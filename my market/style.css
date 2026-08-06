@@ -1,0 +1,130 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f4f4f4;
+}
+
+header{
+    background:#006400;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+nav{
+    background:#333;
+    text-align:center;
+    padding:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:15px;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:yellow;
+}
+
+.hero{
+    background:#4CAF50;
+    color:white;
+    text-align:center;
+    padding:50px;
+}
+
+.news{
+    display:flex;
+    justify-content:center;
+    flex-wrap:nowrap;
+    gap: 20px;
+    padding:30px;
+}
+
+.card{
+    width:300px;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.card h3{
+    padding:15px;
+}
+
+.card p{
+    padding:0 15px 15px;
+}
+
+.card button{
+    margin:15px;
+    padding:10px 20px;
+    border:none;
+    background:green;
+    color:white;
+    cursor:pointer;
+}
+
+.card button:hover{
+    background:darkgreen;
+
+}
+
+
+
+.weather {
+    padding: 50px;
+    text-align: center;
+    background: #06d57f84;
+}
+
+.weather h2 {
+    margin-bottom: 25px;
+}
+
+.weather-card {
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+}
+
+.weather-card p {
+    margin: 12px;
+    font-size: 18px;
+}
+
+/* Contact */
+
+.contact{
+    padding:50px;
+    text-align:center;
+}
+
+.contact p{
+    margin:10px 0;
+    font-size:18px;
+}
+
+footer{
+    background:#333;
+    color:rgb(255, 255, 255);
+    text-align:center;
+    padding:20px;
+}
