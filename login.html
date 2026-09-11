@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>B Market - Login</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-box">
+
+            <h1>B Market</h1>
+
+            <h2>Login</h2>
+
+            <p class="login-text">
+                Login to your B Market account
+            </p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+
+                    <label for="email">Email</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="login-options">
+
+                    <label>
+                        <input type="checkbox" id="remember">
+                        Remember me
+                    </label>
+
+                    <a href="#" id="forgotPassword">
+                        Forgot Password?
+                    </a>
+
+                </div>
+
+
+                <button type="submit" class="login-submit">
+                    Login
+                </button>
+
+
+                <p id="message"></p>
+
+            </form>
+
+
+            <p class="register-text">
+                Don't have an account?
+                <a href="register.html">Create Account</a>
+            </p>
+
+
+            <a href="index.html" class="back-home">
+                ← Back to B Market
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script src="login.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B Market - Registration</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+    <div class="register-container">
+
+        <div class="register-box">
+
+            <h1>B Market</h1>
+            <h2>Create Account</h2>
+            <p>Register to shop fresh local products</p>
+
+            <form id="registerForm">
+
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <label for="mobile">Mobile Number</label>
+                <input type="tel" id="mobile" placeholder="Enter mobile number"
+                       pattern="[0-9]{10}" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword"
+                       placeholder="Confirm password" required>
+
+                <label for="address">Address</label>
+                <textarea id="address" placeholder="Enter your address" required></textarea>
+
+                <button type="submit">Register</button>
+
+            </form>
+
+            <p class="login-text">
+                Already have an account?
+                <a href="login.html">Login</a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="registere.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>B Market - Order History</title>
+
+    <link rel="stylesheet" href="order-history.css">
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+
+        <h1>B Market</h1>
+
+        <nav>
+
+            <a href="index.html">Home</a>
+
+            <a href="product.html">Products</a>
+
+            <a href="cart.html">Cart 🛒</a>
+
+            <a href="order-history.html">
+                Orders
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Order History -->
+
+    <main class="orders-container">
+
+        <h2>My Orders</h2>
+
+        <p class="subtitle">
+            View your previous B Market orders
+        </p>
+
+
+        <!-- Orders will appear here -->
+
+        <div id="ordersList">
+
+        </div>
+
+
+        <!-- No orders message -->
+
+        <div id="noOrders" class="no-orders">
+
+            <h3>No Orders Yet</h3>
+
+            <p>
+                You haven't placed any orders yet.
+            </p>
+
+            <a href="product.html">
+                Start Shopping
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <script src="order-history.js"></script>
+
+</body>
+
+</html>

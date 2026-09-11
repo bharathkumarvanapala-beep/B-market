@@ -1,0 +1,25 @@
+{
+  "name": "b-market-_-fresh-local-products_files",
+  "version": "1.0.0",
+  "description": "",
+  "main": "category.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bharathkumarvanapala-beep/B-market.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bharathkumarvanapala-beep/B-market/issues"
+  },
+  "homepage": "https://github.com/bharathkumarvanapala-beep/B-market#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

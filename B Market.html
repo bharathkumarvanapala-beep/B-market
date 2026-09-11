@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://localhost:5500/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B Market</title>
+    <link rel="stylesheet" href="./B Market_files/styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="./B Market_files/m logo.png">
+            <h1>B Market</h1>
+        </div>
+            <a href="http://localhost:5500/login.html" class="login-btn">Login</a>
+        
+
+        <nav>
+            <a href="http://localhost:5500/index.html#">Home</a>
+            <a href="http://localhost:5500/product.html">Products</a>
+            <a href="http://localhost:5500/index.html#categories">Categories</a>
+            <a href="http://localhost:5500/gallery.html">Gallery</a>
+            <a href="http://localhost:5500/my%20market/index.html">Market news</a>
+            <a href="https://www.mapsofindia.com/maps/andhrapradesh/andhrapradeshagriculture.htm">Products location</a>
+            <a href="http://localhost:5500/cart.html">Cart 🛒</a>
+            <a href="http://localhost:5500/order-history.html">my orders</a>
+
+            <a href="http://localhost:5500/index.html#About">About</a>
+            <a href="http://localhost:5500/index.html#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            
+        </div>
+        <h2>Welcome to B Market</h2>
+        <p>Fresh Fruits, Vegetables &amp; Organic Products</p>
+        <a href="http://localhost:5500/product.html" class="btn">Shop Now</a>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories" class="categories">
+       <h2>Shop By Category</h2>
+
+     
+        
+
+    <div class="cards">
+
+
+        <!-- FRUITS -->
+
+        <div class="card" onclick="openCategory(&#39;fruits&#39;)">
+
+            <img src="./B Market_files/fruit.jpg" alt="Fruits">
+
+            <h3>Fruits</h3>
+
+            <p>Fresh seasonal fruits.</p>
+
+        </div>
+
+
+        <!-- VEGETABLES -->
+
+        <div class="card" onclick="openCategory(&#39;vegetables&#39;)">
+
+            <img src="./B Market_files/vfrt.webp" alt="Vegetables">
+
+            <h3>Vegetables</h3>
+
+            <p>Healthy green vegetables.</p>
+
+        </div>
+
+
+        <!-- GRAINS -->
+
+        <div class="card" onclick="openCategory(&#39;grains&#39;)">
+
+            <img src="./B Market_files/image.b.webp" alt="Grains">
+
+            <h3>Grains</h3>
+
+            <p>Rice, Wheat and Millets.</p>
+
+        </div>
+
+
+        <!-- SPICES -->
+
+        <div class="card" onclick="openCategory(&#39;spices&#39;)">
+
+            <img src="./B Market_files/image.f.webp" alt="Spices">
+
+            <h3>Spices</h3>
+
+            <p>Pepper, Turmeric and more.</p>
+
+        </div>
+
+
+        <!-- COFFEE -->
+
+        <div class="card" onclick="openCategory(&#39;coffee&#39;)">
+
+            <img src="./B Market_files/image.e.webp" alt="Coffee">
+
+            <h3>Coffee</h3>
+
+            <p>Fresh coffee beans.</p>
+
+        </div>
+
+
+        <!-- TAMARIND -->
+
+        <div class="card" onclick="openCategory(&#39;tamarind&#39;)">
+
+            <img src="./B Market_files/image.d.jpg" alt="Tamarind">
+
+            <h3>Tamarind</h3>
+
+            <p>Organic tamarind.</p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+
+    
+    
+
+    <!--location-->
+<section class="map">
+    <h2>Our Location</h2>
+    <iframe src="./B Market_files/embed.html">
+
+
+
+    </iframe>"
+</section>
+    <!-- About -->
+    <section id="About" class="about">
+        <h2>About Us</h2>
+        <p>
+            B Market supplies fresh farm products directly from farmers
+            to customers with <strong>quality</strong> and <strong>affordable</strong> prices.
+        </p>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+
+        <p>📞 +91 7981850491</p>
+        <p>📧 bharathkumarvanapala@gmail.com</p>
+        <p>📍 Andhra Pradesh, India</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 B Market. All Rights Reserved.</p>
+    </footer>
+    <script src="./B Market_files/category.js.download"></script>
+
+
+        <script>
+            (function() {
+                // Live Reload (same host/port as the page — works for 127.0.0.1, localhost, and LAN IP)
+                const socket = new WebSocket((location.protocol === 'https:' ? 'wss:' : 'ws:') + '//' + location.host);
+                socket.onmessage = function(msg) {
+                    if (msg.data === 'reload') {
+                        window.location.reload();
+                    }
+                };
+
+                // Console Interception
+                const originalConsole = {
+                    log: console.log, error: console.error, warn: console.warn, info: console.info
+                };
+                const sendToParent = (type, args, metadata = {}) => {
+                    window.parent.postMessage({
+                        type: 'devtools',
+                        method: type,
+                        args: Array.from(args).map(arg => {
+                            try { return typeof arg === 'object' ? JSON.stringify(arg) : String(arg); }
+                            catch(e) { return String(arg); }
+                        }),
+                        ...metadata
+                    }, '*');
+                };
+
+                console.log = function() { originalConsole.log.apply(console, arguments); sendToParent('log', arguments); };
+                console.error = function() { originalConsole.error.apply(console, arguments); sendToParent('error', arguments); };
+                console.warn = function() { originalConsole.warn.apply(console, arguments); sendToParent('warn', arguments); };
+                console.info = function() { originalConsole.info.apply(console, arguments); sendToParent('info', arguments); };
+
+                window.addEventListener('error', (e) => sendToParent('error', [e.message]));
+
+                // Storage Sync
+                const syncStorage = () => {
+                    sendToParent('storage', [], { data: JSON.stringify(localStorage) });
+                };
+                window.addEventListener('storage', syncStorage);
+                setInterval(syncStorage, 2000); // Polling as fallback
+
+                // Element Inspector
+                let inspecting = false;
+                let overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed; pointer-events:none; background:rgba(0,120,215,0.3); border:1px solid #0078d7; z-index:100000; display:none;';
+                document.body.appendChild(overlay);
+
+                window.addEventListener('message', (event) => {
+                    if (event.data.command === 'toggleInspect') {
+                        inspecting = event.data.value;
+                        if (!inspecting) overlay.style.display = 'none';
+                    }
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!inspecting) return;
+                    const el = document.elementFromPoint(e.clientX, e.clientY);
+                    if (el && el !== overlay) {
+                        const rect = el.getBoundingClientRect();
+                        overlay.style.display = 'block';
+                        overlay.style.width = rect.width + 'px';
+                        overlay.style.height = rect.height + 'px';
+                        overlay.style.top = rect.top + 'px';
+                        overlay.style.left = rect.left + 'px';
+                    }
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!inspecting) return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const el = document.elementFromPoint(e.clientX, e.clientY);
+                    if (el) {
+                        sendToParent('element', [el.tagName.toLowerCase()], { 
+                            id: el.id, 
+                            classes: el.className,
+                            html: el.outerHTML.substring(0, 500) + '...'
+                        });
+                    }
+                }, true);
+
+            })();
+        </script><div style="position: fixed; pointer-events: none; background: rgba(0, 120, 215, 0.3); border: 1px solid rgb(0, 120, 215); z-index: 100000; display: none;"></div>
+        
+</body></html>

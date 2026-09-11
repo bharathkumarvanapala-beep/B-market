@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Shopping Cart - B Market</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <h1>B Market</h1>
+    </div>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="product.html">Products</a>
+
+        <a href="cart.html">Cart 🛒</a>
+
+    </nav>
+
+</header>
+
+
+<section class="cart-section">
+
+    <h2>My Shopping Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <div class="cart-total">
+
+        <h3>
+            Total: ₹<span id="cartTotal">0</span>
+        </h3>
+
+        <button onclick="goToCheckout()">
+            Proceed to Checkout
+        </button>
+
+    </div>
+
+</section>
+
+
+<script src="script.js"></script>
+<script src="cart.js"></script>
+
+</body>
+
+</html>

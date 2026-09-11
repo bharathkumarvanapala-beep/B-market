@@ -1,0 +1,38 @@
+========================================
+             B MARKET ORDER
+========================================
+Date: 2026-09-10 11:26:31
+
+CUSTOMER DETAILS
+Name: v bharath kumar
+Mobile: 7981850491
+Email: bharathkumarvanapala@gmail.com
+Address: 1-0,paderu,531024
+City/Village: paderu
+PIN Code: 531024
+
+ORDER DETAILS
+Products: Tamarind × 1
+Total: ₹180
+
+========================================
+
+========================================
+             B MARKET ORDER
+========================================
+Date: 2026-09-10 11:51:37
+
+CUSTOMER DETAILS
+Name: madhuri
+Mobile: 6302567603
+Email: madhurigabbada@gmail.com
+Address: 1-0,paderu,531024
+City/Village: paderu
+PIN Code: 531024
+
+ORDER DETAILS
+Products: Turmeric × 1
+Total: ₹220
+
+========================================
+
