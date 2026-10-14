@@ -1,0 +1,6 @@
+function getToken(){return localStorage.getItem("bmarket_token")}
+function updateHeader(){const count=(JSON.parse(localStorage.getItem("bmarket_cart")||"[]")).reduce((s,i)=>s+i.quantity,0);document.querySelectorAll("#cartCount").forEach(e=>e.textContent=count);const a=document.getElementById("authLink");if(a&&getToken()){a.textContent="Logout";a.href="#";a.onclick=()=>{localStorage.removeItem("bmarket_token");location.reload()}}}
+document.addEventListener("DOMContentLoaded",updateHeader);
+async function api(path,options={}){const headers={"Content-Type":"application/json",...(options.headers||{})};const token=getToken();if(token)headers.Authorization=`Bearer ${token}`;const res=await fetch(API_BASE_URL+path,{...options,headers});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.message||"Request failed");return data}
+function cart(){return JSON.parse(localStorage.getItem("bmarket_cart")||"[]")}
+function saveCart(c){localStorage.setItem("bmarket_cart",JSON.stringify(c));updateHeader()}

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Checkout | B Market</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+<header class="site-header"><a class="brand" href="index.html"><span>B Market</span></a><nav><a href="cart.html">Cart</a><a href="orders.html">My Orders</a></nav></header>
+<main class="section narrow"><h1>Checkout</h1>
+<form id="checkoutForm" class="form-card">
+<label>Delivery address<textarea id="address" required></textarea></label>
+<label>Payment method<select id="paymentMethod"><option value="COD">Cash on Delivery</option><option value="DEMO_ONLINE">Online Payment (Demo)</option></select></label>
+<button class="btn full" type="submit">Place Order</button>
+<p id="message"></p>
+</form></main>
+<script src="config.js"></script><script src="checkout.js"></script>
+</body>
+</html>

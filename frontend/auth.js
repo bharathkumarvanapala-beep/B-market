@@ -1,0 +1,5 @@
+async function postAuth(path,body){const r=await fetch(API_BASE_URL+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw new Error(d.message||"Request failed");return d}
+document.addEventListener("DOMContentLoaded",()=>{
+ const rf=document.getElementById("registerForm");if(rf)rf.onsubmit=async e=>{e.preventDefault();const msg=document.getElementById("message");if(password.value!==confirmPassword.value){msg.textContent="Passwords do not match";return}try{await postAuth("/auth/register",{name:name.value,email:email.value,mobile:mobile.value,password:password.value,address:address.value});msg.textContent="Registered successfully. You can login now.";rf.reset()}catch(x){msg.textContent=x.message}};
+ const lf=document.getElementById("loginForm");if(lf)lf.onsubmit=async e=>{e.preventDefault();try{const d=await postAuth("/auth/login",{email:email.value,password:password.value});localStorage.setItem("bmarket_token",d.token);location.href="index.html"}catch(x){document.getElementById("message").textContent=x.message}}
+});

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Register | B Market</title><link rel="stylesheet" href="styles.css"></head>
+<body class="auth-page"><main class="auth-box"><h1>B Market</h1><h2>Create Account</h2>
+<form id="registerForm">
+<label>Full Name<input id="name" required></label>
+<label>Email<input id="email" type="email" required></label>
+<label>Mobile<input id="mobile" pattern="[0-9]{10}" required></label>
+<label>Password<input id="password" type="password" minlength="6" required></label>
+<label>Confirm Password<input id="confirmPassword" type="password" minlength="6" required></label>
+<label>Address<textarea id="address" required></textarea></label>
+<button class="btn full" type="submit">Register</button>
+</form><p id="message"></p><p>Already registered? <a href="login.html">Login</a></p></main>
+<script src="config.js"></script><script src="auth.js"></script>
+</body>
+</html>
