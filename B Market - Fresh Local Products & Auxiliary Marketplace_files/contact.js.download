@@ -1,0 +1,131 @@
+// ============================================
+// B MARKET - CONTACT / ENQUIRY FORM HANDLER
+// Dynamic backend resolution for Laptop & Mobile
+// ============================================
+
+function getBackendUrl(path) {
+    if (typeof window !== "undefined" && typeof window.getBMarketApiUrl === "function") {
+        return window.getBMarketApiUrl(path);
+    }
+    const loc = typeof window !== "undefined" ? window.location : null;
+    let host = (loc && loc.hostname) ? loc.hostname.trim() : "";
+    if (!host || host === "0.0.0.0") host = "localhost";
+    const protocol = (loc && loc.protocol === "https:") ? "https:" : "http:";
+    const cleanPath = path ? (path.startsWith("/") ? path : "/" + path) : "";
+    return `${protocol}//${host}:5000${cleanPath}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Contact / Enquiry handler initialized.");
+
+    const enquiryForm = document.getElementById("enquiryForm");
+    const resultElement = document.getElementById("result");
+
+    if (!enquiryForm) {
+        console.warn("enquiryForm not found on this page.");
+        return;
+    }
+
+    enquiryForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const phoneInput = document.getElementById("phone");
+        const messageInput = document.getElementById("message");
+        const submitButton = enquiryForm.querySelector("button[type='submit']");
+
+        const name = nameInput ? nameInput.value.trim() : "";
+        const email = emailInput ? emailInput.value.trim() : "";
+        const phone = phoneInput ? phoneInput.value.trim() : "";
+        const message = messageInput ? messageInput.value.trim() : "";
+
+        if (!name || !email || !message) {
+            showResult("Please fill in your name, email, and enquiry message.", "error");
+            return;
+        }
+
+        // Show sending state
+        const originalButtonText = submitButton ? submitButton.innerText : "Send Enquiry";
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.innerText = "⏳ Sending Enquiry...";
+        }
+
+        showResult("Sending your enquiry, please wait...", "loading");
+
+        // Primary URL resolved dynamically from current browser host (e.g., http://192.168.1.47:5000 or http://localhost:5000)
+        const primaryUrl = getBackendUrl("/api/enquiry");
+        const candidates = [primaryUrl];
+
+        // LAN IP fallback if testing across devices or offline mode
+        const lanFallback = "http://192.168.1.47:5000/api/enquiry";
+        const localhostFallback = "http://localhost:5000/api/enquiry";
+        if (!candidates.includes(lanFallback)) candidates.push(lanFallback);
+        if (!candidates.includes(localhostFallback)) candidates.push(localhostFallback);
+
+        let sentSuccess = false;
+        let lastErrorMsg = "";
+
+        for (const targetUrl of candidates) {
+            try {
+                console.log("Submitting enquiry to backend:", targetUrl);
+                const response = await fetch(targetUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        message: message
+                    })
+                });
+
+                let data = {};
+                try {
+                    data = await response.json();
+                } catch (parseErr) {
+                    data = { success: false, message: "Server returned status " + response.status };
+                }
+
+                if (response.ok && data.success) {
+                    showResult("✅ " + (data.message || "Enquiry sent successfully! We will get back to you soon."), "success");
+                    enquiryForm.reset();
+                    sentSuccess = true;
+                    break;
+                } else {
+                    lastErrorMsg = data.message || ("Server returned error " + response.status);
+                    break;
+                }
+            } catch (networkErr) {
+                console.warn(`Connection failed to ${targetUrl}:`, networkErr.message);
+                lastErrorMsg = networkErr.message;
+            }
+        }
+
+        if (!sentSuccess) {
+            if (lastErrorMsg && !lastErrorMsg.includes("Failed to fetch") && !lastErrorMsg.includes("NetworkError")) {
+                showResult("⚠️ " + lastErrorMsg, "error");
+            } else {
+                showResult(
+                    `❌ Could not connect to backend server at ${primaryUrl}. Please make sure your device is connected to the same Wi-Fi network and the backend is running.`,
+                    "error"
+                );
+            }
+        }
+
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.innerText = originalButtonText;
+        }
+    });
+
+    function showResult(text, type) {
+        if (!resultElement) return;
+        resultElement.style.display = "block";
+        resultElement.textContent = text;
+        resultElement.className = "result-message result-" + type;
+    }
+});

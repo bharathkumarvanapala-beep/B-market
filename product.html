@@ -2,235 +2,503 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Products - B Market</title>
-
+    <title>Products & Auxiliary Marketplace - B Market</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="category.css">
+    <style>
+        /* Product Page Specific Enhancements */
+        .products-hero-banner {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 60%, #388e3c 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 45px 20px 40px;
+            position: relative;
+            box-shadow: inset 0 -4px 12px rgba(0,0,0,0.1);
+        }
 
+        .products-hero-banner h1 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+
+        .products-hero-banner p {
+            font-size: 17px;
+            opacity: 0.95;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .hero-platform-chips {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .hero-chip {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .products-page-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+
+        /* Add Product Trigger Button */
+        .btn-add-product-trigger {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add-product-trigger:hover {
+            background: #1b5e20;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: modalFadeIn 0.25s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.96) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .btn-modal-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #64748b;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .btn-modal-close:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .modal-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .modal-form-grid .full-col {
+            grid-column: span 2;
+        }
+
+        .modal-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .modal-field input,
+        .modal-field select,
+        .modal-field textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f8fafc;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .modal-field input:focus,
+        .modal-field select:focus,
+        .modal-field textarea:focus {
+            outline: none;
+            border-color: #2e7d32;
+            background: #ffffff;
+        }
+
+        .modal-actions {
+            margin-top: 22px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-submit-prod {
+            background: #2e7d32;
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.25);
+        }
+
+        .btn-submit-prod:hover {
+            background: #1b5e20;
+        }
+
+        /* Loading spinner */
+        .loading-state-container {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #2e7d32;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Backend Toast */
+        .backend-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 999999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .backend-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .backend-toast.toast-success {
+            border-left: 4px solid #22c55e;
+        }
+
+        .backend-toast.toast-warning {
+            border-left: 4px solid #f59e0b;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Header -->
-
+    <!-- Header Navigation -->
     <header>
-
         <div class="logo">
-            <h1>B Market</h1>
+            <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: white;">
+                <img src="image/m logo.png" alt="B Market Logo" style="height: 38px; width: auto; object-fit: contain;">
+                <h1 style="margin: 0;">B Market</h1>
+            </a>
         </div>
 
         <nav>
-
             <a href="index.html">Home</a>
-
-              <a href="#About">About</a>
-
-            <a href="#contact">Contact</a>
-
-            <a href="index.html">Go to B Market</a>
-
+            <a href="product.html" style="color: #ffe500; font-weight: 800;">Products</a>
+            <a href="category.html">Categories</a>
+            <a href="cart.html">Cart 🛒</a>
+            <a href="order-history.html">My Orders</a>
+            <div class="header-user-area" style="display: inline-block; margin-left: 10px;">
+                <a href="login.html" class="btn-flipkart-login">Login</a>
+            </div>
         </nav>
-
     </header>
 
+    <!-- Top Products Banner -->
+    <div class="products-hero-banner">
+        <h1 id="categoryHeading">Our Products & Auxiliary Deals</h1>
+        <p>
+            Direct farm-fresh organic produce from local farmers, paired with verified auxiliary products from <strong>Amazon</strong> &amp; <strong>Flipkart</strong>.
+        </p>
+        <div class="hero-platform-chips">
+            <span class="hero-chip">🌿 Direct Farm Fresh</span>
+            <span class="hero-chip">📦 Amazon Auxiliary</span>
+            <span class="hero-chip">🛒 Flipkart Assured</span>
+            <span class="hero-chip">⚡ Instant UPI / Buy Now</span>
+        </div>
+    </div>
 
-    <!-- Products -->
+    <!-- Main Products Workspace -->
+    <main class="products-page-container">
 
-    <main>
+        <!-- DYNAMIC CATALOG EXPLORER (SEARCH, FILTERS, CONTROLS) -->
+        <div class="dynamic-catalog-explorer">
 
-        <section class="products">
+            <div class="catalog-header-bar">
+                <div>
+                    <h2 class="catalog-section-title" style="margin: 0;">Browse Dynamic Catalog</h2>
+                    <p class="catalog-section-subtitle">
+                        Loaded dynamically from B Market Backend API &amp; MongoDB Database
+                    </p>
+                </div>
 
-            <h2>Our Products</h2>
-
-            <div class="product-cards">
-
-
-                <div class="product-card">
-
-                    <img src="Images/fruit.jpg" alt="Fresh Fruits">
-
-                  <h3>fresh fruits</h3>
-                  <p>seasonal fresh fruits</p>
-                   
-
-                  <p class="price">₹120</p>
-                 <a href="product-details.html?product=fruit" class="view-product">
-                             View Product
-                </a>
-                    <button
-                        class="add-cart"
-                        onclick="addToCart('Fresh Fruits', 120, 'image/fruit.jpg')">
-
-                            Add to Cart
-
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <span id="productCountBadge" class="catalog-count-badge">Connecting to backend...</span>
+                    <button type="button" class="btn-add-product-trigger" onclick="openAddProductModal()" title="Add a new dynamic product to database">
+                        <span>➕ Add Product</span>
                     </button>
-
-                
-                        
-
                 </div>
-
-
-                <div class="product-card">
-
-                    <img src="image/vfrt.webp" alt="Vegetables">
-
-                    <h3>Fresh Vegetables</h3>
-
-                    <p>Healthy green vegetables.</p>
-                    <p class="price">₹60</p>
-                    <a href="product-details.html?product=vegetables" class="view-product">
-                        View Product
-                    </a>
-                    
-                   
-
-    <button
-        class="add-cart"
-        onclick="addToCart('Fresh Vegetables', 60, 'image/vfrt.webp')">
-
-        Add to Cart
-
-    </button>
-
-
-
-                </div>
-
-
-                <div class="product-card">
-
-                    <img src="image/image.b.webp" alt="Grains">
-
-                    <h3>Quality Grains</h3>
-
-                    <p>Rice, wheat and other grains.</p>
-                     <p class="price">₹60</p>
-
-                    <a href="product-details.html?product=grains" class="view-product">
-                        View Product
-                    </a>
-                    <button
-        class="add-cart"
-        onclick="addToCart('Quality Grains', 60, 'image/image.b.webp')">
-
-        Add to Cart
-
-    </button>
-
-                </div>
-
-
-                <div class="product-card">
-
-                    <img src="image/image.f.webp" alt="Pepper">
-
-                    <h3>Black Pepper</h3>
-
-                    <p>Natural and aromatic pepper.</p>
-                     <p class="price">₹120</p>
-
-                    <a href="product-details.html?product=black pepper" class="view-product">
-                         View Product
-                    </a>
-                     <button
-        class="add-cart"
-        onclick="addToCart('Black Pepper', 120, 'image/image.f.webp')">
-
-        Add to Cart
-
-    </button>
-
-                </div>
-
-
-                <div class="product-card">
-
-                    <img src="image/image.e.webp" alt="Coffee">
-
-                    <h3>Fresh Coffee</h3>
-
-                    <p>Fresh coffee beans.</p>
-
-                    <p class="price">₹60</p>
-
-                    <a href="product-details.html?product=coffee" class="view-product">
-                            View Product
-                    </a>
-                     <button
-                        class="add-cart"
-                        onclick="addToCart('Fresh Coffee', 60, 'image/image.e.webp')">
-
-                        Add to Cart
-
-                    </button>
-
-                </div>
-
-
-                <div class="product-card">
-
-                    <img src="image/image.d.jpg" alt="Tamarind">
-
-                    <h3>Organic Tamarind</h3>
-
-                    <p>Natural and tasty tamarind.</p>
-
-                    <p class="price">₹70</p>
-
-
-                    <a href="product-details.html?product=tamarind" class="view-product">
-                        View Product
-                    </a>
-                <button
-                    class="add-cart"
-                    onclick="addToCart('Organic Tamarind', 70, 'image/image.d.jpg')">
-
-                    Add to Cart
-
-                </button>
-
-                </div>
-
-
             </div>
 
+            <!-- SEARCH & SORT CONTROLS -->
+            <div class="catalog-controls-panel">
+                <div class="search-input-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="productSearchInput" placeholder="Search produce, grains, spices or Amazon/Flipkart brands..." autocomplete="off">
+                </div>
+
+                <div class="sort-select-box">
+                    <label for="productSortSelect">Sort By:</label>
+                    <select id="productSortSelect">
+                        <option value="featured">✨ Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Highest Customer Rating</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- CATEGORY FILTER TABS -->
+            <div class="catalog-filter-group">
+                <span class="filter-group-label">Categories:</span>
+                <div class="category-pills-row">
+                    <button type="button" class="cat-pill-btn active" data-category="all">🌟 All Categories</button>
+                    <button type="button" class="cat-pill-btn" data-category="fruits">🍎 Fresh Fruits</button>
+                    <button type="button" class="cat-pill-btn" data-category="vegetables">🥦 Fresh Vegetables</button>
+                    <button type="button" class="cat-pill-btn" data-category="grains">🌾 Grains &amp; Millets</button>
+                    <button type="button" class="cat-pill-btn" data-category="spices">🌶️ Spices &amp; Honey</button>
+                    <button type="button" class="cat-pill-btn" data-category="coffee">☕ Coffee &amp; Brews</button>
+                    <button type="button" class="cat-pill-btn" data-category="tamarind">🪵 Tamarind &amp; Essentials</button>
+                </div>
+            </div>
+
+            <!-- PLATFORM SOURCE FILTER TABS (DIRECT, AMAZON, FLIPKART) -->
+            <div class="catalog-filter-group">
+                <span class="filter-group-label">Platform Filter:</span>
+                <div class="source-pills-row">
+                    <button type="button" class="source-pill-btn active" data-source="all">
+                        <span>🌐 All Marketplace</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-bmarket" data-source="bmarket">
+                        <span>🌿 B Market Farm Fresh (Direct)</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-amazon" data-source="amazon">
+                        <span>📦 Amazon Auxiliary Deals</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-flipkart" data-source="flipkart">
+                        <span>🛒 Flipkart Auxiliary Deals</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- DYNAMIC PRODUCTS GRID (Rendered by product.js) -->
+        <section class="products-grid-section">
+            <div id="allProductsGrid" class="dynamic-products-grid">
+                <!-- Dynamically populated from backend API -->
+            </div>
         </section>
 
     </main>
 
-    <!-- About -->
-    <section  id="About" class="about">
-        <h2>About Us</h2>
-        <p>
-            B Market supplies fresh farm products directly from farmers
-            to customers with quality and affordable prices.
-        </p>
-    </section>
-    <!-- Contact -->
-    <section id="contact" class="contact">
-        <h2>Contact Us</h2>
+    <!-- ADD PRODUCT MODAL (Allows adding dynamic products via API) -->
+    <div id="addProductModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>➕ Add Dynamic Product</h3>
+                <button type="button" class="btn-modal-close" onclick="closeAddProductModal()">&times;</button>
+            </div>
 
-        <p>📞 +91 7981850491</p>
-        <p>📧 bharathkumarvanapala@gmail.com</p>
-        <p>📍 Andhra Pradesh, India</p>
+            <form id="addProductForm">
+                <div class="modal-form-grid">
+                    <div class="modal-field full-col">
+                        <label for="newProdName">Product Name *</label>
+                        <input type="text" id="newProdName" placeholder="e.g. Organic Hill Honey" required>
+                    </div>
+
+                    <div class="modal-field">
+                        <label for="newProdCategory">Category *</label>
+                        <select id="newProdCategory" required>
+                            <option value="fruits">Fresh Fruits</option>
+                            <option value="vegetables">Fresh Vegetables</option>
+                            <option value="grains">Grains &amp; Millets</option>
+                            <option value="spices">Spices &amp; Condiments</option>
+                            <option value="coffee">Coffee &amp; Brews</option>
+                            <option value="tamarind">Tamarind &amp; Essentials</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-field">
+                        <label for="newProdSource">Platform / Source *</label>
+                        <select id="newProdSource" required>
+                            <option value="bmarket">🌿 B Market (Direct Farm Fresh)</option>
+                            <option value="amazon">📦 Amazon (Auxiliary)</option>
+                            <option value="flipkart">🛒 Flipkart (Auxiliary)</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-field">
+                        <label for="newProdPrice">Selling Price (₹) *</label>
+                        <input type="number" id="newProdPrice" min="1" placeholder="e.g. 150" required>
+                    </div>
+
+                    <div class="modal-field">
+                        <label for="newProdOrigPrice">Original MRP (₹)</label>
+                        <input type="number" id="newProdOrigPrice" min="1" placeholder="e.g. 190">
+                    </div>
+
+                    <div class="modal-field">
+                        <label for="newProdUnit">Unit (e.g. kg, 500g, pack)</label>
+                        <input type="text" id="newProdUnit" placeholder="kg" value="kg">
+                    </div>
+
+                    <div class="modal-field">
+                        <label for="newProdImage">Image URL or Path</label>
+                        <input type="text" id="newProdImage" placeholder="image/fruit.jpg or https://..." value="image/fruit.jpg">
+                    </div>
+
+                    <div class="modal-field full-col">
+                        <label for="newProdAffiliate">Affiliate / Link URL (for Amazon / Flipkart)</label>
+                        <input type="text" id="newProdAffiliate" placeholder="https://www.amazon.in/dp/... or https://www.flipkart.com/...">
+                    </div>
+
+                    <div class="modal-field full-col">
+                        <label for="newProdDesc">Product Description</label>
+                        <textarea id="newProdDesc" rows="3" placeholder="Brief description of quality, harvest method or benefits..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddProductModal()">Cancel</button>
+                    <button type="submit" id="saveProductBtn" class="btn-submit-prod">Save &amp; Publish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="About" class="about" style="background: #ffffff; padding: 50px 20px; text-align: center; border-top: 1px solid #e2e8f0;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 style="font-size: 28px; color: #1e293b; margin-bottom: 12px;">About B Market</h2>
+            <p style="font-size: 16px; color: #475569; line-height: 1.7;">
+                B Market bridges local farmers directly with households, ensuring fresh, pesticide-free produce at honest prices. Through our auxiliary marketplace partnerships with Amazon and Flipkart, we also bring you certified kitchen essentials, organic seeds, and top-rated farm and kitchen gear in one seamless platform.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact" style="background: #f8fafc; padding: 45px 20px; text-align: center; border-top: 1px solid #e2e8f0;">
+        <h2 style="font-size: 26px; color: #1e293b; margin-bottom: 15px;">Contact Customer Care</h2>
+        <p style="font-size: 15px; color: #334155; margin: 6px 0;">📞 +91 7981850491</p>
+        <p style="font-size: 15px; color: #334155; margin: 6px 0;">📧 bharathkumarvanapala@gmail.com</p>
+        <p style="font-size: 15px; color: #334155; margin: 6px 0;">📍 Andhra Pradesh, India</p>
     </section>
 
     <!-- Footer -->
-
     <footer>
-
-        <p>© 2026 B Market. All Rights Reserved.</p>
-
+        <p>© 2026 B Market. All Rights Reserved. Fresh Local Products &amp; Auxiliary Marketplace.</p>
     </footer>
 
-
+    <!-- Core Scripts -->
+    <script src="auth-state.js"></script>
     <script src="script.js"></script>
-    <script src="B Market_files/product.js"></script>
+    <script src="product.js"></script>
 
 </body>
 

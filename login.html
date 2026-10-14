@@ -4,95 +4,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>B Market - Login</title>
-
+    <title>Customer Login - B Market</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="category.css">
+    <style>
+        body.auth-page-body {
+            background: linear-gradient(135deg, #f0fdf4 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+        }
+
+        .auth-card-container {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.04);
+            display: flex;
+            max-width: 880px;
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            min-height: 520px;
+        }
+
+        @media (max-width: 768px) {
+            .auth-card-container {
+                flex-direction: column;
+            }
+            .auth-side-banner {
+                display: none !important;
+            }
+        }
+
+        /* Left Side Banner (Flipkart Style) */
+        .auth-side-banner {
+            flex: 0 0 340px;
+            background: linear-gradient(135deg, #166534 0%, #10843f 60%, #15803d 100%);
+            color: #ffffff;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .auth-banner-top .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .auth-banner-top .brand-row img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .auth-banner-top .brand-row h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .auth-banner-title {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .auth-banner-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.92;
+            margin-bottom: 24px;
+        }
+
+        .auth-perks-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .auth-perks-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .auth-banner-bottom {
+            margin-top: 30px;
+            font-size: 12px;
+            opacity: 0.75;
+            text-align: center;
+        }
+
+        /* Right Side Form */
+        .auth-form-wrap {
+            flex: 1;
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-form-header {
+            margin-bottom: 26px;
+        }
+
+        .auth-form-header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0 0 6px 0;
+        }
+
+        .auth-form-header p {
+            font-size: 14px;
+            color: #64748b;
+            margin: 0;
+        }
+
+        .auth-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .auth-field label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #334155;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .auth-field input {
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f8fafc;
+            transition: all 0.2s;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .auth-field input:focus {
+            outline: none;
+            border-color: #10843f;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(16, 132, 63, 0.12);
+        }
+
+        .auth-options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .auth-options-row label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #475569;
+            cursor: pointer;
+        }
+
+        .auth-options-row a {
+            color: #2874f0;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-options-row a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-alert-box {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .auth-alert-box.alert-error {
+            display: block;
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        .auth-alert-box.alert-success {
+            display: block;
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .btn-auth-submit {
+            background: #fb641b;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(251, 100, 27, 0.3);
+        }
+
+        .btn-auth-submit:hover {
+            background: #e6530c;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(251, 100, 27, 0.35);
+        }
+
+        .btn-auth-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .demo-login-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #475569;
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-quick-fill {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #10843f;
+            cursor: pointer;
+        }
+
+        .btn-quick-fill:hover {
+            background: #e2e8f0;
+        }
+
+        .auth-switch-link {
+            text-align: center;
+            font-size: 14px;
+            color: #475569;
+            margin-top: 20px;
+        }
+
+        .auth-switch-link a {
+            color: #2874f0;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .auth-switch-link a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-back-link {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .auth-back-link a {
+            color: #64748b;
+            text-decoration: none;
+        }
+
+        .auth-back-link a:hover {
+            color: #10843f;
+        }
+    </style>
 </head>
 
-<body class="login-page">
+<body class="auth-page-body">
 
-    <div class="login-container">
+    <div class="auth-card-container">
 
-        <div class="login-box">
+        <!-- Left Brand Banner (Flipkart Style) -->
+        <div class="auth-side-banner">
+            <div class="auth-banner-top">
+                <div class="brand-row">
+                    <img src="image/m logo.png" alt="B Market Logo">
+                    <h2>B Market</h2>
+                </div>
+                <div class="auth-banner-title">
+                    Customer Login
+                </div>
+                <p class="auth-banner-desc">
+                    Log in to view your orders, access your saved delivery address, and checkout faster.
+                </p>
+                <ul class="auth-perks-list">
+                    <li>📦 View Past Orders &amp; Delivery Tracking</li>
+                    <li>📍 1-Click Checkout with Saved Addresses</li>
+                    <li>🌿 Direct Tribal &amp; Farm Fresh Harvests</li>
+                    <li>⚡ Amazon &amp; Flipkart Auxiliary Deals</li>
+                </ul>
+            </div>
+            <div class="auth-banner-bottom">
+                © 2026 B Market. All Rights Reserved.
+            </div>
+        </div>
 
-            <h1>B Market</h1>
+        <!-- Right Form Section -->
+        <div class="auth-form-wrap">
+            <div class="auth-form-header">
+                <h1>Welcome Back</h1>
+                <p>Login with your registered Email or Mobile Number</p>
+            </div>
 
-            <h2>Login</h2>
-
-            <p class="login-text">
-                Login to your B Market account
-            </p>
+            <div id="alertBox" class="auth-alert-box"></div>
 
             <form id="loginForm">
-
-                <div class="input-group">
-
-                    <label for="email">Email</label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        required
-                    >
-
+                <div class="auth-field">
+                    <label for="email">Email or Mobile Number</label>
+                    <input type="text" id="email" placeholder="Enter email or 10-digit mobile" required autocomplete="username">
                 </div>
 
-
-                <div class="input-group">
-
+                <div class="auth-field">
                     <label for="password">Password</label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        required
-                    >
-
+                    <input type="password" id="password" placeholder="Enter your account password" required autocomplete="current-password">
                 </div>
 
-
-                <div class="login-options">
-
+                <div class="auth-options-row">
                     <label>
-                        <input type="checkbox" id="remember">
-                        Remember me
+                        <input type="checkbox" id="rememberMe" checked>
+                        Remember Me
                     </label>
-
-                    <a href="#" id="forgotPassword">
+                    <a href="javascript:void(0)" onclick="alert('Please contact customer care at +91 7981850491 or register a new account.')">
                         Forgot Password?
                     </a>
-
                 </div>
 
-
-                <button type="submit" class="login-submit">
-                    Login
+                <button type="submit" id="loginSubmitBtn" class="btn-auth-submit">
+                    Login to Account
                 </button>
-
-
-                <p id="message"></p>
-
             </form>
 
+            <div class="demo-login-box">
+                <span>Demo Customer: <strong>bharath@example.com</strong></span>
+                <button type="button" class="btn-quick-fill" onclick="autoFillDemo()">Quick Fill</button>
+            </div>
 
-            <p class="register-text">
-                Don't have an account?
-                <a href="register.html">Create Account</a>
-            </p>
+            <div class="auth-switch-link">
+                New to B Market? <a href="register.html">Create an Account</a>
+            </div>
 
-
-            <a href="index.html" class="back-home">
-                ← Back to B Market
-            </a>
-
+            <div class="auth-back-link">
+                <a href="index.html">← Back to B Market Home</a>
+            </div>
         </div>
 
     </div>
 
-
+    <script src="auth-state.js"></script>
     <script src="login.js"></script>
 
 </body>

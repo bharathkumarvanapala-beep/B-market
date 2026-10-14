@@ -1,188 +1,242 @@
-// ==========================================
-// B MARKET - CHECKOUT
-// ==========================================
-
-console.log("CHECKOUT JS CONNECTED!");
-
-const checkoutForm = document.getElementById("checkoutForm");
-const checkoutItems = document.getElementById("checkoutItems");
-const checkoutTotal = document.getElementById("checkoutTotal");
+// ===============================
+// GET CART
+// ===============================
 
 
-// Get cart from localStorage
+function getBackendUrl(path) {
+    if (typeof window !== "undefined" && typeof window.getBMarketApiUrl === "function") {
+        return window.getBMarketApiUrl(path);
+    }
+    const loc = typeof window !== "undefined" ? window.location : null;
+    let host = (loc && loc.hostname) ? loc.hostname.trim() : "";
+    if (!host || host === "0.0.0.0") host = "localhost";
+    const protocol = (loc && loc.protocol === "https:") ? "https:" : "http:";
+    const cleanPath = path ? (path.startsWith("/") ? path : "/" + path) : "";
+    return `${protocol}//${host}:5000${cleanPath}`;
+}
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+function placeOrder() {
 
-// Display cart
-function displayCheckout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
 
-    checkoutItems.innerHTML = "";
+    const order = {
+        products: cart,
+        date: new Date().toISOString()
+    };
+
+    fetch(getBackendUrl("/api/orders"), {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(order)
+
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log(data);
+
+        alert("Order placed successfully!");
+
+        localStorage.removeItem("cart");
+
+    })
+    .catch(error => {
+
+        console.log("Order Error:", error);
+
+    });
+}
+
+// ===============================
+// SHOW ORDER
+// ===============================
+
+function showCheckout() {
+
+    const checkoutItems =
+        document.getElementById("checkoutItems");
+
+    const checkoutTotal =
+        document.getElementById("checkoutTotal");
+
 
     if (cart.length === 0) {
 
         checkoutItems.innerHTML =
             "<p>Your cart is empty.</p>";
 
-        checkoutTotal.textContent = "0";
+        checkoutTotal.innerText = "0";
 
         return;
+
     }
+
 
     let total = 0;
 
-    cart.forEach((item) => {
 
-        const quantity = item.quantity || 1;
-        const price = Number(item.price) || 0;
+    checkoutItems.innerHTML = "";
 
-        const itemTotal = price * quantity;
 
-        total += itemTotal;
+    cart.forEach(function(product) {
 
-        const div = document.createElement("div");
+        let subtotal =
+            product.price * product.quantity;
 
-        div.className = "checkout-item";
+        total += subtotal;
 
-        div.innerHTML = `
-            <p>
-                <strong>${item.name}</strong>
-            </p>
 
-            <p>
-                ₹${price} × ${quantity}
-                = ₹${itemTotal}
-            </p>
+        checkoutItems.innerHTML += `
+
+            <div class="checkout-item">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                >
+
+                <div>
+
+                    <h4>
+                        ${product.name}
+                    </h4>
+
+                    <p>
+                        Price: ₹${product.price}
+                    </p>
+
+                    <p>
+                        Quantity: ${product.quantity}
+                    </p>
+
+                    <p>
+                        Subtotal: ₹${subtotal}
+                    </p>
+
+                </div>
+
+            </div>
+
         `;
-
-        checkoutItems.appendChild(div);
 
     });
 
-    checkoutTotal.textContent = total;
+
+    checkoutTotal.innerText = total;
+
 }
 
 
-// Submit order
-checkoutForm.addEventListener("submit", async function(event) {
+// ===============================
+// CHECKOUT FORM
+// ===============================
+
+document
+.getElementById("checkoutForm")
+.addEventListener("submit", function(event) {
 
     event.preventDefault();
 
-    console.log("CHECKOUT SUBMITTED!");
 
     if (cart.length === 0) {
 
         alert("Your cart is empty.");
 
+        window.location.href = "product.html";
+
         return;
-    }
-
-
-    const name =
-        document.getElementById("name").value.trim();
-
-    const mobile =
-        document.getElementById("mobile").value.trim();
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const address =
-        document.getElementById("address").value.trim();
-
-    const city =
-        document.getElementById("city").value.trim();
-
-    const pincode =
-        document.getElementById("pincode").value.trim();
-
-
-    // Calculate total
-    let total = 0;
-
-    cart.forEach(item => {
-
-        const quantity = item.quantity || 1;
-        const price = Number(item.price) || 0;
-
-        total += price * quantity;
-
-    });
-
-
-    // Convert cart into text
-    const items = cart.map(item => {
-
-        const quantity = item.quantity || 1;
-
-        return `${item.name} × ${quantity}`;
-
-    }).join(", ");
-
-
-    const formData = new FormData();
-
-    formData.append("name", name);
-    formData.append("mobile", mobile);
-    formData.append("email", email);
-    formData.append("address", address);
-    formData.append("city", city);
-    formData.append("pincode", pincode);
-
-    formData.append("items", items);
-    formData.append("total", total);
-
-
-    try {
-
-        console.log("Sending order to PHP...");
-
-        const response = await fetch(
-            "B%20Market_files/backend/order.php",
-            {
-                method: "POST",
-                body: formData
-            }
-        );
-
-
-        const data = await response.json();
-
-        console.log("PHP ORDER RESPONSE:", data);
-
-
-        if (data.success) {
-
-            alert("Order placed successfully!");
-
-
-            // Clear cart
-            localStorage.removeItem("cart");
-
-
-            // Go back to home page
-            window.location.href = "index.html";
-
-        } else {
-
-            alert(
-                data.message || "Unable to place order."
-            );
-
-        }
-
-
-    } catch (error) {
-
-        console.error("ORDER ERROR:", error);
-
-        alert(
-            "Unable to connect to PHP backend."
-        );
 
     }
+
+
+    // CUSTOMER DETAILS
+
+    const customer = {
+
+        name:
+            document.getElementById("name").value,
+
+        mobile:
+            document.getElementById("mobile").value,
+
+        email:
+            document.getElementById("email").value,
+
+        address:
+            document.getElementById("address").value,
+
+        city:
+            document.getElementById("city").value,
+
+        pincode:
+            document.getElementById("pincode").value
+
+    };
+
+
+    // SAVE CUSTOMER DETAILS FOR FUTURE CONVENIENCE
+    localStorage.setItem("customer", JSON.stringify(customer));
+    const existingUser = JSON.parse(localStorage.getItem("bmarket_user") || "{}");
+    localStorage.setItem("bmarket_user", JSON.stringify({ ...existingUser, ...customer }));
+
+    // PENDING ORDER DETAILS FOR PAYMENT
+    const pendingOrder = {
+        id: "BM-" + Date.now().toString().slice(-6),
+        date: new Date().toLocaleString(),
+        items: cart,
+        customer: customer,
+        total: cart.reduce(
+            (total, item) =>
+                total + item.price * item.quantity,
+            0
+        ),
+        status: "Payment Pending"
+    };
+
+    localStorage.setItem(
+        "pendingOrder",
+        JSON.stringify(pendingOrder)
+    );
+
+    // GO TO PAYMENT
+    window.location.href = "payment.html";
 
 });
 
+// Auto-fill saved customer info if available
+function populateSavedCustomer() {
+    const saved = JSON.parse(localStorage.getItem("bmarket_user") || localStorage.getItem("customer") || "null");
+    if (!saved) return;
 
-// Display products when page opens
-displayCheckout();
+    if (saved.name && document.getElementById("name")) document.getElementById("name").value = saved.name;
+    if (saved.mobile && document.getElementById("mobile")) document.getElementById("mobile").value = saved.mobile;
+    if (saved.email && document.getElementById("email")) document.getElementById("email").value = saved.email;
+    if (saved.address && document.getElementById("address")) document.getElementById("address").value = saved.address;
+    if (saved.city && document.getElementById("city")) document.getElementById("city").value = saved.city;
+    if (saved.pincode && document.getElementById("pincode")) document.getElementById("pincode").value = saved.pincode;
+}
+
+// ===============================
+// LOAD CHECKOUT
+// ===============================
+
+showCheckout();
+populateSavedCustomer();
+
+
+
+
+
+
+
+

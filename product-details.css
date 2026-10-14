@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+header {
+    background: #2e7d32;
+    color: white;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.product-details {
+    max-width: 960px;
+    margin: 50px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+    .product-details {
+        flex-direction: column;
+        padding: 24px;
+        margin: 20px;
+    }
+}
+
+.product-details img {
+    width: 420px;
+    max-width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.details {
+    flex: 1;
+}
+
+.details h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #0f172a;
+}
+
+.details p {
+    font-size: 16px;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.details h3 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #2e7d32;
+    margin-bottom: 25px;
+}
+
+#addCart {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 14px 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+}
+
+#addCart:hover {
+    background: #1b5e20;
+    transform: translateY(-2px);
+}
+
+.btn-back-link {
+    display: inline-block;
+    color: #2e7d32;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 15px;
+}
+
+.btn-back-link:hover {
+    text-decoration: underline;
+}

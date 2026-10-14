@@ -1,252 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B Market</title>
+    <title>B Market - Fresh Local Products &amp; Auxiliary Marketplace</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="category.css">
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            <img src="image/m logo.png">
-            <h1>B Market</h1>
-        </div class="login-area">
-            <a href="login.html" class="login-btn">Login</a>
+    <!-- ======================================================== -->
+    <!-- FLIPKART-STYLE TOP NAVBAR -->
+    <!-- ======================================================== -->
+    <header class="fk-top-navbar">
+        <div class="fk-nav-inner">
+            <!-- Brand Logo & Plus Tag -->
+            <a href="index.html" class="fk-brand-col">
+                <img src="image/m logo.png" alt="B Market Logo" class="fk-brand-logo">
+                <div class="fk-brand-text">
+                    <h1>B Market</h1>
+                    <div class="fk-brand-subtag">
+                        <span>Explore</span>
+                        <span class="plus-star">Plus ✦</span>
+                        <span>Farm &amp; Auxiliary</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Flipkart-Style Header Search Bar -->
+            <div class="fk-header-search">
+                <input type="text" id="headerSearchInput" class="fk-search-input" placeholder="Search for farm fresh produce, grains, spices or Amazon/Flipkart brands..." autocomplete="off">
+                <button type="button" class="fk-search-btn" onclick="triggerHeaderSearch()" title="Search">
+                    🔍
+                </button>
+            </div>
+
+            <!-- Right Actions: Account, Orders, Cart -->
+            <div class="fk-header-actions">
+                <!-- Customer Login / Account Menu (Managed dynamically by auth-state.js) -->
+                <div id="headerUserSlot" class="header-user-area">
+                    <a href="login.html" class="btn-flipkart-login">Login</a>
+                </div>
+
+                <a href="order-history.html" class="fk-action-link" title="My Order History">
+                    <span>📦 Orders</span>
+                </a>
+
+                <a href="cart.html" class="fk-action-link" title="Shopping Cart">
+                    <span>🛒 Cart</span>
+                    <span id="headerCartCount" class="cart-count-badge" style="display: none;">0</span>
+                </a>
+
+                <a href="product.html" class="fk-action-link" style="color: #ffe500; font-weight: 800;" title="View All Dynamic Products">
+                    <span>All Products ↗</span>
+                </a>
+            </div>
         </div>
-
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="product.html">Products</a>
-            <a href="#categories">Categories</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="my market/index.html">Market news</a>
-            <a href="https://www.mapsofindia.com/maps/andhrapradesh/andhrapradeshagriculture.htm">Products location</a>
-            <a href="cart.html">Cart 🛒</a>
-            <a href="order-history.html">my orders</a>
-
-            <a href="#About">About</a>
-            <a href="#contact">Contact</a>
-            <a href="#contact">Enquiry</a>
-            
-        </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            
+    <!-- ======================================================== -->
+    <!-- FLIPKART-STYLE TOP CATEGORY ICONS STRIP -->
+    <!-- ======================================================== -->
+    <nav class="fk-categories-strip" aria-label="Category Navigation">
+        <div class="fk-categories-container">
+            <div class="fk-cat-item" onclick="openCategory('all')">
+                <div class="fk-cat-icon-circle">🌟</div>
+                <span class="fk-cat-label">All Items</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('fruits')">
+                <div class="fk-cat-icon-circle">🍎</div>
+                <span class="fk-cat-label">Fruits</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('vegetables')">
+                <div class="fk-cat-icon-circle">🥦</div>
+                <span class="fk-cat-label">Vegetables</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('grains')">
+                <div class="fk-cat-icon-circle">🌾</div>
+                <span class="fk-cat-label">Grains &amp; Millets</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('spices')">
+                <div class="fk-cat-icon-circle">🌶️</div>
+                <span class="fk-cat-label">Spices &amp; Honey</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('coffee')">
+                <div class="fk-cat-icon-circle">☕</div>
+                <span class="fk-cat-label">Araku Coffee</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('tamarind')">
+                <div class="fk-cat-icon-circle">🪵</div>
+                <span class="fk-cat-label">Tamarind &amp; Oils</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="selectSourceTab('amazon')">
+                <div class="fk-cat-icon-circle" style="background: #fff7ed; border-color: #ffedd5;">📦</div>
+                <span class="fk-cat-label">Amazon Deals</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="selectSourceTab('flipkart')">
+                <div class="fk-cat-icon-circle" style="background: #eff6ff; border-color: #dbeafe;">⚡</div>
+                <span class="fk-cat-label">Flipkart Assured</span>
+            </div>
         </div>
-        <h2>Welcome to B Market</h2>
-        <p>Fresh Fruits, Vegetables & Organic Products</p>
-        <a href="product.html" class="btn">Shop Now</a>
+    </nav>
+
+    <!-- ======================================================== -->
+    <!-- FLIPKART-STYLE HERO PROMO BANNER CAROUSEL -->
+    <!-- ======================================================== -->
+    <section class="fk-hero-carousel-wrap">
+        <div class="fk-carousel-slide" id="heroBannerSlide">
+            <div class="fk-slide-left">
+                <span class="fk-promo-tag">🌿 100% FARM FRESH HARVEST FESTIVAL</span>
+                <h2>Direct from Paderu &amp; Araku Farmers to Your Doorstep</h2>
+                <p>
+                    Experience natural, chemical-free fruits, vegetables, unpolished grains, and organic forest honey at honest farm prices. Partnered with <strong>Amazon</strong> &amp; <strong>Flipkart</strong> for premium dry fruits and gardening essentials.
+                </p>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a href="#dynamicCategoryExplorer" class="btn-fk-cta">
+                        <span>🛒 Shop Farm Harvests</span>
+                    </a>
+                    <a href="product.html" class="btn-fk-cta" style="background: #ffffff; color: #10843f !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                        <span>⚡ Auxiliary Deals ↗</span>
+                    </a>
+                </div>
+            </div>
+            <div class="fk-slide-right">
+                <img src="image/fruit.jpg" alt="Fresh Farm Produce" onerror="this.src='image/vfrt.webp'">
+            </div>
+        </div>
     </section>
 
-    <!-- Categories -->
-    <section  id="categories"   class="categories">
-       <h2>Shop By Category</h2>
-
-     
-        
-
-    <div class="cards">
-
-
-        <!-- FRUITS -->
-
-        <div class="card"
-             onclick="openCategory('fruits')">
-
-            <img
-                src="image/fruit.jpg"
-                alt="Fruits"
-            >
-
-            <h3>Fruits</h3>
-
-            <p>Fresh seasonal fruits.</p>
-
+    <!-- ======================================================== -->
+    <!-- TRUST & PERKS BAR -->
+    <!-- ======================================================== -->
+    <section class="fk-trust-strip">
+        <div class="fk-trust-grid">
+            <div class="fk-trust-item">
+                <div class="fk-trust-icon">🚜</div>
+                <div>
+                    <h4>Direct Farmer Sourcing</h4>
+                    <p>Harvested every morning without middleman markups</p>
+                </div>
+            </div>
+            <div class="fk-trust-item">
+                <div class="fk-trust-icon">⚡</div>
+                <div>
+                    <h4>Instant UPI &amp; QR Pay</h4>
+                    <p>Pay easily via PhonePe, GPay, Paytm or Cash on Delivery</p>
+                </div>
+            </div>
+            <div class="fk-trust-item">
+                <div class="fk-trust-icon">📦</div>
+                <div>
+                    <h4>Amazon &amp; Flipkart Auxiliary</h4>
+                    <p>Curated top deals for almonds, basmati &amp; home gardening</p>
+                </div>
+            </div>
+            <div class="fk-trust-item">
+                <div class="fk-trust-icon">🛡️</div>
+                <div>
+                    <h4>100% Freshness Guarantee</h4>
+                    <p>Pristine hygienic packaging &amp; quick local dispatch</p>
+                </div>
+            </div>
         </div>
-
-
-        <!-- VEGETABLES -->
-
-        <div class="card"
-             onclick="openCategory('vegetables')">
-
-            <img
-                src="image/vfrt.webp"
-                alt="Vegetables"
-            >
-
-            <h3>Vegetables</h3>
-
-            <p>Healthy green vegetables.</p>
-
-        </div>
-
-
-        <!-- GRAINS -->
-
-        <div class="card"
-             onclick="openCategory('grains')">
-
-            <img
-                src="image/image.b.webp"
-                alt="Grains"
-            >
-
-            <h3>Grains</h3>
-
-            <p>Rice, Wheat and Millets.</p>
-
-        </div>
-
-
-        <!-- SPICES -->
-
-        <div class="card"
-             onclick="openCategory('spices')">
-
-            <img
-                src="image/image.f.webp"
-                alt="Spices"
-            >
-
-            <h3>Spices</h3>
-
-            <p>Pepper, Turmeric and more.</p>
-
-        </div>
-
-
-        <!-- COFFEE -->
-
-        <div class="card"
-             onclick="openCategory('coffee')">
-
-            <img
-                src="image/image.e.webp"
-                alt="Coffee"
-            >
-
-            <h3>Coffee</h3>
-
-            <p>Fresh coffee beans.</p>
-
-        </div>
-
-
-        <!-- TAMARIND -->
-
-        <div class="card"
-             onclick="openCategory('tamarind')">
-
-            <img
-                src="image/image.d.jpg"
-                alt="Tamarind"
-            >
-
-            <h3>Tamarind</h3>
-
-            <p>Organic tamarind.</p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-
-    </div>
     </section>
 
-    <!--location-->
-<section class="map">
-    <h2>Our Location</h2>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28920.47871083315!2d82.64671300408044!3d18.078512907581363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3a24be0ff40b0b%3A0x91a4381547de98d5!2sPaderu%2C%20Andhra%20Pradesh%20531024!5e1!3m2!1sen!2sin!4v1786612274749!5m2!1sen!2sin">
+    <!-- ======================================================== -->
+    <!-- FLASH DEALS TIMER BANNER -->
+    <!-- ======================================================== -->
+    <main class="main-container">
+        <div class="fk-deals-banner">
+            <div class="fk-deals-title-wrap">
+                <span style="font-size: 22px;">⚡</span>
+                <h3 class="fk-deals-title">Deal of the Day — Farm Fresh &amp; Partner Auxiliary Deals</h3>
+                <div class="fk-timer-box">
+                    <span>⏰ Ends in:</span>
+                    <strong id="dealTimerDisplay">04h : 28m : 15s</strong>
+                </div>
+            </div>
+            <a href="product.html" style="color: #fb641b; font-weight: 800; text-decoration: none; font-size: 14px;">
+                View All Deals &rarr;
+            </a>
+        </div>
 
+        <!-- ======================================================== -->
+        <!-- LIVE DYNAMIC CATEGORY & AUXILIARY PRODUCTS EXPLORER -->
+        <!-- ======================================================== -->
+        <section id="dynamicCategoryExplorer" class="dynamic-catalog-explorer">
+            <div class="catalog-header-bar">
+                <div>
+                    <h3 class="catalog-section-title">Live Dynamic Marketplace</h3>
+                    <p class="catalog-section-subtitle">
+                        Direct Farm Fresh Produce + Curated Deals from <strong>Amazon</strong> &amp; <strong>Flipkart</strong> (Loaded dynamically from MongoDB backend)
+                    </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <span id="catalogProductCount" class="catalog-count-badge">Loading products...</span>
+                    <a href="product.html" class="cat-pill-btn" style="background: #10843f; color: #ffffff; text-decoration: none; border-color: #10843f;">
+                        <span>All Products Page &rarr;</span>
+                    </a>
+                </div>
+            </div>
 
+            <!-- SEARCH & SORT CONTROLS -->
+            <div class="catalog-controls-panel">
+                <div class="search-input-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="catalogSearchInput" placeholder="Search produce, dry fruits, grains, coffee or Amazon/Flipkart brands..." autocomplete="off">
+                </div>
 
-    </iframe>"
-</section>
-    <!-- About -->
-    <section  id="About" class="about">
-        <h2>About Us</h2>
-        <p>
-            B Market supplies fresh farm products directly from farmers
-            to customers with <strong>quality</strong> and <strong>affordable</strong> prices.
-        </p>
-    </section>
+                <div class="sort-select-box">
+                    <label for="catalogSortSelect">Sort By:</label>
+                    <select id="catalogSortSelect">
+                        <option value="featured">✨ Featured Deals</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
 
-    <!-- Contact -->
-    <section id="contact" class="contact">
-        <h2>Contact Us</h2>
+            <!-- CATEGORY PILLS BAR -->
+            <div class="catalog-filter-group">
+                <span class="filter-group-label">Categories:</span>
+                <div class="category-pills-row">
+                    <button type="button" class="cat-pill-btn active" data-category="all">🌟 All Categories</button>
+                    <button type="button" class="cat-pill-btn" data-category="fruits">🍎 Fruits</button>
+                    <button type="button" class="cat-pill-btn" data-category="vegetables">🥦 Vegetables</button>
+                    <button type="button" class="cat-pill-btn" data-category="grains">🌾 Grains &amp; Millets</button>
+                    <button type="button" class="cat-pill-btn" data-category="spices">🌶️ Spices</button>
+                    <button type="button" class="cat-pill-btn" data-category="coffee">☕ Coffee &amp; Brews</button>
+                    <button type="button" class="cat-pill-btn" data-category="tamarind">🪵 Tamarind &amp; Oils</button>
+                </div>
+            </div>
 
-        <p>📞 +91 7981850491</p>
-        <p>📧 bharathkumarvanapala@gmail.com</p>
-        <p>📍 Andhra Pradesh, India</p>
-    </section>
+            <!-- PLATFORM SOURCE TABS (DIRECT + AMAZON + FLIPKART) -->
+            <div class="catalog-filter-group">
+                <span class="filter-group-label">Market Source:</span>
+                <div class="source-pills-row">
+                    <button type="button" class="source-pill-btn active" data-source="all">
+                        <span>🌐 All Products</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-bmarket" data-source="bmarket">
+                        <span>🌿 B Market Farm Fresh (Direct)</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-amazon" data-source="amazon">
+                        <span>📦 Amazon Auxiliary Deals</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-flipkart" data-source="flipkart">
+                        <span>🛒 Flipkart Auxiliary Deals</span>
+                    </button>
+                </div>
+            </div>
 
-    
+            <!-- DYNAMIC PRODUCT GRID (Rendered by category.js from MongoDB API) -->
+            <div id="homeProductsGrid" class="dynamic-products-grid">
+                <!-- Dynamically populated from backend -->
+            </div>
+        </section>
 
+        <!-- LOCATION MAP -->
+        <section class="map-section">
+            <h3>Our Farm Sourcing Location</h3>
+            <p style="margin-top: -6px; margin-bottom: 20px;">Paderu &amp; Araku Valley Tribal Agencies, Alluri Sitharama Raju District, Andhra Pradesh</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28920.47871083315!2d82.64671300408044!3d18.078512907581363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3a24be0ff40b0b%3A0x91a4381547de98d5!2sPaderu%2C%20Andhra%20Pradesh%20531024!5e1!3m2!1sen!2sin!4v1786612274749!5m2!1sen!2sin" width="100%" height="320" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"></iframe>
+        </section>
 
+        <!-- ABOUT US -->
+        <section id="About" class="about" style="background: #ffffff; padding: 40px; border-radius: 16px; margin: 25px 0; border: 1px solid #e2e8f0; text-align: center;">
+            <h3 style="font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">About B Market</h3>
+            <p style="max-width: 800px; margin: 0 auto; line-height: 1.7; color: #475569; font-size: 15px;">
+                B Market supplies pure farm produce directly from tribal and local growers to customers with honest quality and affordable prices. By partnering with leading marketplaces like <strong>Amazon</strong> and <strong>Flipkart</strong> for complementary auxiliary goods, we offer a complete, trusted shopping destination for healthy households.
+            </p>
+        </section>
 
+        <!-- CONTACT / ENQUIRY SECTION -->
+        <section id="enquiry" class="enquiry-section" style="margin-bottom: 40px;">
+            <div class="enquiry-card">
+                <h2>Contact / Direct Farmer Enquiry</h2>
+                <form id="enquiryForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="Your Name" required>
+                    </div>
 
-    <section id="contact">
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" placeholder="Your Email" required>
+                    </div>
 
-    <h2>Contact / Enquiry</h2>
+                    <div class="form-group">
+                        <label for="phone">Your Phone</label>
+                        <input type="tel" id="phone" placeholder="Your Phone" required>
+                    </div>
 
-    <form id="enquiryForm">
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" placeholder="Ask about wholesale farm supply, harvest schedule or delivery..." required></textarea>
+                    </div>
 
-        <input
-            type="text"
-            id="name"
-            placeholder="Your Name"
-            required
-        >
+                    <button type="submit">
+                        Send Enquiry
+                    </button>
+                </form>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Your Email"
-            required
-        >
+                <p id="result" class="result-message" style="display: none;"></p>
+            </div>
+        </section>
 
-        <input
-            type="tel"
-            id="phone"
-            placeholder="Your Phone"
-            required
-        >
+    </main>
 
-        <textarea
-            id="message"
-            placeholder="Write your enquiry..."
-            required
-        ></textarea>
-
-        <button type="submit">
-            Send Enquiry
-        </button>
-
-    </form>
-
-    <p id="result"></p>
-</section>
-
-
-<!-- Footer -->
+    <!-- FOOTER -->
     <footer>
-        <p>© 2026 B Market. All Rights Reserved.</p>
+        <p>© 2026 B Market. All Rights Reserved. Fresh Local Products &amp; Auxiliary Marketplace.</p>
+        <p style="font-size: 13px; opacity: 0.85; margin-top: 6px;">📞 +91 7981850491 &nbsp;|&nbsp; 📧 bharathkumarvanapala@gmail.com &nbsp;|&nbsp; 📍 Andhra Pradesh, India</p>
     </footer>
-    <script src="B Market_files/contact.js"></script>">
+
+    <!-- Header Search Synchronization Script -->
+    <script>
+        function triggerHeaderSearch() {
+            const hInput = document.getElementById("headerSearchInput");
+            const cInput = document.getElementById("catalogSearchInput");
+            if (hInput && cInput) {
+                cInput.value = hInput.value;
+                cInput.dispatchEvent(new Event("input"));
+                document.getElementById("dynamicCategoryExplorer").scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        document.getElementById("headerSearchInput")?.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                triggerHeaderSearch();
+            }
+        });
+
+        document.getElementById("headerSearchInput")?.addEventListener("input", function(e) {
+            const cInput = document.getElementById("catalogSearchInput");
+            if (cInput) {
+                cInput.value = e.target.value;
+                cInput.dispatchEvent(new Event("input"));
+            }
+        });
+
+        // Flash Deal Countdown Timer Simulation
+        (function initDealCountdown() {
+            let totalSeconds = 4 * 3600 + 28 * 60 + 15;
+            const timerEl = document.getElementById("dealTimerDisplay");
+            setInterval(() => {
+                if (totalSeconds > 0) totalSeconds--;
+                const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+                const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+                const s = String(totalSeconds % 60).padStart(2, "0");
+                if (timerEl) timerEl.innerText = `${h}h : ${m}m : ${s}s`;
+            }, 1000);
+        })();
+    </script>
+
+    <!-- SCRIPTS -->
+    <script src="auth-state.js"></script>
+    <script src="script.js"></script>
+    <script src="contact.js"></script>
     <script src="category.js"></script>
 
 </body>
+
 </html>

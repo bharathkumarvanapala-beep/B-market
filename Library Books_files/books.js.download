@@ -1,0 +1,72 @@
+const searchForm = document.getElementById("searchForm");
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+const searchStatus = document.getElementById("searchStatus");
+const searchResults = document.getElementById("searchResults");
+
+function escapeHtml(value = "") {
+  const element = document.createElement("div");
+  element.textContent = value;
+  return element.innerHTML;
+}
+
+function getCoverUrl(book) {
+  return book.cover_i
+    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+    : "https://via.placeholder.com/76x112?text=No+Cover";
+}
+
+function displayBooks(books) {
+  searchResults.innerHTML = books.map((book) => {
+    const title = escapeHtml(book.title || "Untitled");
+    const author = escapeHtml((book.author_name || ["Author not available"]).slice(0, 2).join(", "));
+    const year = book.first_publish_year || "Not available";
+    const editions = book.edition_count || "Not available";
+    const bookUrl = book.key ? `https://openlibrary.org${book.key}` : "#";
+
+    return `
+      <article class="search-book-card">
+        <img src="${getCoverUrl(book)}" alt="Cover of ${title}" onerror="this.src='https://via.placeholder.com/76x112?text=No+Cover'">
+        <div>
+          <h3>${title}</h3>
+          <p><strong>Author:</strong> ${author}</p>
+          <p><strong>First published:</strong> ${year}</p>
+          <p><strong>Editions:</strong> ${editions}</p>
+          <a href="${bookUrl}" target="_blank" rel="noopener noreferrer">View full details</a>
+        </div>
+      </article>`;
+  }).join("");
+}
+
+async function searchBooks(event) {
+  event.preventDefault();
+  const query = searchInput.value.trim();
+  if (!query) return;
+
+  searchButton.disabled = true;
+  searchButton.textContent = "Searching...";
+  searchStatus.textContent = `Searching for “${query}”...`;
+  searchResults.innerHTML = "";
+
+  try {
+    const response = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=8`);
+    if (!response.ok) throw new Error("Search request failed");
+    const data = await response.json();
+    const books = data.docs || [];
+
+    if (!books.length) {
+      searchStatus.textContent = `No books found for “${query}”. Try another title, author, or ISBN.`;
+      return;
+    }
+
+    searchStatus.textContent = `${data.numFound.toLocaleString()} result${data.numFound === 1 ? "" : "s"} found. Showing the first ${books.length}.`;
+    displayBooks(books);
+  } catch (error) {
+    searchStatus.textContent = "The book search could not be completed. Check your internet connection and try again.";
+  } finally {
+    searchButton.disabled = false;
+    searchButton.textContent = "Search";
+  }
+}
+
+if (searchForm) searchForm.addEventListener("submit", searchBooks);

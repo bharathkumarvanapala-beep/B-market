@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B Market - Secure Payment</title>
+    <link rel="stylesheet" href="checkout.css">
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <h1>B Market</h1>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="product.html">Products</a>
+            <a href="cart.html">Cart 🛒</a>
+            <a href="order-history.html">My Orders</a>
+        </nav>
+    </header>
+
+    <!-- STEP PROGRESS BAR -->
+    <div class="progress-bar-container">
+        <div class="progress-step completed">
+            <span class="step-num">✓</span>
+            <span class="step-text">Cart</span>
+        </div>
+        <div class="step-connector completed"></div>
+        <div class="progress-step completed">
+            <span class="step-num">✓</span>
+            <span class="step-text">Delivery</span>
+        </div>
+        <div class="step-connector completed"></div>
+        <div class="progress-step active">
+            <span class="step-num">3</span>
+            <span class="step-text">Payment</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="progress-step">
+            <span class="step-num">4</span>
+            <span class="step-text">Confirmation</span>
+        </div>
+    </div>
+
+    <!-- MAIN PAYMENT CONTENT -->
+    <main class="payment-container">
+        <h2 class="payment-title">Secure Checkout & Payment</h2>
+
+        <div class="payment-grid">
+
+            <!-- LEFT: PAYMENT METHODS -->
+            <section class="payment-methods-box">
+                <div class="box-header">
+                    <h3>Choose Payment Method</h3>
+                    <span class="secure-badge">🔒 256-Bit SSL Encrypted</span>
+                </div>
+
+                <!-- PAYMENT METHOD SELECTOR TABS -->
+                <div class="payment-tabs">
+                    <button type="button" class="tab-btn active" data-method="upi">
+                        <span class="tab-icon">📱</span>
+                        <span class="tab-label">UPI / QR Code</span>
+                        <span class="badge-fast">Instant</span>
+                    </button>
+                    <button type="button" class="tab-btn" data-method="card">
+                        <span class="tab-icon">💳</span>
+                        <span class="tab-label">Credit / Debit Card</span>
+                    </button>
+                    <button type="button" class="tab-btn" data-method="netbanking">
+                        <span class="tab-icon">🏦</span>
+                        <span class="tab-label">Net Banking</span>
+                    </button>
+                    <button type="button" class="tab-btn" data-method="cod">
+                        <span class="tab-icon">💵</span>
+                        <span class="tab-label">Cash on Delivery</span>
+                    </button>
+                </div>
+
+                <!-- FORM: UPI PAYMENT (AMAZON STYLE MULTI-CHANNEL CHECKOUT) -->
+                <div id="method-upi" class="method-panel active">
+                    <div class="upi-box amazon-upi-container">
+                        
+                        <!-- AMAZON STYLE HEADER -->
+                        <div class="amazon-upi-header">
+                            <span class="amazon-tag-badge">⚡ Instant UPI Checkout</span>
+                            <h4>Select your preferred UPI method:</h4>
+                            <p>Pay via PhonePe app directly, enter your PhonePe UPI ID, or scan the QR code.</p>
+                        </div>
+
+                        <!-- 1. PHONEPE OPTION CARD (EXPANDED BY DEFAULT) -->
+                        <div class="amazon-pay-card active" id="card-phonepe-option">
+                            <div class="amazon-pay-header" onclick="selectAmazonUpiMode('phonepe')">
+                                <label class="amazon-radio-label">
+                                    <input type="radio" name="amazonUpiChoice" id="radio-phonepe" value="phonepe" checked>
+                                    <span class="custom-radio"></span>
+                                    <div class="amazon-radio-brand">
+                                        <span class="brand-badge-icon phonepe-bg">पे</span>
+                                        <div>
+                                            <strong>PhonePe</strong>
+                                            <span class="pill-preferred">Recommended • 1-Tap Pay</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="amazon-pay-body" id="body-phonepe">
+                                <!-- Direct PhonePe App 1-Click Launch -->
+                                <div class="amazon-direct-launch-box">
+                                    <button type="button" class="btn-amazon-app-pay btn-phonepe-launch" data-app="phonepe">
+                                        <span class="app-icon-circle">पे</span>
+                                        <div class="btn-text-col">
+                                            <strong>Pay ₹<span class="pay-amount-label">0</span> with PhonePe App</strong>
+                                            <small>1-Tap direct redirect into PhonePe app on mobile or desktop</small>
+                                        </div>
+                                        <span class="btn-launch-chevron">➔</span>
+                                    </button>
+                                </div>
+
+                                <div class="amazon-divider">
+                                    <span>OR PAY VIA PHONEPE UPI ID / MOBILE NUMBER</span>
+                                </div>
+
+                                <!-- PhonePe UPI ID / Mobile Number Collect Request -->
+                                <div class="amazon-vpa-box">
+                                    <label for="phonepeVpaInput">Enter PhonePe Mobile Number or UPI ID:</label>
+                                    <div class="amazon-input-row">
+                                        <div class="input-with-pill">
+                                            <input type="text" id="phonepeVpaInput" placeholder="e.g. 9876543210 or yourname" maxlength="50" autocomplete="off">
+                                            <span class="suffix-pill" id="phonepeSuffixDisplay">@ybl</span>
+                                        </div>
+                                        <button type="button" id="btnRequestPhonePeCollect" class="btn-amazon-verify-pay">
+                                            Verify & Pay
+                                        </button>
+                                    </div>
+                                    <div class="vpa-quick-pills">
+                                        <span class="vpa-pill active" onclick="setPhonePeSuffix('@ybl')">@ybl</span>
+                                        <span class="vpa-pill" onclick="setPhonePeSuffix('@ibl')">@ibl</span>
+                                        <span class="vpa-pill" onclick="setPhonePeSuffix('@axl')">@axl</span>
+                                    </div>
+                                    <p class="amazon-helper-text">
+                                        🔒 A secure collect request of <strong>₹<span class="pay-amount-label">0</span></strong> will be sent to your PhonePe app for 1-click approval.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. GOOGLE PAY OPTION CARD -->
+                        <div class="amazon-pay-card" id="card-gpay-option">
+                            <div class="amazon-pay-header" onclick="selectAmazonUpiMode('gpay')">
+                                <label class="amazon-radio-label">
+                                    <input type="radio" name="amazonUpiChoice" id="radio-gpay" value="gpay">
+                                    <span class="custom-radio"></span>
+                                    <div class="amazon-radio-brand">
+                                        <span class="brand-badge-icon gpay-bg">G</span>
+                                        <div>
+                                            <strong>Google Pay (GPay)</strong>
+                                            <span class="pill-fast">Fast & Secure</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="amazon-pay-body" id="body-gpay" style="display: none;">
+                                <div class="amazon-direct-launch-box">
+                                    <button type="button" class="btn-amazon-app-pay btn-gpay-launch" data-app="gpay">
+                                        <span class="app-icon-circle">G</span>
+                                        <div class="btn-text-col">
+                                            <strong>Pay ₹<span class="pay-amount-label">0</span> with Google Pay</strong>
+                                            <small>Opens Google Pay directly on mobile or desktop</small>
+                                        </div>
+                                        <span class="btn-launch-chevron">➔</span>
+                                    </button>
+                                </div>
+
+                                <div class="amazon-divider">
+                                    <span>OR ENTER GPAY UPI ID</span>
+                                </div>
+
+                                <div class="amazon-vpa-box">
+                                    <label for="gpayVpaInput">Enter your Google Pay UPI ID:</label>
+                                    <div class="amazon-input-row">
+                                        <div class="input-with-pill">
+                                            <input type="text" id="gpayVpaInput" placeholder="e.g. yourname@okhdfcbank" maxlength="50" autocomplete="off">
+                                        </div>
+                                        <button type="button" id="btnRequestGpayCollect" class="btn-amazon-verify-pay">
+                                            Verify & Pay
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. PAYTM OPTION CARD -->
+                        <div class="amazon-pay-card" id="card-paytm-option">
+                            <div class="amazon-pay-header" onclick="selectAmazonUpiMode('paytm')">
+                                <label class="amazon-radio-label">
+                                    <input type="radio" name="amazonUpiChoice" id="radio-paytm" value="paytm">
+                                    <span class="custom-radio"></span>
+                                    <div class="amazon-radio-brand">
+                                        <span class="brand-badge-icon paytm-bg">P</span>
+                                        <div>
+                                            <strong>Paytm UPI</strong>
+                                            <span class="pill-fast">Instant</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="amazon-pay-body" id="body-paytm" style="display: none;">
+                                <div class="amazon-direct-launch-box">
+                                    <button type="button" class="btn-amazon-app-pay btn-paytm-launch" data-app="paytm">
+                                        <span class="app-icon-circle">P</span>
+                                        <div class="btn-text-col">
+                                            <strong>Pay ₹<span class="pay-amount-label">0</span> with Paytm App</strong>
+                                            <small>Opens Paytm directly on mobile or desktop</small>
+                                        </div>
+                                        <span class="btn-launch-chevron">➔</span>
+                                    </button>
+                                </div>
+
+                                <div class="amazon-divider">
+                                    <span>OR ENTER PAYTM UPI ID</span>
+                                </div>
+
+                                <div class="amazon-vpa-box">
+                                    <label for="paytmVpaInput">Enter your Paytm UPI ID:</label>
+                                    <div class="amazon-input-row">
+                                        <div class="input-with-pill">
+                                            <input type="text" id="paytmVpaInput" placeholder="e.g. 9876543210@paytm" maxlength="50" autocomplete="off">
+                                        </div>
+                                        <button type="button" id="btnRequestPaytmCollect" class="btn-amazon-verify-pay">
+                                            Verify & Pay
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. SCAN QR CODE OPTION CARD (PHONEPE STANDEE & DYNAMIC QR) -->
+                        <div class="amazon-pay-card" id="card-qr-option">
+                            <div class="amazon-pay-header" onclick="selectAmazonUpiMode('qr')">
+                                <label class="amazon-radio-label">
+                                    <input type="radio" name="amazonUpiChoice" id="radio-qr" value="qr">
+                                    <span class="custom-radio"></span>
+                                    <div class="amazon-radio-brand">
+                                        <span class="brand-badge-icon qr-bg">📷</span>
+                                        <div>
+                                            <strong>Scan & Pay via PhonePe QR Code</strong>
+                                            <span class="pill-qr">Official Standee / Real-Time QR</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="amazon-pay-body" id="body-qr" style="display: none;">
+                                <div class="qr-section">
+                                    <div class="phonepe-qr-card">
+                                        <div class="phonepe-badge-header">
+                                            <div class="phonepe-brand-title">
+                                                <span class="phonepe-logo-icon">पे</span>
+                                                <div>
+                                                    <strong>PhonePe & UPI Accepted Here</strong>
+                                                    <p>Scan with PhonePe, Google Pay, Paytm</p>
+                                                </div>
+                                            </div>
+                                            <div class="dynamic-amount-pill">
+                                                <span>Amount to Pay</span>
+                                                <strong>₹<span class="pay-amount-label">0</span></strong>
+                                            </div>
+                                        </div>
+
+                                        <!-- DYNAMIC QR TOGGLE TABS -->
+                                        <div class="qr-switch-bar">
+                                            <button type="button" id="btnShowStandeeQr" class="qr-switch-btn active" title="Show official merchant standee">
+                                                📷 Merchant Standee
+                                            </button>
+                                            <button type="button" id="btnShowDynamicQr" class="qr-switch-btn" title="Show QR prefilled with exact order amount">
+                                                ⚡ Dynamic ₹<span class="pay-amount-label">0</span> QR
+                                            </button>
+                                        </div>
+
+                                        <div class="qr-image-frame">
+                                            <img src="image/phonepe-qr.jpg" alt="PhonePe QR - Vanapala Bharat Kumar" class="phonepe-scanner-img" id="userPhonePeQr">
+                                            <img src="" alt="Dynamic Order UPI QR" class="phonepe-scanner-img dynamic-qr-img" id="dynamicUpiQr" style="display: none;">
+                                        </div>
+
+                                        <div class="payee-info-banner">
+                                            <div class="verified-payee">
+                                                <span class="verified-check">✓</span>
+                                                <span>Verified Merchant: <strong>VANAPALA BHARAT KUMAR</strong></span>
+                                            </div>
+                                            <div class="upi-copy-row">
+                                                <span class="upi-text-label">UPI ID: <strong id="merchantUpiId">7981850491@ybl</strong></span>
+                                                <button type="button" id="copyUpiBtn" class="btn-copy-upi" title="Copy UPI ID">📋 Copy</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- DIRECT TAP TO PAY (OPENS INSTALLED UPI APP) -->
+                                        <div class="mobile-direct-pay">
+                                            <button type="button" id="directUpiAppBtn" class="btn-direct-upi" data-app="phonepe">
+                                                <span>⚡ Tap to Pay via PhonePe / UPI App</span>
+                                                <small>(Directly opens PhonePe, GPay, or Paytm with ₹<span class="pay-amount-label">0</span>)</small>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. AMAZON-STYLE PHONEPE COLLECT REQUEST WAIT OVERLAY CARD -->
+                        <div id="phonepeCollectCard" class="phonepe-collect-card" style="display: none;">
+                            <div class="collect-pulse-spinner">
+                                <div class="pulse-ring"></div>
+                                <span class="collect-icon">पे</span>
+                            </div>
+                            <h4>Payment Request Sent to PhonePe!</h4>
+                            <p class="collect-subtitle">
+                                We sent a payment request of <strong>₹<span class="pay-amount-label">0</span></strong> to <strong id="collectTargetVpa">your PhonePe account</strong>.
+                            </p>
+                            
+                            <div class="collect-instructions">
+                                <div class="step-num-item">
+                                    <span class="step-badge">1</span>
+                                    <span>Open the <strong>PhonePe app</strong> on your mobile phone</span>
+                                </div>
+                                <div class="step-num-item">
+                                    <span class="step-badge">2</span>
+                                    <span>Check notifications for request from <strong>VANAPALA BHARAT KUMAR</strong></span>
+                                </div>
+                                <div class="step-num-item">
+                                    <span class="step-badge">3</span>
+                                    <span>Tap <strong>Pay</strong> and enter your UPI PIN</span>
+                                </div>
+                            </div>
+
+                            <div class="collect-timer-bar">
+                                <span>Time remaining to approve:</span>
+                                <strong id="collectCountdownTimer">04:59</strong>
+                            </div>
+
+                            <div class="collect-actions">
+                                <button type="button" id="btnConfirmApprovedPhonePe" class="btn-collect-approve">
+                                    ✅ I Have Approved on PhonePe (Confirm Order)
+                                </button>
+                                <button type="button" id="btnCancelCollect" class="btn-collect-cancel">
+                                    ← Back / Change Payment Method
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- OPTIONAL TRANSACTION REFERENCE -->
+                        <div class="utr-input-section" style="margin-top: 18px;">
+                            <label for="upiUtrNumber">
+                                <span>UPI Reference / UTR Number <small>(Optional for instant auto-verification)</small></span>
+                            </label>
+                            <div class="input-with-button">
+                                <input type="text" id="upiUtrNumber" placeholder="Enter 12-digit UTR from PhonePe / GPay receipt" maxlength="16">
+                                <button type="button" id="verifyUtrBtn" class="btn-verify">Save Ref</button>
+                            </div>
+                            <span id="utrStatusMsg" class="upi-status-msg"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- FORM: CARD PAYMENT -->
+                <div id="method-card" class="method-panel">
+                    <!-- Interactive Visual Card -->
+                    <div class="card-visual">
+                        <div class="card-visual-top">
+                            <span class="card-chip"></span>
+                            <span id="cardTypeDisplay" class="card-brand-logo">CARD</span>
+                        </div>
+                        <div class="card-visual-number" id="cardNumberDisplay">•••• •••• •••• ••••</div>
+                        <div class="card-visual-bottom">
+                            <div>
+                                <span class="card-label">CARD HOLDER</span>
+                                <span class="card-val" id="cardHolderDisplay">YOUR NAME</span>
+                            </div>
+                            <div>
+                                <span class="card-label">EXPIRES</span>
+                                <span class="card-val" id="cardExpiryDisplay">MM/YY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="cardForm" class="payment-form">
+                        <div class="form-row">
+                            <label for="cardNumber">Card Number</label>
+                            <div class="input-icon-wrapper">
+                                <input type="text" id="cardNumber" placeholder="4532 •••• •••• ••••" maxlength="19" autocomplete="cc-number">
+                                <span class="input-card-icon" id="cardBrandIcon">💳</span>
+                            </div>
+                            <span class="field-error" id="cardNumberError"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="cardName">Cardholder Name</label>
+                            <input type="text" id="cardName" placeholder="Full name as printed on card" autocomplete="cc-name">
+                            <span class="field-error" id="cardNameError"></span>
+                        </div>
+
+                        <div class="form-row-grid">
+                            <div>
+                                <label for="cardExpiry">Expiry Date</label>
+                                <input type="text" id="cardExpiry" placeholder="MM / YY" maxlength="5" autocomplete="cc-exp">
+                                <span class="field-error" id="cardExpiryError"></span>
+                            </div>
+                            <div>
+                                <label for="cardCvv">CVV / CVC</label>
+                                <div class="cvv-wrapper">
+                                    <input type="password" id="cardCvv" placeholder="•••" maxlength="4" autocomplete="cc-csc">
+                                    <span class="cvv-help" title="3-digit security code on the back of your card">ℹ️</span>
+                                </div>
+                                <span class="field-error" id="cardCvvError"></span>
+                            </div>
+                        </div>
+
+                        <div class="pci-compliance-note">
+                            🔒 <strong>Zero Storage Guarantee:</strong> Card details are verified securely through client-side encryption and are never stored on plaintext servers.
+                        </div>
+                    </form>
+                </div>
+
+                <!-- FORM: NET BANKING -->
+                <div id="method-netbanking" class="method-panel">
+                    <p class="netbank-intro">Select your bank for a secure payment gateway redirect:</p>
+                    <div class="bank-grid">
+                        <label class="bank-card">
+                            <input type="radio" name="bankSelect" value="SBI" checked>
+                            <span class="bank-name">State Bank of India</span>
+                        </label>
+                        <label class="bank-card">
+                            <input type="radio" name="bankSelect" value="HDFC">
+                            <span class="bank-name">HDFC Bank</span>
+                        </label>
+                        <label class="bank-card">
+                            <input type="radio" name="bankSelect" value="ICICI">
+                            <span class="bank-name">ICICI Bank</span>
+                        </label>
+                        <label class="bank-card">
+                            <input type="radio" name="bankSelect" value="Axis">
+                            <span class="bank-name">Axis Bank</span>
+                        </label>
+                        <label class="bank-card">
+                            <input type="radio" name="bankSelect" value="PNB">
+                            <span class="bank-name">Punjab National Bank</span>
+                        </label>
+                        <label class="bank-card">
+                            <input type="radio" name="bankSelect" value="Kotak">
+                            <span class="bank-name">Kotak Mahindra Bank</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- FORM: CASH ON DELIVERY -->
+                <div id="method-cod" class="method-panel">
+                    <div class="cod-banner">
+                        <div class="cod-icon">🚚</div>
+                        <div class="cod-info">
+                            <h4>Pay On Delivery (Cash or UPI)</h4>
+                            <p>You can pay via Cash or UPI QR Code directly to our delivery partner when your farm fresh products arrive at your doorstep.</p>
+                        </div>
+                    </div>
+                    <div class="cod-security">
+                        <label for="codVerification">Human Verification Code:</label>
+                        <div class="captcha-box">
+                            <span id="captchaCode" class="captcha-display">5892</span>
+                            <button type="button" id="refreshCaptcha" class="btn-refresh" title="Refresh code">🔄</button>
+                            <input type="text" id="captchaInput" placeholder="Enter 4-digit code" maxlength="4">
+                        </div>
+                        <span class="field-error" id="captchaError"></span>
+                    </div>
+                </div>
+
+                <!-- ACTION BUTTON -->
+                <div class="pay-action-wrapper">
+                    <button type="button" id="payNowBtn" class="btn-pay-now">
+                        <span class="lock-icon">🔒</span>
+                        <span id="payBtnText">Pay ₹<span class="pay-amount-label">0</span> Securely</span>
+                    </button>
+                    <p class="safe-checkout-guarantee">
+                        🛡️ 100% Buyer Protection & Fresh Product Guarantee. Instant email receipt provided.
+                    </p>
+                </div>
+            </section>
+
+            <!-- RIGHT: ORDER SUMMARY & DELIVERY DETAILS -->
+            <aside class="order-summary-box">
+                <!-- CUSTOMER DETAILS SUMMARY -->
+                <div class="summary-card">
+                    <div class="summary-card-header">
+                        <h4>📍 Delivering To</h4>
+                        <a href="checkout.html" class="edit-link">Edit</a>
+                    </div>
+                    <div class="delivery-details-content" id="customerSummaryContent">
+                        <p class="cust-name" id="summaryCustomerName">Customer</p>
+                        <p class="cust-address" id="summaryCustomerAddress">Address details...</p>
+                        <p class="cust-contact">
+                            <span>📞 <span id="summaryCustomerMobile">--</span></span> &nbsp;|&nbsp; 
+                            <span>✉️ <span id="summaryCustomerEmail">--</span></span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ORDER ITEMS SUMMARY -->
+                <div class="summary-card">
+                    <h4>🛍️ Items in Your Order (<span id="summaryItemCount">0</span>)</h4>
+                    <div class="summary-items-list" id="summaryItemsList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- PRICE BREAKDOWN -->
+                <div class="summary-card price-breakdown-card">
+                    <h4>Price Breakdown</h4>
+                    <div class="price-row">
+                        <span>Items Subtotal:</span>
+                        <span>₹<span id="summarySubtotal">0</span></span>
+                    </div>
+                    <div class="price-row">
+                        <span>Farm Fresh Delivery:</span>
+                        <span class="free-tag">FREE</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Handling & Packaging:</span>
+                        <span class="free-tag">₹0 (Free)</span>
+                    </div>
+                    <hr>
+                    <div class="price-row total-row">
+                        <strong>Grand Total Payable:</strong>
+                        <strong class="total-price">₹<span class="pay-amount-label">0</span></strong>
+                    </div>
+                </div>
+
+                <!-- TRUST BADGES -->
+                <div class="trust-badges">
+                    <div class="trust-item">
+                        <span>🌱</span>
+                        <div>
+                            <strong>100% Farm Fresh</strong>
+                            <p>Directly harvested from local farmers</p>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <span>⚡</span>
+                        <div>
+                            <strong>Fast Local Delivery</strong>
+                            <p>Delivered within 24-48 hours</p>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <span>🛡️</span>
+                        <div>
+                            <strong>Secure Transactions</strong>
+                            <p>End-to-end encrypted order flow</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- DYNAMIC UPI APP LAUNCH & DESKTOP PAYMENT MODAL -->
+    <div id="upiIntentModal" class="modal-overlay">
+        <div class="modal-card upi-modal-card">
+            <button type="button" id="closeUpiModalBtn" class="btn-close-modal" title="Close">✕</button>
+            <div class="upi-modal-header">
+                <span class="upi-modal-logo" id="upiModalLogo">पे</span>
+                <div>
+                    <h3 id="upiModalTitle">Pay via PhonePe</h3>
+                    <p id="upiModalSubtitle">Merchant: VANAPALA BHARAT KUMAR (7981850491@ybl)</p>
+                </div>
+            </div>
+
+            <div class="upi-modal-amount-badge">
+                <span>Exact Payment Due</span>
+                <strong>₹<span class="pay-amount-label" id="upiModalAmount">0</span></strong>
+            </div>
+
+            <div class="upi-modal-qr-frame">
+                <img id="upiModalQrImg" src="" alt="Dynamic Order QR Code" class="upi-modal-qr">
+                <p class="upi-modal-qr-tip">Scan with <strong id="upiModalAppName">PhonePe</strong> or any UPI app to pay exact amount pre-filled</p>
+            </div>
+
+            <div class="upi-modal-actions">
+                <button type="button" id="upiModalDirectLaunchBtn" class="btn-launch-app">
+                    ⚡ Open <span id="upiModalLaunchName">PhonePe</span> App Directly
+                </button>
+                <div class="upi-modal-secondary-actions">
+                    <button type="button" id="upiModalCopyLinkBtn" class="btn-modal-action">
+                        📋 Copy UPI Link
+                    </button>
+                    <a id="upiModalWhatsappBtn" href="#" target="_blank" class="btn-modal-action btn-wa">
+                        💬 Pay via WhatsApp
+                    </a>
+                </div>
+                <button type="button" id="upiModalDoneBtn" class="btn-paid-confirm">
+                    ✅ I Have Completed Payment (Place Order)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROCESSING OVERLAY MODAL -->
+    <div id="processingModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="spinner"></div>
+            <h3 id="modalStatusTitle">Processing Payment...</h3>
+            <p id="modalStatusMessage">Securing bank transaction and verifying your order details.</p>
+            <div class="modal-steps">
+                <div id="step-auth" class="modal-step-item active">1. Verifying Details</div>
+                <div id="step-pay" class="modal-step-item">2. Processing Payment</div>
+                <div id="step-confirm" class="modal-step-item">3. Dispatching Order & Email Receipt</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER SUCCESS CONFIRMATION MODAL -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-card success-card">
+            <div class="success-icon-badge">✓</div>
+            <h2>Order Placed Successfully!</h2>
+            <p class="success-subtitle">Thank you for ordering with B Market. Fresh farm products are on their way!</p>
+
+            <div class="receipt-box" id="receiptBox">
+                <div class="receipt-row">
+                    <span>Order ID:</span>
+                    <strong id="receiptOrderId">#BM-123456</strong>
+                </div>
+                <div class="receipt-row">
+                    <span>Transaction ID:</span>
+                    <strong id="receiptTxnId">TXN-ABC987</strong>
+                </div>
+                <div class="receipt-row">
+                    <span>Payment Method:</span>
+                    <strong id="receiptMethod">UPI</strong>
+                </div>
+                <div class="receipt-row">
+                    <span>Amount Paid:</span>
+                    <strong class="receipt-total" id="receiptTotal">₹0</strong>
+                </div>
+                <div class="receipt-row">
+                    <span>Delivery To:</span>
+                    <span id="receiptDeliveryTo">Name, City</span>
+                </div>
+                <div class="receipt-email-notice">
+                    ✉️ An official confirmation receipt has been emailed to you and the store owner.
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-print" onclick="window.print()">🖨️ Print Receipt</button>
+                <a href="order-history.html" class="btn-view-orders">📦 View in My Orders</a>
+                <a href="index.html" class="btn-home">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 B Market. All Rights Reserved. Fresh Farm Products Directly From Farmers.</p>
+    </footer>
+
+    <script src="payment.js"></script>
+</body>
+</html>

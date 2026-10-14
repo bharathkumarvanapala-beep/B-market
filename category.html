@@ -2,69 +2,122 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>B Market Category</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories & Auxiliary Deals - B Market</title>
     <link rel="stylesheet" href="category.css">
-
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 
 <body>
 
-
-<header>
-
-    <h1>B Market</h1>
-
-    <nav>
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="product.html">
-            All Products
-        </a>
-
-        <a href="cart.html">
-            Cart 🛒
-        </a>
-
-    </nav>
-
-</header>
-
-
-<main>
-
-    <section class="category-page">
-
-        <h2 id="categoryTitle">
-            Products
-        </h2>
-
-
-        <div
-            id="categoryProducts"
-            class="category-products">
+    <header>
+        <div class="logo">
+            <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: white;">
+                <img src="image/m logo.png" alt="B Market Logo" style="height: 38px; width: auto; object-fit: contain;">
+                <h1 style="margin: 0;">B Market</h1>
+            </a>
         </div>
 
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="product.html">All Products</a>
+            <a href="category.html" style="color: #ffe500; font-weight: 800;">Categories</a>
+            <a href="cart.html">Cart 🛒</a>
+            <a href="order-history.html">My Orders</a>
+            <div class="header-user-area" style="display: inline-block; margin-left: 10px;">
+                <a href="login.html" class="btn-flipkart-login">Login</a>
+            </div>
+        </nav>
+    </header>
 
-    </section>
+    <main>
+        <section class="category-page">
 
-</main>
+            <div class="category-hero-header">
+                <h2 id="categoryTitle">Explore by Category</h2>
+                <p>Compare local farm harvests with certified partner deals from Amazon &amp; Flipkart</p>
+            </div>
 
+            <!-- DYNAMIC CATALOG EXPLORER -->
+            <div class="dynamic-catalog-explorer">
+                <div class="catalog-header-bar">
+                    <div>
+                        <h3 class="catalog-section-title">Category Products Showcase</h3>
+                        <p class="catalog-section-subtitle">
+                            Direct Farm Fresh Produce + Curated Deals from <strong>Amazon</strong> &amp; <strong>Flipkart</strong>
+                        </p>
+                    </div>
+                    <span id="catalogProductCount" class="catalog-count-badge">Loading dynamic products...</span>
+                </div>
 
+                <!-- SEARCH & SORT CONTROLS -->
+                <div class="catalog-controls-panel">
+                    <div class="search-input-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="catalogSearchInput" placeholder="Search produce, dry fruits, organic brands..." autocomplete="off">
+                    </div>
 
-<script src="script.js"></script>
+                    <div class="sort-select-box">
+                        <label for="catalogSortSelect">Sort By:</label>
+                        <select id="catalogSortSelect">
+                            <option value="featured">✨ Featured</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="rating">Highest Rated</option>
+                        </select>
+                    </div>
+                </div>
 
-<script src="category.js"></script>
+                <!-- CATEGORY PILLS BAR -->
+                <div class="catalog-filter-group">
+                    <span class="filter-group-label">Categories:</span>
+                    <div class="category-pills-row">
+                        <button type="button" class="cat-pill-btn active" data-category="all">🌟 All Categories</button>
+                        <button type="button" class="cat-pill-btn" data-category="fruits">🍎 Fresh Fruits</button>
+                        <button type="button" class="cat-pill-btn" data-category="vegetables">🥦 Fresh Vegetables</button>
+                        <button type="button" class="cat-pill-btn" data-category="grains">🌾 Grains &amp; Millets</button>
+                        <button type="button" class="cat-pill-btn" data-category="spices">🌶️ Spices &amp; Honey</button>
+                        <button type="button" class="cat-pill-btn" data-category="coffee">☕ Coffee &amp; Brews</button>
+                        <button type="button" class="cat-pill-btn" data-category="tamarind">🪵 Organic Tamarind</button>
+                    </div>
+                </div>
+
+                <!-- PLATFORM SOURCE TABS (DIRECT + AMAZON + FLIPKART) -->
+                <div class="catalog-filter-group">
+                    <span class="filter-group-label">Platform Source:</span>
+                    <div class="source-pills-row">
+                        <button type="button" class="source-pill-btn active" data-source="all">
+                            <span>🌐 All Products</span>
+                        </button>
+                        <button type="button" class="source-pill-btn source-btn-bmarket" data-source="bmarket">
+                            <span>🌿 B Market Farm Fresh (Direct)</span>
+                        </button>
+                        <button type="button" class="source-pill-btn source-btn-amazon" data-source="amazon">
+                            <span>📦 Amazon Auxiliary Deals</span>
+                        </button>
+                        <button type="button" class="source-pill-btn source-btn-flipkart" data-source="flipkart">
+                            <span>🛒 Flipkart Auxiliary Deals</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT GRID -->
+            <div id="categoryProducts" class="dynamic-products-grid">
+                <!-- Dynamically populated by category.js -->
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 B Market. All Rights Reserved.</p>
+    </footer>
+
+    <script src="auth-state.js"></script>
+    <script src="script.js"></script>
+    <script src="category.js"></script>
 
 </body>
 

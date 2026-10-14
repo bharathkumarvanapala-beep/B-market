@@ -1,0 +1,2656 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://127.0.0.1:8080/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B Market - Fresh Local Products &amp; Auxiliary Marketplace</title>
+    <link rel="stylesheet" href="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/styles.css">
+    <link rel="stylesheet" href="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/category.css">
+</head>
+
+<body>
+
+    <!-- ======================================================== -->
+    <!-- FLIPKART-STYLE TOP NAVBAR -->
+    <!-- ======================================================== -->
+    <header class="fk-top-navbar">
+        <div class="fk-nav-inner">
+            <!-- Brand Logo & Plus Tag -->
+            <a href="http://127.0.0.1:8080/index.html" class="fk-brand-col">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/m logo.png" alt="B Market Logo" class="fk-brand-logo">
+                <div class="fk-brand-text">
+                    <h1>B Market</h1>
+                    <div class="fk-brand-subtag">
+                        <span>Explore</span>
+                        <span class="plus-star">Plus ✦</span>
+                        <span>Farm &amp; Auxiliary</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Flipkart-Style Header Search Bar -->
+            <div class="fk-header-search">
+                <input type="text" id="headerSearchInput" class="fk-search-input" placeholder="Search for farm fresh produce, grains, spices or Amazon/Flipkart brands..." autocomplete="off">
+                <button type="button" class="fk-search-btn" onclick="triggerHeaderSearch()" title="Search">
+                    🔍
+                </button>
+            </div>
+
+            <!-- Right Actions: Account, Orders, Cart -->
+            <div class="fk-header-actions">
+                <!-- Customer Login / Account Menu (Managed dynamically by auth-state.js) -->
+                <div id="headerUserSlot" class="header-user-area">
+                <a href="http://127.0.0.1:8080/login.html" class="btn-flipkart-login">
+                    <span>Login</span>
+                </a>
+            </div>
+
+                <a href="http://127.0.0.1:8080/order-history.html" class="fk-action-link" title="My Order History">
+                    <span>📦 Orders</span>
+                </a>
+
+                <a href="http://127.0.0.1:8080/cart.html" class="fk-action-link" title="Shopping Cart">
+                    <span>🛒 Cart</span>
+                    <span id="headerCartCount" class="cart-count-badge" style="display: inline-flex;">1</span>
+                </a>
+
+                <a href="http://127.0.0.1:8080/product.html" class="fk-action-link" style="color: #ffe500; font-weight: 800;" title="View All Dynamic Products">
+                    <span>All Products ↗</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ======================================================== -->
+    <!-- FLIPKART-STYLE TOP CATEGORY ICONS STRIP -->
+    <!-- ======================================================== -->
+    <nav class="fk-categories-strip" aria-label="Category Navigation">
+        <div class="fk-categories-container">
+            <div class="fk-cat-item" onclick="openCategory('all')">
+                <div class="fk-cat-icon-circle">🌟</div>
+                <span class="fk-cat-label">All Items</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('fruits')">
+                <div class="fk-cat-icon-circle">🍎</div>
+                <span class="fk-cat-label">Fruits</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('vegetables')">
+                <div class="fk-cat-icon-circle">🥦</div>
+                <span class="fk-cat-label">Vegetables</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('grains')">
+                <div class="fk-cat-icon-circle">🌾</div>
+                <span class="fk-cat-label">Grains &amp; Millets</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('spices')">
+                <div class="fk-cat-icon-circle">🌶️</div>
+                <span class="fk-cat-label">Spices &amp; Honey</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('coffee')">
+                <div class="fk-cat-icon-circle">☕</div>
+                <span class="fk-cat-label">Araku Coffee</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="openCategory('tamarind')">
+                <div class="fk-cat-icon-circle">🪵</div>
+                <span class="fk-cat-label">Tamarind &amp; Oils</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="selectSourceTab('amazon')">
+                <div class="fk-cat-icon-circle" style="background: #fff7ed; border-color: #ffedd5;">📦</div>
+                <span class="fk-cat-label">Amazon Deals</span>
+            </div>
+
+            <div class="fk-cat-item" onclick="selectSourceTab('flipkart')">
+                <div class="fk-cat-icon-circle" style="background: #eff6ff; border-color: #dbeafe;">⚡</div>
+                <span class="fk-cat-label">Flipkart Assured</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================================================== -->
+    <!-- FLIPKART-STYLE HERO PROMO BANNER CAROUSEL -->
+    <!-- ======================================================== -->
+    <section class="fk-hero-carousel-wrap">
+        <div class="fk-carousel-slide" id="heroBannerSlide">
+            <div class="fk-slide-left">
+                <span class="fk-promo-tag">🌿 100% FARM FRESH HARVEST FESTIVAL</span>
+                <h2>Direct from Paderu &amp; Araku Farmers to Your Doorstep</h2>
+                <p>
+                    Experience natural, chemical-free fruits, vegetables, unpolished grains, and organic forest honey at honest farm prices. Partnered with <strong>Amazon</strong> &amp; <strong>Flipkart</strong> for premium dry fruits and gardening essentials.
+                </p>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a href="http://127.0.0.1:8080/index.html#dynamicCategoryExplorer" class="btn-fk-cta">
+                        <span>🛒 Shop Farm Harvests</span>
+                    </a>
+                    <a href="http://127.0.0.1:8080/product.html" class="btn-fk-cta" style="background: #ffffff; color: #10843f !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                        <span>⚡ Auxiliary Deals ↗</span>
+                    </a>
+                </div>
+            </div>
+            <div class="fk-slide-right">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/fruit.jpg" alt="Fresh Farm Produce" onerror="this.src='image/vfrt.webp'">
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TRUST & PERKS BAR -->
+    <!-- ======================================================== -->
+    <section class="fk-trust-strip">
+        <div class="fk-trust-grid">
+            <div class="fk-trust-item">
+                <div class="fk-trust-icon">🚜</div>
+                <div>
+                    <h4>Direct Farmer Sourcing</h4>
+                    <p>Harvested every morning without middleman markups</p>
+                </div>
+            </div>
+            <div class="fk-trust-item">
+                <div class="fk-trust-icon">⚡</div>
+                <div>
+                    <h4>Instant UPI &amp; QR Pay</h4>
+                    <p>Pay easily via PhonePe, GPay, Paytm or Cash on Delivery</p>
+                </div>
+            </div>
+            <div class="fk-trust-item">
+                <div class="fk-trust-icon">📦</div>
+                <div>
+                    <h4>Amazon &amp; Flipkart Auxiliary</h4>
+                    <p>Curated top deals for almonds, basmati &amp; home gardening</p>
+                </div>
+            </div>
+            <div class="fk-trust-item">
+                <div class="fk-trust-icon">🛡️</div>
+                <div>
+                    <h4>100% Freshness Guarantee</h4>
+                    <p>Pristine hygienic packaging &amp; quick local dispatch</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- FLASH DEALS TIMER BANNER -->
+    <!-- ======================================================== -->
+    <main class="main-container">
+        <div class="fk-deals-banner">
+            <div class="fk-deals-title-wrap">
+                <span style="font-size: 22px;">⚡</span>
+                <h3 class="fk-deals-title">Deal of the Day — Farm Fresh &amp; Partner Auxiliary Deals</h3>
+                <div class="fk-timer-box">
+                    <span>⏰ Ends in:</span>
+                    <strong id="dealTimerDisplay">04h : 26m : 24s</strong>
+                </div>
+            </div>
+            <a href="http://127.0.0.1:8080/product.html" style="color: #fb641b; font-weight: 800; text-decoration: none; font-size: 14px;">
+                View All Deals →
+            </a>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- LIVE DYNAMIC CATEGORY & AUXILIARY PRODUCTS EXPLORER -->
+        <!-- ======================================================== -->
+        <section id="dynamicCategoryExplorer" class="dynamic-catalog-explorer">
+            <div class="catalog-header-bar">
+                <div>
+                    <h3 class="catalog-section-title">Live Dynamic Marketplace</h3>
+                    <p class="catalog-section-subtitle">
+                        Direct Farm Fresh Produce + Curated Deals from <strong>Amazon</strong> &amp; <strong>Flipkart</strong> (Loaded dynamically from MongoDB backend)
+                    </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <span id="catalogProductCount" class="catalog-count-badge">47 products available</span>
+                    <a href="http://127.0.0.1:8080/product.html" class="cat-pill-btn" style="background: #10843f; color: #ffffff; text-decoration: none; border-color: #10843f;">
+                        <span>All Products Page →</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- SEARCH & SORT CONTROLS -->
+            <div class="catalog-controls-panel">
+                <div class="search-input-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="catalogSearchInput" placeholder="Search produce, dry fruits, grains, coffee or Amazon/Flipkart brands..." autocomplete="off">
+                </div>
+
+                <div class="sort-select-box">
+                    <label for="catalogSortSelect">Sort By:</label>
+                    <select id="catalogSortSelect">
+                        <option value="featured">✨ Featured Deals</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- CATEGORY PILLS BAR -->
+            <div class="catalog-filter-group">
+                <span class="filter-group-label">Categories:</span>
+                <div class="category-pills-row">
+                    <button type="button" class="cat-pill-btn active" data-category="all">🌟 All Categories</button>
+                    <button type="button" class="cat-pill-btn" data-category="fruits">🍎 Fruits</button>
+                    <button type="button" class="cat-pill-btn" data-category="vegetables">🥦 Vegetables</button>
+                    <button type="button" class="cat-pill-btn" data-category="grains">🌾 Grains &amp; Millets</button>
+                    <button type="button" class="cat-pill-btn" data-category="spices">🌶️ Spices</button>
+                    <button type="button" class="cat-pill-btn" data-category="coffee">☕ Coffee &amp; Brews</button>
+                    <button type="button" class="cat-pill-btn" data-category="tamarind">🪵 Tamarind &amp; Oils</button>
+                </div>
+            </div>
+
+            <!-- PLATFORM SOURCE TABS (DIRECT + AMAZON + FLIPKART) -->
+            <div class="catalog-filter-group">
+                <span class="filter-group-label">Market Source:</span>
+                <div class="source-pills-row">
+                    <button type="button" class="source-pill-btn active" data-source="all">
+                        <span>🌐 All Products</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-bmarket" data-source="bmarket">
+                        <span>🌿 B Market Farm Fresh (Direct)</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-amazon" data-source="amazon">
+                        <span>📦 Amazon Auxiliary Deals</span>
+                    </button>
+                    <button type="button" class="source-pill-btn source-btn-flipkart" data-source="flipkart">
+                        <span>🛒 Flipkart Auxiliary Deals</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DYNAMIC PRODUCT GRID (Rendered by category.js from MongoDB API) -->
+            <div id="homeProductsGrid" class="dynamic-products-grid">
+        <div class="product-item-card bmarket-item" data-category="fruits" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/fruit.jpg" alt="Exotic Dragon Fruit (Pitaya)" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Local Farm
+                </span>
+                <span class="discount-pill">22% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Exotic Dragon Fruit (Pitaya)">
+                    Exotic Dragon Fruit (Pitaya)
+                </h3>
+
+                <p class="card-product-desc">
+                    Freshly harvested vivid magenta dragon fruit rich in antioxidants.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(1)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹140</span>
+                    <span class="price-original">₹180</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Exotic Dragon Fruit (Pitaya)', 140, 'image/fruit.jpg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Exotic Dragon Fruit (Pitaya)', 140, 'image/fruit.jpg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="fruits" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1596547609652-9cf5d8d76921" alt="Solimo Premium Seedless Raisins (Kismis)" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon Prime
+                </span>
+                <span class="discount-pill">23% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Solimo Premium Seedless Raisins (Kismis)">
+                    Solimo Premium Seedless Raisins (Kismis)
+                </h3>
+
+                <p class="card-product-desc">
+                    Sweet, juicy dried seedless green raisins, 100% naturally dried.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.5</strong>
+                        <small>(8,410)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹199</span>
+                    <span class="price-original">₹260</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Solimo+Seedless+Raisins+500g" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="tamarind" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.d.jpg" alt="24 Mantra Organic Jaggery Powder (Bellam)" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">19% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Organic Tamarind</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="24 Mantra Organic Jaggery Powder (Bellam)">
+                    24 Mantra Organic Jaggery Powder (Bellam)
+                </h3>
+
+                <p class="card-product-desc">
+                    Chemical-free unrefined natural jaggery powder loaded with iron and minerals.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.7</strong>
+                        <small>(8,930)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹85</span>
+                    <span class="price-original">₹105</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=24+Mantra+Organic+Jaggery+Powder" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="tamarind" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1589927986089-35812388d1f4" alt="Pure Desi Cow A2 Cultured Ghee" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Vedic Bilona
+                </span>
+                <span class="discount-pill">18% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Organic Tamarind</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Pure Desi Cow A2 Cultured Ghee">
+                    Pure Desi Cow A2 Cultured Ghee
+                </h3>
+
+                <p class="card-product-desc">
+                    Hand-churned bilona ghee made from grass-fed indigenous desi cow whole curd.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>5</strong>
+                        <small>(92)</small>
+                    </div>
+                    <span class="unit-label">500ml</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹450</span>
+                    <span class="price-original">₹550</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Pure Desi Cow A2 Cultured Ghee', 450, 'https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Pure Desi Cow A2 Cultured Ghee', 450, 'https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="fruits" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1547514701-42782101795e" alt="Fresh Nagpur Mandarin Oranges" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Citrus Burst
+                </span>
+                <span class="discount-pill">23% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Fresh Nagpur Mandarin Oranges">
+                    Fresh Nagpur Mandarin Oranges
+                </h3>
+
+                <p class="card-product-desc">
+                    Plump, vitamin C packed juicy local oranges fresh off the sunny groves.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(63)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹85</span>
+                    <span class="price-original">₹110</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Fresh Nagpur Mandarin Oranges', 85, 'https://images.unsplash.com/photo-1547514701-42782101795e?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Fresh Nagpur Mandarin Oranges', 85, 'https://images.unsplash.com/photo-1547514701-42782101795e?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="fruits" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/fruit.jpg" alt="Happilo 100% Natural California Almonds" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon's Choice
+                </span>
+                <span class="discount-pill">22% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Happilo 100% Natural California Almonds">
+                    Happilo 100% Natural California Almonds
+                </h3>
+
+                <p class="card-product-desc">
+                    Premium California almonds with high protein, natural fiber and zero cholesterol.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(15,320)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹389</span>
+                    <span class="price-original">₹499</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Happilo+Natural+California+Almonds+500g" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="vegetables" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1592924357228-91a4daadcfea" alt="Country Fresh Red Tomatoes" onerror="this.onerror=null; this.src='image/vfrt.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Farm Direct
+                </span>
+                <span class="discount-pill">27% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Vegetables</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Country Fresh Red Tomatoes">
+                    Country Fresh Red Tomatoes
+                </h3>
+
+                <p class="card-product-desc">
+                    Plump, sun-ripened red country tomatoes with rich tangy cooking flavor.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.7</strong>
+                        <small>(112)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹40</span>
+                    <span class="price-original">₹55</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Country Fresh Red Tomatoes', 40, 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Country Fresh Red Tomatoes', 40, 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="fruits" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/fruit.jpg" alt="Farmley Select Whole Roasted Cashews" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">22% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="Farmley Select Whole Roasted Cashews">
+                    Farmley Select Whole Roasted Cashews
+                </h3>
+
+                <p class="card-product-desc">
+                    Freshly roasted crunchy whole cashew nuts, hygienically double packed.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(7,920)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹429</span>
+                    <span class="price-original">₹550</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=Farmley+Roasted+Cashews+500g" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="fruits" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1563227812-0ea4c22e6cc8" alt="Nutraj California Walnut Kernels (Akhrot)" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon's Choice
+                </span>
+                <span class="discount-pill">23% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Nutraj California Walnut Kernels (Akhrot)">
+                    Nutraj California Walnut Kernels (Akhrot)
+                </h3>
+
+                <p class="card-product-desc">
+                    Raw crispy walnut halves rich in brain-boosting Omega-3 fatty acids.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.7</strong>
+                        <small>(9,430)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹499</span>
+                    <span class="price-original">₹650</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Nutraj+California+Walnut+Kernels+500g" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="vegetables" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/vfrt.webp" alt="Fresh Green Vegetables Combo" onerror="this.onerror=null; this.src='image/vfrt.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 100% Organic
+                </span>
+                <span class="discount-pill">25% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Vegetables</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Fresh Green Vegetables Combo">
+                    Fresh Green Vegetables Combo
+                </h3>
+
+                <p class="card-product-desc">
+                    Crisp and fresh leafy green vegetables plucked every morning from local farms.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(165)</small>
+                    </div>
+                    <span class="unit-label">pack</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹60</span>
+                    <span class="price-original">₹80</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Fresh Green Vegetables Combo', 60, 'image/vfrt.webp')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Fresh Green Vegetables Combo', 60, 'image/vfrt.webp')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="vegetables" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/ginger.jpg" alt="Fresh Country Ginger (Desi Adrak)" onerror="this.onerror=null; this.src='image/ginger.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Hill Grown
+                </span>
+                <span class="discount-pill">20% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Vegetables</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Fresh Country Ginger (Desi Adrak)">
+                    Fresh Country Ginger (Desi Adrak)
+                </h3>
+
+                <p class="card-product-desc">
+                    Strong, spicy, aromatic native hill ginger free of chemical polish and wax.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(84)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹80</span>
+                    <span class="price-original">₹100</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Fresh Country Ginger (Desi Adrak)', 80, 'image/ginger.jpg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Fresh Country Ginger (Desi Adrak)', 80, 'image/ginger.jpg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="vegetables" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1540148426945-6cf22a6b2383" alt="Organic Tribal Garlic (Desi Lehsun)" onerror="this.onerror=null; this.src='image/vfrt.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Aromatic
+                </span>
+                <span class="discount-pill">24% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Vegetables</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Organic Tribal Garlic (Desi Lehsun)">
+                    Organic Tribal Garlic (Desi Lehsun)
+                </h3>
+
+                <p class="card-product-desc">
+                    Small-pod pungent desi garlic bursting with allicin and natural immunity boosters.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(89)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹95</span>
+                    <span class="price-original">₹125</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Organic Tribal Garlic (Desi Lehsun)', 95, 'https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Organic Tribal Garlic (Desi Lehsun)', 95, 'https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="vegetables" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1416879595882-3373a0480b5b" alt="Ugaoo Vegetable Seeds Starter Kit (Pack of 12)" onerror="this.onerror=null; this.src='image/vfrt.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon's Choice
+                </span>
+                <span class="discount-pill">25% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Vegetables</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Ugaoo Vegetable Seeds Starter Kit (Pack of 12)">
+                    Ugaoo Vegetable Seeds Starter Kit (Pack of 12)
+                </h3>
+
+                <p class="card-product-desc">
+                    Non-GMO heirloom vegetable seeds kit for home garden and kitchen cultivation.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.5</strong>
+                        <small>(4,320)</small>
+                    </div>
+                    <span class="unit-label">kit</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹299</span>
+                    <span class="price-original">₹399</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Ugaoo+Vegetable+Seeds+Starter+Kit" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="vegetables" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1585320806297-9794b3e4eeae" alt="Kraft Seeds All-in-One Kitchen Garden Seed Pack" onerror="this.onerror=null; this.src='image/vfrt.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">24% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Vegetables</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="Kraft Seeds All-in-One Kitchen Garden Seed Pack">
+                    Kraft Seeds All-in-One Kitchen Garden Seed Pack
+                </h3>
+
+                <p class="card-product-desc">
+                    Certified high-germination vegetable seeds for spinach, tomato, coriander and chillies.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.4</strong>
+                        <small>(2,890)</small>
+                    </div>
+                    <span class="unit-label">pack</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹189</span>
+                    <span class="price-original">₹250</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=Kraft+Seeds+Kitchen+Garden+Pack" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="vegetables" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1617576683096-00fc8eecb3af" alt="TrustBasket Heavy Duty Gardening Tools Kit" onerror="this.onerror=null; this.src='image/vfrt.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon Prime
+                </span>
+                <span class="discount-pill">30% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Vegetables</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="TrustBasket Heavy Duty Gardening Tools Kit">
+                    TrustBasket Heavy Duty Gardening Tools Kit
+                </h3>
+
+                <p class="card-product-desc">
+                    Ergonomic rust-proof trowel, cultivator and pruner set for kitchen garden farming.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(5,120)</small>
+                    </div>
+                    <span class="unit-label">set</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹349</span>
+                    <span class="price-original">₹499</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=TrustBasket+Gardening+Tools+Set" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="grains" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.b.webp" alt="Premium Sona Masoori Rice" onerror="this.onerror=null; this.src='image/image.b.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Best Seller
+                </span>
+                <span class="discount-pill">18% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Grains &amp; Millets</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Premium Sona Masoori Rice">
+                    Premium Sona Masoori Rice
+                </h3>
+
+                <p class="card-product-desc">
+                    Aromatic, lightweight, aged Sona Masoori raw rice of supreme cooking quality.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(210)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹70</span>
+                    <span class="price-original">₹85</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Premium Sona Masoori Rice', 70, 'image/image.b.webp')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Premium Sona Masoori Rice', 70, 'image/image.b.webp')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="grains" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/millets.jpg" alt="Organic Mountain Millets (Ragi)" onerror="this.onerror=null; this.src='image/millets.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Superfood
+                </span>
+                <span class="discount-pill">16% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Grains &amp; Millets</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Organic Mountain Millets (Ragi)">
+                    Organic Mountain Millets (Ragi)
+                </h3>
+
+                <p class="card-product-desc">
+                    Nutritious calcium-rich finger millets cultivated organically on hilltops.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(95)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹80</span>
+                    <span class="price-original">₹95</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Organic Mountain Millets (Ragi)', 80, 'image/millets.jpg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Organic Mountain Millets (Ragi)', 80, 'image/millets.jpg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="grains" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1586201375761-83865001e31c" alt="Desi Brown Rice (Unpolished)" onerror="this.onerror=null; this.src='image/image.b.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Fiber Rich
+                </span>
+                <span class="discount-pill">18% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Grains &amp; Millets</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Desi Brown Rice (Unpolished)">
+                    Desi Brown Rice (Unpolished)
+                </h3>
+
+                <p class="card-product-desc">
+                    100% whole grain unpolished brown rice ideal for healthy diabetic balanced diet.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.7</strong>
+                        <small>(64)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹90</span>
+                    <span class="price-original">₹110</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Desi Brown Rice (Unpolished)', 90, 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Desi Brown Rice (Unpolished)', 90, 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="grains" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/millets.jpg" alt="Organic Foxtail Millet (Kangni / Korra)" onerror="this.onerror=null; this.src='image/millets.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Low Glycemic
+                </span>
+                <span class="discount-pill">21% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Grains &amp; Millets</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Organic Foxtail Millet (Kangni / Korra)">
+                    Organic Foxtail Millet (Kangni / Korra)
+                </h3>
+
+                <p class="card-product-desc">
+                    Traditional native grains packed with dietary fiber, natural iron and lean protein.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(71)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹95</span>
+                    <span class="price-original">₹120</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Organic Foxtail Millet (Kangni / Korra)', 95, 'image/millets.jpg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Organic Foxtail Millet (Kangni / Korra)', 95, 'image/millets.jpg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="grains" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1586201375761-83865001e31c" alt="India Gate Basmati Rice Classic" onerror="this.onerror=null; this.src='image/image.b.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon's Choice
+                </span>
+                <span class="discount-pill">19% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Grains &amp; Millets</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="India Gate Basmati Rice Classic">
+                    India Gate Basmati Rice Classic
+                </h3>
+
+                <p class="card-product-desc">
+                    Extra long slender grains with exotic aroma, aged for 2 years for royal feasts.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.7</strong>
+                        <small>(18,450)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹195</span>
+                    <span class="price-original">₹240</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=India+Gate+Basmati+Rice+Classic" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="grains" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1509440159596-0249088772ff" alt="24 Mantra Organic Sprouted Ragi Flour" onerror="this.onerror=null; this.src='image/millets.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon Prime
+                </span>
+                <span class="discount-pill">18% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Grains &amp; Millets</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="24 Mantra Organic Sprouted Ragi Flour">
+                    24 Mantra Organic Sprouted Ragi Flour
+                </h3>
+
+                <p class="card-product-desc">
+                    Certified organic sprouted finger millet flour, easily digestible for babies and elders.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(6,210)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹99</span>
+                    <span class="price-original">₹120</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=24+Mantra+Organic+Sprouted+Ragi+Flour" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="grains" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1586201375761-83865001e31c" alt="Fortune Special Biryani Basmati Rice" onerror="this.onerror=null; this.src='image/image.b.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">21% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Grains &amp; Millets</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="Fortune Special Biryani Basmati Rice">
+                    Fortune Special Biryani Basmati Rice
+                </h3>
+
+                <p class="card-product-desc">
+                    Perfect non-sticky long grain rice specially aged for fragrant restaurant-style biryanis.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.5</strong>
+                        <small>(9,340)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹165</span>
+                    <span class="price-original">₹210</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=Fortune+Special+Biryani+Basmati+Rice" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="grains" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1586201375761-83865001e31c" alt="Tata Sampann Unpolished Toor Dal" onerror="this.onerror=null; this.src='image/image.b.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">19% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Grains &amp; Millets</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="Tata Sampann Unpolished Toor Dal">
+                    Tata Sampann Unpolished Toor Dal
+                </h3>
+
+                <p class="card-product-desc">
+                    Pristine unpolished toor dal retaining natural wholesome protein and rich taste.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(8,120)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹145</span>
+                    <span class="price-original">₹180</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=Tata+Sampann+Unpolished+Toor+Dal" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="spices" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.f.webp" alt="Paderu Pure Black Pepper" onerror="this.onerror=null; this.src='image/image.f.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 GI Tag Origin
+                </span>
+                <span class="discount-pill">17% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Spices &amp; Condiments</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Paderu Pure Black Pepper">
+                    Paderu Pure Black Pepper
+                </h3>
+
+                <p class="card-product-desc">
+                    Bold, intense black peppercorns grown in Eastern Ghats tribal hill forest plantations.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(188)</small>
+                    </div>
+                    <span class="unit-label">100g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹150</span>
+                    <span class="price-original">₹180</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Paderu Pure Black Pepper', 150, 'image/image.f.webp')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Paderu Pure Black Pepper', 150, 'image/image.f.webp')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="spices" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/termer.jpg" alt="Pure Natural Turmeric (Haldi)" onerror="this.onerror=null; this.src='image/termer.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 High Curcumin
+                </span>
+                <span class="discount-pill">23% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Spices &amp; Condiments</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Pure Natural Turmeric (Haldi)">
+                    Pure Natural Turmeric (Haldi)
+                </h3>
+
+                <p class="card-product-desc">
+                    Golden aromatic organic turmeric powder rich in natural therapeutic curcumin oils.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(145)</small>
+                    </div>
+                    <span class="unit-label">250g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹100</span>
+                    <span class="price-original">₹130</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Pure Natural Turmeric (Haldi)', 100, 'image/termer.jpg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Pure Natural Turmeric (Haldi)', 100, 'image/termer.jpg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="spices" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/honey.jpg" alt="Organic Wild Forest Honey" onerror="this.onerror=null; this.src='image/honey.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Raw &amp; Pure
+                </span>
+                <span class="discount-pill">17% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Spices &amp; Condiments</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Organic Wild Forest Honey">
+                    Organic Wild Forest Honey
+                </h3>
+
+                <p class="card-product-desc">
+                    Unfiltered natural forest honey hand-collected by local tribal beekeepers.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>5</strong>
+                        <small>(92)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹240</span>
+                    <span class="price-original">₹290</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Organic Wild Forest Honey', 240, 'image/honey.jpg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Organic Wild Forest Honey', 240, 'image/honey.jpg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="spices" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1596040033229-a9821ebd058d" alt="Tribal Forest Green Cardamom" onerror="this.onerror=null; this.src='image/image.f.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Queen of Spices
+                </span>
+                <span class="discount-pill">19% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Spices &amp; Condiments</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Tribal Forest Green Cardamom">
+                    Tribal Forest Green Cardamom
+                </h3>
+
+                <p class="card-product-desc">
+                    Fragrant, plump green cardamom pods with intense sweet-spicy natural aroma.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(78)</small>
+                    </div>
+                    <span class="unit-label">100g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹220</span>
+                    <span class="price-original">₹270</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Tribal Forest Green Cardamom', 220, 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Tribal Forest Green Cardamom', 220, 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="spices" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1596040033229-a9821ebd058d" alt="Catch Super Garam Masala Powder" onerror="this.onerror=null; this.src='image/image.f.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon's Choice
+                </span>
+                <span class="discount-pill">20% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Spices &amp; Condiments</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Catch Super Garam Masala Powder">
+                    Catch Super Garam Masala Powder
+                </h3>
+
+                <p class="card-product-desc">
+                    Authentic North Indian blend of roasted exotic whole spices and condiments.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(11,200)</small>
+                    </div>
+                    <span class="unit-label">100g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹88</span>
+                    <span class="price-original">₹110</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Catch+Super+Garam+Masala+100g" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="spices" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/termer.jpg" alt="Everest Pure Kashmiri Chilli Powder" onerror="this.onerror=null; this.src='image/termer.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon Prime
+                </span>
+                <span class="discount-pill">14% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Spices &amp; Condiments</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Everest Pure Kashmiri Chilli Powder">
+                    Everest Pure Kashmiri Chilli Powder
+                </h3>
+
+                <p class="card-product-desc">
+                    Mild pungency with vibrant rich natural red color for irresistible curries.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.7</strong>
+                        <small>(14,800)</small>
+                    </div>
+                    <span class="unit-label">100g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹125</span>
+                    <span class="price-original">₹145</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Everest+Kashmiri+Lal+Chilli+Powder" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="spices" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1596040033229-a9821ebd058d" alt="MDH Chunky Chat Masala" onerror="this.onerror=null; this.src='image/image.f.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">17% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Spices &amp; Condiments</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="MDH Chunky Chat Masala">
+                    MDH Chunky Chat Masala
+                </h3>
+
+                <p class="card-product-desc">
+                    Tangy spices blend for salads, fruit platters, crispy snacks and street chaat.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(8,640)</small>
+                    </div>
+                    <span class="unit-label">100g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹75</span>
+                    <span class="price-original">₹90</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=MDH+Chunky+Chat+Masala" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="spices" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/honey.jpg" alt="Dabur 100% Pure Organic Honey" onerror="this.onerror=null; this.src='image/honey.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">20% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Spices &amp; Condiments</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="Dabur 100% Pure Organic Honey">
+                    Dabur 100% Pure Organic Honey
+                </h3>
+
+                <p class="card-product-desc">
+                    NMR tested 100% pure honey sourced directly from certified organic apiaries.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(19,400)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹220</span>
+                    <span class="price-original">₹275</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=Dabur+Organic+Honey+500g" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="coffee" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.e.webp" alt="Araku Valley Fresh Filter Coffee Beans" onerror="this.onerror=null; this.src='image/image.e.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Araku Valley
+                </span>
+                <span class="discount-pill">17% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Coffee &amp; Brews</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Araku Valley Fresh Filter Coffee Beans">
+                    Araku Valley Fresh Filter Coffee Beans
+                </h3>
+
+                <p class="card-product-desc">
+                    Shade-grown single origin Arabica coffee beans roasted fresh to aromatic perfection.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(172)</small>
+                    </div>
+                    <span class="unit-label">250g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹250</span>
+                    <span class="price-original">₹300</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Araku Valley Fresh Filter Coffee Beans', 250, 'image/image.e.webp')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Araku Valley Fresh Filter Coffee Beans', 250, 'image/image.e.webp')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="coffee" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1559056199-641a0ac8b55e" alt="Traditional South Indian Filter Blend" onerror="this.onerror=null; this.src='image/image.e.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 80:20 Roast
+                </span>
+                <span class="discount-pill">18% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Coffee &amp; Brews</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Traditional South Indian Filter Blend">
+                    Traditional South Indian Filter Blend
+                </h3>
+
+                <p class="card-product-desc">
+                    Aromatic blend of roasted Arabica with chicory for thick crema and strong kick.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(110)</small>
+                    </div>
+                    <span class="unit-label">200g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹180</span>
+                    <span class="price-original">₹220</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Traditional South Indian Filter Blend', 180, 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Traditional South Indian Filter Blend', 180, 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="coffee" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.e.webp" alt="Roasted Tribal PeaBerry Coffee" onerror="this.onerror=null; this.src='image/image.e.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Rare PeaBerry
+                </span>
+                <span class="discount-pill">18% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Coffee &amp; Brews</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Roasted Tribal PeaBerry Coffee">
+                    Roasted Tribal PeaBerry Coffee
+                </h3>
+
+                <p class="card-product-desc">
+                    Rare round single peaberry coffee beans delivering exceptionally smooth brew.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(68)</small>
+                    </div>
+                    <span class="unit-label">250g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹280</span>
+                    <span class="price-original">₹340</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Roasted Tribal PeaBerry Coffee', 280, 'image/image.e.webp')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Roasted Tribal PeaBerry Coffee', 280, 'image/image.e.webp')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="coffee" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1514432324607-a09d9b4aefdd" alt="Nescafé Classic Instant Coffee Glass Jar" onerror="this.onerror=null; this.src='image/image.e.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon's Choice
+                </span>
+                <span class="discount-pill">14% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Coffee &amp; Brews</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Nescafé Classic Instant Coffee Glass Jar">
+                    Nescafé Classic Instant Coffee Glass Jar
+                </h3>
+
+                <p class="card-product-desc">
+                    100% pure Robusta coffee beans, rich distinctive flavor and morning awakening aroma.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.7</strong>
+                        <small>(32,400)</small>
+                    </div>
+                    <span class="unit-label">200g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹360</span>
+                    <span class="price-original">₹420</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Nescafe+Classic+Instant+Coffee+200g" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="coffee" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1587734195503-904fca47e0e9" alt="Blue Tokai Vienna Roast Arabica Coffee" onerror="this.onerror=null; this.src='image/image.e.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon Prime
+                </span>
+                <span class="discount-pill">13% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Coffee &amp; Brews</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Blue Tokai Vienna Roast Arabica Coffee">
+                    Blue Tokai Vienna Roast Arabica Coffee
+                </h3>
+
+                <p class="card-product-desc">
+                    Specialty dark roast artisan coffee with oaky, smoky caramel and cocoa notes.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(6,720)</small>
+                    </div>
+                    <span class="unit-label">250g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹480</span>
+                    <span class="price-original">₹550</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Blue+Tokai+Vienna+Roast+Coffee" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="coffee" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1576092768241-dec231879fc3" alt="Tata Tea Gold Premium Long Leaf Blend" onerror="this.onerror=null; this.src='image/image.e.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">16% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Coffee &amp; Brews</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="Tata Tea Gold Premium Long Leaf Blend">
+                    Tata Tea Gold Premium Long Leaf Blend
+                </h3>
+
+                <p class="card-product-desc">
+                    Exquisite blend of strong Assam CTC tea pellets with aromatic Darjeeling whole leaves.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(11,400)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹210</span>
+                    <span class="price-original">₹250</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=Tata+Tea+Gold+500g" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="tamarind" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.d.jpg" alt="Hill-Grown Organic Tamarind" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Chemical Free
+                </span>
+                <span class="discount-pill">20% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Organic Tamarind</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Hill-Grown Organic Tamarind">
+                    Hill-Grown Organic Tamarind
+                </h3>
+
+                <p class="card-product-desc">
+                    Natural sun-dried tangy tamarind grown in Eastern Ghats tribal forest tracts.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(154)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹100</span>
+                    <span class="price-original">₹125</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Hill-Grown Organic Tamarind', 100, 'image/image.d.jpg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Hill-Grown Organic Tamarind', 100, 'image/image.d.jpg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="tamarind" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1596040033229-a9821ebd058d" alt="Deseeded Pure Tamarind Slab" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Seedless
+                </span>
+                <span class="discount-pill">20% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Organic Tamarind</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Deseeded Pure Tamarind Slab">
+                    Deseeded Pure Tamarind Slab
+                </h3>
+
+                <p class="card-product-desc">
+                    Clean deseeded tamarind ready for instant rasam, sambar and chutney preparation.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(88)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹140</span>
+                    <span class="price-original">₹175</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Deseeded Pure Tamarind Slab', 140, 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Deseeded Pure Tamarind Slab', 140, 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="tamarind" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1474979266404-7eaacbcd87c5" alt="Wood-Pressed Gingelly (Sesame) Oil" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Cold Pressed
+                </span>
+                <span class="discount-pill">19% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Organic Tamarind</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Wood-Pressed Gingelly (Sesame) Oil">
+                    Wood-Pressed Gingelly (Sesame) Oil
+                </h3>
+
+                <p class="card-product-desc">
+                    Traditional cold wood-churned unrefined sesame oil with zero chemical solvents.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(104)</small>
+                    </div>
+                    <span class="unit-label">1 Litre</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹260</span>
+                    <span class="price-original">₹320</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Wood-Pressed Gingelly (Sesame) Oil', 260, 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Wood-Pressed Gingelly (Sesame) Oil', 260, 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="coffee" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1514432324607-a09d9b4aefdd" alt="Continental Xtra Instant Coffee Powder" onerror="this.onerror=null; this.src='image/image.e.webp'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">17% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Coffee &amp; Brews</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="Continental Xtra Instant Coffee Powder">
+                    Continental Xtra Instant Coffee Powder
+                </h3>
+
+                <p class="card-product-desc">
+                    70% coffee 30% chicory blend offering strong flavor, rich aroma and great value.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.5</strong>
+                        <small>(14,200)</small>
+                    </div>
+                    <span class="unit-label">200g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹245</span>
+                    <span class="price-original">₹295</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=Continental+Xtra+Instant+Coffee" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="tamarind" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1596040033229-a9821ebd058d" alt="24 Mantra Organic Tamarind" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon's Choice
+                </span>
+                <span class="discount-pill">18% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Organic Tamarind</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="24 Mantra Organic Tamarind">
+                    24 Mantra Organic Tamarind
+                </h3>
+
+                <p class="card-product-desc">
+                    Organically grown certified chemical-free sour culinary tamarind slab.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(4,890)</small>
+                    </div>
+                    <span class="unit-label">500g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹115</span>
+                    <span class="price-original">₹140</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=24+Mantra+Organic+Tamarind+500g" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card amazon-item" data-category="tamarind" data-source="amazon">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.d.jpg" alt="Dabur Hommade Tamarind Paste" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-amazon">
+                    📦 Amazon Prime
+                </span>
+                <span class="discount-pill">17% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Organic Tamarind</span>
+                    <span class="source-subtag">📦 AMAZON</span>
+                </div>
+
+                <h3 class="card-product-title" title="Dabur Hommade Tamarind Paste">
+                    Dabur Hommade Tamarind Paste
+                </h3>
+
+                <p class="card-product-desc">
+                    Thick concentrated ready-to-use tamarind pulp for instant tangy curries.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.5</strong>
+                        <small>(7,320)</small>
+                    </div>
+                    <span class="unit-label">200g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹75</span>
+                    <span class="price-original">₹90</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.amazon.in/s?k=Dabur+Hommade+Tamarind+Paste" target="_blank" rel="noopener noreferrer" class="btn-partner-amazon">
+                    <span>📦 Buy on Amazon ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card flipkart-item" data-category="tamarind" data-source="flipkart">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.d.jpg" alt="Priya Concentrated Tamarind Paste" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-flipkart">
+                    ⚡ Flipkart Assured
+                </span>
+                <span class="discount-pill">19% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Organic Tamarind</span>
+                    <span class="source-subtag">🛒 FLIPKART</span>
+                </div>
+
+                <h3 class="card-product-title" title="Priya Concentrated Tamarind Paste">
+                    Priya Concentrated Tamarind Paste
+                </h3>
+
+                <p class="card-product-desc">
+                    Traditional Andhra recipe concentrated tamarind paste, zero seeds or fibers.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.6</strong>
+                        <small>(5,120)</small>
+                    </div>
+                    <span class="unit-label">300g</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹65</span>
+                    <span class="price-original">₹80</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <a href="https://www.flipkart.com/search?q=Priya+Tamarind+Paste" target="_blank" rel="noopener noreferrer" class="btn-partner-flipkart">
+                    <span>⚡ Buy on Flipkart ↗</span>
+                </a>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="fruits" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/mango.jpeg" alt="Organic Sweet Mangoes (Banganapalli)" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Local Harvest
+                </span>
+                <span class="discount-pill">20% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Organic Sweet Mangoes (Banganapalli)">
+                    Organic Sweet Mangoes (Banganapalli)
+                </h3>
+
+                <p class="card-product-desc">
+                    Sweet, aromatic organic mangoes harvested fresh from Andhra orchards.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.9</strong>
+                        <small>(98)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹160</span>
+                    <span class="price-original">₹200</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Organic Sweet Mangoes (Banganapalli)', 160, 'image/mango.jpeg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Organic Sweet Mangoes (Banganapalli)', 160, 'image/mango.jpeg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="fruits" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1571771894821-ce9b6c11b08e" alt="Hill-Grown Paderu Bananas" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Farm Direct
+                </span>
+                <span class="discount-pill">23% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Hill-Grown Paderu Bananas">
+                    Hill-Grown Paderu Bananas
+                </h3>
+
+                <p class="card-product-desc">
+                    Pesticide-free mountain bananas rich in potassium and vital vitamins.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.7</strong>
+                        <small>(76)</small>
+                    </div>
+                    <span class="unit-label">dozen</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹50</span>
+                    <span class="price-original">₹65</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Hill-Grown Paderu Bananas', 50, 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&amp;q=80')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Hill-Grown Paderu Bananas', 50, 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&amp;q=80')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    
+        <div class="product-item-card bmarket-item" data-category="fruits" data-source="bmarket">
+            <div class="card-media-wrap">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/fruit.jpg" alt="Fresh Seasonal Fruits Basket" onerror="this.onerror=null; this.src='image/fruit.jpg'" loading="lazy" class="product-item-img">
+                <span class="partner-badge badge-bmarket">
+                    🌿 Farm Fresh
+                </span>
+                <span class="discount-pill">20% OFF</span>
+            </div>
+
+            <div class="card-content-wrap">
+                <div class="card-category-tag">
+                    <span>Fresh Fruits</span>
+                    <span class="source-subtag">🌿 BMARKET</span>
+                </div>
+
+                <h3 class="card-product-title" title="Fresh Seasonal Fruits Basket">
+                    Fresh Seasonal Fruits Basket
+                </h3>
+
+                <p class="card-product-desc">
+                    Naturally ripened, crisp and juicy handpicked farm fruits direct from local growers.
+                </p>
+
+                <div class="card-meta-row">
+                    <div class="rating-stars">
+                        <span>★</span>
+                        <strong>4.8</strong>
+                        <small>(142)</small>
+                    </div>
+                    <span class="unit-label">kg</span>
+                </div>
+
+                <div class="card-price-row">
+                    <span class="price-current">₹120</span>
+                    <span class="price-original">₹150</span>
+                </div>
+
+                
+            <div class="prod-action-row">
+                <button type="button" class="btn-add-cart" onclick="addToCart('Fresh Seasonal Fruits Basket', 120, 'image/fruit.jpg')">
+                    <span>🛒 Add to Cart</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="quickBuyNow('Fresh Seasonal Fruits Basket', 120, 'image/fruit.jpg')" title="Buy Now &amp; Proceed to UPI Payment">
+                    <span>⚡ Buy Now</span>
+                </button>
+            </div>
+        
+            </div>
+        </div>
+    </div>
+        </section>
+
+        <!-- LOCATION MAP -->
+        <section class="map-section">
+            <h3>Our Farm Sourcing Location</h3>
+            <p style="margin-top: -6px; margin-bottom: 20px;">Paderu &amp; Araku Valley Tribal Agencies, Alluri Sitharama Raju District, Andhra Pradesh</p>
+            <iframe src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/embed.html" width="100%" height="320" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"></iframe>
+        </section>
+
+        <!-- ABOUT US -->
+        <section id="About" class="about" style="background: #ffffff; padding: 40px; border-radius: 16px; margin: 25px 0; border: 1px solid #e2e8f0; text-align: center;">
+            <h3 style="font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">About B Market</h3>
+            <p style="max-width: 800px; margin: 0 auto; line-height: 1.7; color: #475569; font-size: 15px;">
+                B Market supplies pure farm produce directly from tribal and local growers to customers with honest quality and affordable prices. By partnering with leading marketplaces like <strong>Amazon</strong> and <strong>Flipkart</strong> for complementary auxiliary goods, we offer a complete, trusted shopping destination for healthy households.
+            </p>
+        </section>
+
+        <!-- CONTACT / ENQUIRY SECTION -->
+        <section id="enquiry" class="enquiry-section" style="margin-bottom: 40px;">
+            <div class="enquiry-card">
+                <h2>Contact / Direct Farmer Enquiry</h2>
+                <form id="enquiryForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="Your Name" required="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" placeholder="Your Email" required="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Your Phone</label>
+                        <input type="tel" id="phone" placeholder="Your Phone" required="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" placeholder="Ask about wholesale farm supply, harvest schedule or delivery..." required=""></textarea>
+                    </div>
+
+                    <button type="submit">
+                        Send Enquiry
+                    </button>
+                </form>
+
+                <p id="result" class="result-message" style="display: none;"></p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 B Market. All Rights Reserved. Fresh Local Products &amp; Auxiliary Marketplace.</p>
+        <p style="font-size: 13px; opacity: 0.85; margin-top: 6px;">📞 +91 7981850491 &nbsp;|&nbsp; 📧 bharathkumarvanapala@gmail.com &nbsp;|&nbsp; 📍 Andhra Pradesh, India</p>
+    </footer>
+
+    <!-- Header Search Synchronization Script -->
+    <script>
+        function triggerHeaderSearch() {
+            const hInput = document.getElementById("headerSearchInput");
+            const cInput = document.getElementById("catalogSearchInput");
+            if (hInput && cInput) {
+                cInput.value = hInput.value;
+                cInput.dispatchEvent(new Event("input"));
+                document.getElementById("dynamicCategoryExplorer").scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        document.getElementById("headerSearchInput")?.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                triggerHeaderSearch();
+            }
+        });
+
+        document.getElementById("headerSearchInput")?.addEventListener("input", function(e) {
+            const cInput = document.getElementById("catalogSearchInput");
+            if (cInput) {
+                cInput.value = e.target.value;
+                cInput.dispatchEvent(new Event("input"));
+            }
+        });
+
+        // Flash Deal Countdown Timer Simulation
+        (function initDealCountdown() {
+            let totalSeconds = 4 * 3600 + 28 * 60 + 15;
+            const timerEl = document.getElementById("dealTimerDisplay");
+            setInterval(() => {
+                if (totalSeconds > 0) totalSeconds--;
+                const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+                const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+                const s = String(totalSeconds % 60).padStart(2, "0");
+                if (timerEl) timerEl.innerText = `${h}h : ${m}m : ${s}s`;
+            }, 1000);
+        })();
+    </script>
+
+    <!-- SCRIPTS -->
+    <script src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/auth-state.js.download"></script>
+    <script src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/script.js.download"></script>
+    <script src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/contact.js.download"></script>
+    <script src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/category.js.download"></script>
+
+
+
+</body></html>
