@@ -2,22 +2,41 @@ import mongoose from "mongoose";
 
 let cachedDbPromise = null;
 
+function resolveMongoUri() {
+    const raw =
+        process.env.MONGODB_URI ||
+        process.env.MONGO_URI ||
+        process.env.DATABASE_URL ||
+        process.env.MONGODB_URL ||
+        process.env.MONGO_URL ||
+        process.env.MONGODB_ATLAS_URI ||
+        process.env.ATLAS_URI;
+
+    if (!raw || typeof raw !== "string") return null;
+    return raw.trim().replace(/^['"]|['"]$/g, "");
+}
+
 /**
  * Returns safe diagnostic metadata about the configured database
  * without exposing sensitive credentials or passwords.
  */
 export function getSanitizedDbInfo() {
-    const raw =
-        process.env.MONGODB_URI ||
-        process.env.MONGO_URI ||
-        process.env.DATABASE_URL ||
-        process.env.MONGODB_URL;
+    const raw = resolveMongoUri();
 
     if (!raw) {
         return {
             configured: false,
             type: "MISSING",
-            message: "No MongoDB connection string found in Netlify Environment Variables."
+            message: "No MongoDB connection string found in Netlify Environment Variables.",
+            checkedVariables: [
+                "MONGODB_URI",
+                "MONGO_URI",
+                "DATABASE_URL",
+                "MONGODB_URL",
+                "MONGO_URL",
+                "MONGODB_ATLAS_URI",
+                "ATLAS_URI"
+            ]
         };
     }
 
@@ -25,12 +44,15 @@ export function getSanitizedDbInfo() {
     const isLocal = raw.includes("127.0.0.1") || raw.includes("localhost");
     const hostMatch = raw.match(/@([^/?#]+)/);
     const host = hostMatch ? hostMatch[1] : (isLocal ? "localhost:27017" : "custom_host");
+    const pathPart = raw.replace(/^mongodb(\+srv)?:\/\/[^/]+/, "");
+    const hasExplicitDb = /\/[a-zA-Z0-9_-]+(\?|$)/.test(pathPart);
 
     return {
         configured: true,
         type: isAtlas ? "MongoDB Atlas (Cloud)" : (isLocal ? "Localhost (Invalid for Cloud)" : "MongoDB"),
         host: host,
-        hasDatabaseName: /\/[a-zA-Z0-9_-]+(\?|$)/.test(raw)
+        hasExplicitDatabaseName: hasExplicitDb,
+        targetDatabase: hasExplicitDb ? "from_uri" : "bmarket"
     };
 }
 
@@ -45,12 +67,8 @@ export async function connectToDatabase() {
         return mongoose.connection;
     }
 
-    // 2. Read environment variable (supports standard aliases)
-    const mongoUri =
-        process.env.MONGODB_URI ||
-        process.env.MONGO_URI ||
-        process.env.DATABASE_URL ||
-        process.env.MONGODB_URL;
+    // 2. Read environment variable (supports standard aliases and sanitizes quotes)
+    const mongoUri = resolveMongoUri();
 
     // 3. STRICT CHECK: Fail immediately if no URI is configured
     // NEVER fall back to 127.0.0.1 in Netlify cloud serverless!
@@ -78,15 +96,23 @@ export async function connectToDatabase() {
 
     // 5. Connect to MongoDB Atlas with connection caching
     if (!cachedDbPromise) {
+        const pathPart = mongoUri.replace(/^mongodb(\+srv)?:\/\/[^/]+/, "");
+        const hasExplicitDb = /\/[a-zA-Z0-9_-]+(\?|$)/.test(pathPart);
+
         const opts = {
             bufferCommands: false,
-            serverSelectionTimeoutMS: 5000,
-            connectTimeoutMS: 5000
+            serverSelectionTimeoutMS: 8000,
+            connectTimeoutMS: 8000
         };
+
+        // If connection string does not specify a db name, route to bmarket
+        if (!hasExplicitDb) {
+            opts.dbName = "bmarket";
+        }
 
         const hostMatch = mongoUri.match(/@([^/?#]+)/);
         const maskedHost = hostMatch ? hostMatch[1] : "mongodb_cluster";
-        console.log(`Connecting to cloud database at ${maskedHost}...`);
+        console.log(`Connecting to cloud database at ${maskedHost} (db: ${opts.dbName || "from_uri"})...`);
 
         cachedDbPromise = mongoose.connect(mongoUri, opts).then(m => {
             console.log("✅ Successfully connected to MongoDB Atlas via Netlify Function");
@@ -124,3 +150,4 @@ export async function connectToDatabase() {
 export function isDbConnected() {
     return mongoose.connection && mongoose.connection.readyState === 1;
 }
+
