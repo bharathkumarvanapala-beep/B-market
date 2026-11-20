@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { connectToDatabase, isDbConnected } from "./utils/db.js";
+import { connectToDatabase, isDbConnected, getSanitizedDbInfo } from "./utils/db.js";
 import Enquiry from "./models/Enquiry.js";
 
 const CORS_HEADERS = {
@@ -46,11 +46,13 @@ export async function handler(event, context) {
         );
 
         let dbStatus = "disconnected";
+        let dbError = null;
         try {
             await connectToDatabase();
             dbStatus = isDbConnected() ? "connected" : "disconnected";
         } catch (e) {
-            dbStatus = "error: " + e.message;
+            dbStatus = "error";
+            dbError = e.message;
         }
 
         return {
@@ -60,6 +62,8 @@ export async function handler(event, context) {
                 success: true,
                 service: "B Market Serverless Enquiry Function",
                 database: dbStatus,
+                databaseDiagnostics: getSanitizedDbInfo(),
+                databaseError: dbError,
                 emailConfigured: isEmailReady,
                 recipient: emailUser,
                 timestamp: new Date().toISOString()
@@ -177,7 +181,8 @@ export async function handler(event, context) {
                     headers: CORS_HEADERS,
                     body: JSON.stringify({
                         success: false,
-                        message: "Database service is temporarily unavailable. Your enquiry could not be saved. Please try again shortly."
+                        message: "Database connection notice: " + dbErr.message,
+                        diagnostics: getSanitizedDbInfo()
                     })
                 };
             }
