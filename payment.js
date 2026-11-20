@@ -889,12 +889,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (typeof window !== "undefined" && typeof window.getBMarketApiUrl === "function") {
                             return window.getBMarketApiUrl(path);
                         }
-                        const loc = typeof window !== "undefined" ? window.location : null;
-                        let host = (loc && loc.hostname) ? loc.hostname.trim() : "";
-                        if (!host || host === "0.0.0.0") host = "localhost";
-                        const protocol = (loc && loc.protocol === "https:") ? "https:" : "http:";
                         const cleanPath = path ? (path.startsWith("/") ? path : "/" + path) : "";
-                        return `${protocol}//${host}:5000${cleanPath}`;
+                        return cleanPath;
                     }
 
                     // Send order to backend API for database persistence and email invoice dispatch

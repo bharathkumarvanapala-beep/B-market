@@ -1,0 +1,5 @@
+# B Market Netlify Proxy Redirects
+# When deployed to Netlify, this proxies frontend API calls to your online backend.
+# Replace the URL below with your deployed backend URL (Render, Railway, Fly.io, etc.):
+/api/*  https://your-bmarket-backend.onrender.com/api/:splat  200
+

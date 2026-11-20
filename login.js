@@ -7,12 +7,8 @@ function getBackendUrl(path) {
     if (typeof window !== "undefined" && typeof window.getBMarketApiUrl === "function") {
         return window.getBMarketApiUrl(path);
     }
-    const loc = typeof window !== "undefined" ? window.location : null;
-    let host = (loc && loc.hostname) ? loc.hostname.trim() : "";
-    if (!host || host === "0.0.0.0") host = "localhost";
-    const protocol = (loc && loc.protocol === "https:") ? "https:" : "http:";
     const cleanPath = path ? (path.startsWith("/") ? path : "/" + path) : "";
-    return `${protocol}//${host}:5000${cleanPath}`;
+    return cleanPath;
 }
 
 const AUTH_LOGIN_URL = getBackendUrl("/api/auth/login");
@@ -59,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
             submitBtn.innerText = "Verifying Credentials...";
 
             try {
-                const response = await fetch(AUTH_LOGIN_URL, {
+                const loginEndpoint = getBackendUrl("/api/auth/login");
+                const response = await fetch(loginEndpoint, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password })

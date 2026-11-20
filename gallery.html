@@ -4,27 +4,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B Market Gallery</title>
-
+    <title>Farm Gallery - B Market</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .gallery-container {
+            max-width: 1100px;
+            margin: 40px auto 60px;
+            padding: 0 20px;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .gallery-header h2 {
+            font-size: 32px;
+            color: #1b5e20;
+            margin-bottom: 8px;
+        }
+
+        .gallery-header p {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            padding: 16px 20px;
+        }
+
+        .gallery-caption h4 {
+            margin: 0 0 6px 0;
+            font-size: 16px;
+            color: #1e293b;
+        }
+
+        .gallery-caption p {
+            margin: 0;
+            font-size: 13px;
+            color: #64748b;
+        }
+    </style>
+    <script src="api-config.js"></script>
 </head>
 
 <body>
-<header >
-    <nav> <a href="index.html">Go To B market</a>
-    </nav>
-</header>
-<div class=market>
-    <h1>B Market Gallery</h1>
-    <p>Our Fresh Products Collection</p>
-</div>
-    <div class="gallerymarket">
 
-        <img src="image/vfrt.webp" height="320" width="400" alt="vegetables">
-        <img src="image/fruit.jpg" alt="fruits" width="500">
-        <img src="my market/frts.webp" width="400">
+    <header>
+        <div class="logo">
+            <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: white;">
+                <img src="image/m logo.png" alt="B Market Logo" style="height: 38px; width: auto; object-fit: contain;">
+                <h1 style="margin: 0;">B Market</h1>
+            </a>
+        </div>
 
-    </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="product.html">Products</a>
+            <a href="category.html">Categories</a>
+            <a href="gallery.html" style="color: #ffe500; font-weight: 800;">Gallery</a>
+            <a href="cart.html">Cart 🛒</a>
+            <a href="order-history.html">Orders</a>
+            <a href="contact.html">Contact</a>
+            <div id="headerUserSlot" class="header-user-area" style="display: inline-block; margin-left: 10px;">
+                <a href="login.html" class="btn-flipkart-login">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="gallery-container">
+        <div class="gallery-header">
+            <h2>🌿 Farm Fresh Gallery</h2>
+            <p>A glimpse into our natural harvests, regional farms, and authentic produce</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <img src="image/fruit.jpg" alt="Seasonal Farm Fruits">
+                <div class="gallery-caption">
+                    <h4>Fresh Seasonal Fruits</h4>
+                    <p>Naturally tree-ripened farm fruits harvested at peak flavor.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="image/vfrt.webp" alt="Fresh Green Vegetables">
+                <div class="gallery-caption">
+                    <h4>Green Vegetables</h4>
+                    <p>Crisp, pesticide-free daily farm greens and garden vegetables.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="image/mango.jpeg" alt="Sweet Mangoes">
+                <div class="gallery-caption">
+                    <h4>Organic Mango Harvest</h4>
+                    <p>Famous Andhra sweet Banganapalli and Suvarnarekha mangoes.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="image/image.b.webp" alt="Sona Masoori Rice">
+                <div class="gallery-caption">
+                    <h4>Pure Sona Masoori Rice</h4>
+                    <p>Aged, aromatic raw rice directly from river valley fields.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="image/image.f.webp" alt="Paderu Black Pepper">
+                <div class="gallery-caption">
+                    <h4>Paderu Hill Black Pepper</h4>
+                    <p>GI tagged Eastern Ghats spicy and aromatic black peppercorns.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="image/image.e.webp" alt="Araku Coffee Beans">
+                <div class="gallery-caption">
+                    <h4>Araku Valley Coffee</h4>
+                    <p>Shade-grown organic Arabica coffee roasted to perfection.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="image/image.d.jpg" alt="Sun-dried Tamarind">
+                <div class="gallery-caption">
+                    <h4>Hill-Grown Tamarind</h4>
+                    <p>Naturally sun-dried tangy tamarind from forest tracts.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="image/honey.jpg" alt="Natural Forest Honey">
+                <div class="gallery-caption">
+                    <h4>Raw Forest Honey</h4>
+                    <p>Pure, unheated wild flora honey collected by tribal communities.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="image/termer.jpg" alt="Pure Turmeric Roots">
+                <div class="gallery-caption">
+                    <h4>Curcumin-Rich Turmeric</h4>
+                    <p>High-curcumin organic turmeric roots with intense aroma.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 B Market. All Rights Reserved. Fresh Local Products &amp; Auxiliary Marketplace.</p>
+    </footer>
+
+    <script src="auth-state.js"></script>
 
 </body>
+
 </html>

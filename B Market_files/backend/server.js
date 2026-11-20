@@ -14,8 +14,44 @@ const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS Configuration for Netlify & Localhost
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    process.env.NETLIFY_URL,
+    process.env.CLIENT_URL,
+    "http://localhost:8080",
+    "http://localhost:5000",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:8080",
+    "http://127.0.0.1:5000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173"
+].filter(Boolean);
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        const isNetlifyDomain = /^https:\/\/[a-zA-Z0-9_-]+\.netlify\.app$/.test(origin);
+        if (
+            isNetlifyDomain ||
+            allowedOrigins.includes(origin) ||
+            allowedOrigins.some(allowed => origin === allowed || origin.startsWith(allowed)) ||
+            process.env.NODE_ENV !== "production" ||
+            process.env.CORS_ORIGIN === "*"
+        ) {
+            return callback(null, true);
+        }
+        return callback(null, true);
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+    exposedHeaders: ["Content-Range", "X-Content-Range"]
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 // Auth & Customer API
@@ -43,8 +79,9 @@ app.post("/api/add-test-product", async (req, res) => {
     }
 });
 
-// MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/bmarket")
+// MongoDB (Cloud Atlas or Local fallback)
+const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/bmarket";
+mongoose.connect(mongoUri)
     .then(() => {
         console.log("MongoDB connected");
     })
@@ -386,8 +423,9 @@ app.post("/api/orders", async (req, res) => {
 // START SERVER
 // ===============================
 
-app.listen(5000, () => {
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
     console.log(
-        "B Market backend server is running on http://localhost:5000"
+        `B Market backend server is running on port ${port} (Ready for Netlify & Cloud)`
     );
 });

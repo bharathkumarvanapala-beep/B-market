@@ -1,33 +1,26 @@
 // ============================================
-// B MARKET - CONTACT / ENQUIRY FORM HANDLER
-// Dynamic backend resolution for Laptop & Mobile
+// B MARKET - CONTACT & FARMER ENQUIRY HANDLER
 // ============================================
 
 function getBackendUrl(path) {
     if (typeof window !== "undefined" && typeof window.getBMarketApiUrl === "function") {
         return window.getBMarketApiUrl(path);
     }
-    const loc = typeof window !== "undefined" ? window.location : null;
-    let host = (loc && loc.hostname) ? loc.hostname.trim() : "";
-    if (!host || host === "0.0.0.0") host = "localhost";
-    const protocol = (loc && loc.protocol === "https:") ? "https:" : "http:";
     const cleanPath = path ? (path.startsWith("/") ? path : "/" + path) : "";
-    return `${protocol}//${host}:5000${cleanPath}`;
+    return cleanPath;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Contact / Enquiry handler initialized.");
-
     const enquiryForm = document.getElementById("enquiryForm");
     const resultElement = document.getElementById("result");
 
-    if (!enquiryForm) {
-        console.warn("enquiryForm not found on this page.");
-        return;
-    }
+    if (!enquiryForm) return;
+
+    let isSubmitting = false;
 
     enquiryForm.addEventListener("submit", async function (event) {
         event.preventDefault();
+        if (isSubmitting) return;
 
         const nameInput = document.getElementById("name");
         const emailInput = document.getElementById("email");
@@ -40,85 +33,80 @@ document.addEventListener("DOMContentLoaded", () => {
         const phone = phoneInput ? phoneInput.value.trim() : "";
         const message = messageInput ? messageInput.value.trim() : "";
 
-        if (!name || !email || !message) {
-            showResult("Please fill in your name, email, and enquiry message.", "error");
+        if (!name || name.length < 2) {
+            showResult("Please enter your full name.", "error");
             return;
         }
 
-        // Show sending state
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!email || !emailRegex.test(email)) {
+            showResult("Please enter a valid email address.", "error");
+            return;
+        }
+
+        if (!message || message.length < 3) {
+            showResult("Please write your enquiry message.", "error");
+            return;
+        }
+
+        isSubmitting = true;
         const originalButtonText = submitButton ? submitButton.innerText : "Send Enquiry";
         if (submitButton) {
             submitButton.disabled = true;
-            submitButton.innerText = "⏳ Sending Enquiry...";
+            submitButton.innerText = "⏳ Saving Enquiry & Sending...";
         }
 
-        showResult("Sending your enquiry, please wait...", "loading");
+        showResult("Submitting your enquiry, please wait...", "loading");
 
-        // Primary URL resolved dynamically from current browser host (e.g., http://192.168.1.47:5000 or http://localhost:5000)
-        const primaryUrl = getBackendUrl("/api/enquiry");
-        const candidates = [primaryUrl];
+        const apiUrl = getBackendUrl("/api/enquiry");
 
-        // LAN IP fallback if testing across devices or offline mode
-        const lanFallback = "http://192.168.1.47:5000/api/enquiry";
-        const localhostFallback = "http://localhost:5000/api/enquiry";
-        if (!candidates.includes(lanFallback)) candidates.push(lanFallback);
-        if (!candidates.includes(localhostFallback)) candidates.push(localhostFallback);
+        try {
+            console.log("Submitting enquiry to:", apiUrl);
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    message: message
+                })
+            });
 
-        let sentSuccess = false;
-        let lastErrorMsg = "";
-
-        for (const targetUrl of candidates) {
+            let data = {};
             try {
-                console.log("Submitting enquiry to backend:", targetUrl);
-                const response = await fetch(targetUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        phone: phone,
-                        message: message
-                    })
-                });
-
-                let data = {};
-                try {
-                    data = await response.json();
-                } catch (parseErr) {
-                    data = { success: false, message: "Server returned status " + response.status };
-                }
-
-                if (response.ok && data.success) {
-                    showResult("✅ " + (data.message || "Enquiry sent successfully! We will get back to you soon."), "success");
-                    enquiryForm.reset();
-                    sentSuccess = true;
-                    break;
-                } else {
-                    lastErrorMsg = data.message || ("Server returned error " + response.status);
-                    break;
-                }
-            } catch (networkErr) {
-                console.warn(`Connection failed to ${targetUrl}:`, networkErr.message);
-                lastErrorMsg = networkErr.message;
+                data = await response.json();
+            } catch (parseErr) {
+                data = {
+                    success: false,
+                    message: "Server returned status " + response.status + " (" + response.statusText + ")"
+                };
             }
-        }
 
-        if (!sentSuccess) {
-            if (lastErrorMsg && !lastErrorMsg.includes("Failed to fetch") && !lastErrorMsg.includes("NetworkError")) {
-                showResult("⚠️ " + lastErrorMsg, "error");
-            } else {
+            if (response.ok && data.success) {
                 showResult(
-                    `❌ Could not connect to backend server at ${primaryUrl}. Please make sure your device is connected to the same Wi-Fi network and the backend is running.`,
-                    "error"
+                    "✅ " + (data.message || "Enquiry submitted and saved successfully! Our farm team will contact you soon."),
+                    "success"
                 );
+                enquiryForm.reset();
+            } else {
+                showResult("⚠️ " + (data.message || `Server returned error (${response.status})`), "error");
             }
-        }
-
-        if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.innerText = originalButtonText;
+        } catch (networkErr) {
+            console.error("Enquiry network error:", networkErr);
+            showResult(
+                "❌ Could not reach the B Market server. Please check your internet connection or try again later.",
+                "error"
+            );
+        } finally {
+            isSubmitting = false;
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.innerText = originalButtonText;
+            }
         }
     });
 

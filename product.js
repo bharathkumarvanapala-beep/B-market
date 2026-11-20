@@ -8,12 +8,8 @@ function getBackendUrl(path) {
     if (typeof window !== "undefined" && typeof window.getBMarketApiUrl === "function") {
         return window.getBMarketApiUrl(path);
     }
-    const loc = typeof window !== "undefined" ? window.location : null;
-    let host = (loc && loc.hostname) ? loc.hostname.trim() : "";
-    if (!host || host === "0.0.0.0") host = "localhost";
-    const protocol = (loc && loc.protocol === "https:") ? "https:" : "http:";
     const cleanPath = path ? (path.startsWith("/") ? path : "/" + path) : "";
-    return `${protocol}//${host}:5000${cleanPath}`;
+    return cleanPath;
 }
 
 const BACKEND_API_URL = getBackendUrl("/api/products");
@@ -141,7 +137,8 @@ async function fetchProductsFromBackend() {
     }
 
     try {
-        const response = await fetch(BACKEND_API_URL, {
+        const apiUrl = getBackendUrl("/api/products");
+        const response = await fetch(apiUrl, {
             headers: { "Accept": "application/json" }
         });
 

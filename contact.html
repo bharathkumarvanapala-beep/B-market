@@ -1,17 +1,321 @@
-<form id="enquiryForm">
+<!DOCTYPE html>
+<html lang="en">
 
-    <input type="text" id="name" placeholder="Your Name" required>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact & Farmer Enquiry - B Market</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-container {
+            max-width: 1000px;
+            margin: 40px auto 60px;
+            padding: 0 20px;
+        }
 
-    <input type="email" id="email" placeholder="Your Email" required>
+        .contact-header-box {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-    <input type="tel" id="phone" placeholder="Your Phone" required>
+        .contact-header-box h2 {
+            font-size: 32px;
+            color: #1b5e20;
+            margin-bottom: 8px;
+        }
 
-    <textarea id="message" placeholder="Write your enquiry..." required></textarea>
+        .contact-header-box p {
+            font-size: 16px;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-    <button type="submit">Send Enquiry</button>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 30px;
+        }
 
-</form>
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
-<p id="result"></p>
+        .contact-info-panel {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+        }
 
-<script src="contact.js"></script>
+        .contact-info-panel h3 {
+            color: #2e7d32;
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e8f5e9;
+            padding-bottom: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .info-text h4 {
+            margin: 0 0 4px 0;
+            font-size: 15px;
+            color: #222;
+        }
+
+        .info-text p, .info-text a {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .info-text a:hover {
+            color: #2e7d32;
+            text-decoration: underline;
+        }
+
+        .contact-form-panel {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+        }
+
+        .contact-form-panel h3 {
+            color: #2e7d32;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .contact-form-panel .form-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2e7d32;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+        }
+
+        .contact-form-panel button[type="submit"] {
+            width: 100%;
+            background: #2e7d32;
+            color: #ffffff;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .contact-form-panel button[type="submit"]:hover {
+            background: #1b5e20;
+        }
+
+        .contact-form-panel button[type="submit"]:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .result-message {
+            margin-top: 18px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .result-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+            display: block;
+        }
+
+        .result-error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+            display: block;
+        }
+
+        .result-loading {
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+            display: block;
+        }
+    </style>
+    <script src="api-config.js"></script>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo">
+            <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: white;">
+                <img src="image/m logo.png" alt="B Market Logo" style="height: 38px; width: auto; object-fit: contain;">
+                <h1 style="margin: 0;">B Market</h1>
+            </a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="product.html">Products</a>
+            <a href="category.html">Categories</a>
+            <a href="cart.html">Cart 🛒</a>
+            <a href="order-history.html">Orders</a>
+            <a href="contact.html" style="color: #ffe500; font-weight: 800;">Contact</a>
+            <div id="headerUserSlot" class="header-user-area" style="display: inline-block; margin-left: 10px;">
+                <a href="login.html" class="btn-flipkart-login">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="contact-container">
+        <div class="contact-header-box">
+            <h2>Get in Touch with B Market</h2>
+            <p>Direct communication between conscious consumers and regional farmers. Have an enquiry or wholesale order? Send us a message below.</p>
+        </div>
+
+        <div class="contact-grid">
+            <!-- Contact Details Panel -->
+            <div class="contact-info-panel">
+                <h3>Contact Information</h3>
+
+                <div class="info-item">
+                    <span class="info-icon">📞</span>
+                    <div class="info-text">
+                        <h4>Customer Care &amp; WhatsApp</h4>
+                        <p><a href="tel:+917981850491">+91 7981850491</a></p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">✉️</span>
+                    <div class="info-text">
+                        <h4>Email Enquiries</h4>
+                        <p><a href="mailto:bharathkumarvanapala@gmail.com">bharathkumarvanapala@gmail.com</a></p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">📍</span>
+                    <div class="info-text">
+                        <h4>Headquarters &amp; Farmer Hub</h4>
+                        <p>Main Road, Paderu, Alluri Sitharama Raju District, Andhra Pradesh - 531024</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">⏰</span>
+                    <div class="info-text">
+                        <h4>Operating Hours</h4>
+                        <p>Monday - Sunday: 7:00 AM - 9:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">🌿</span>
+                    <div class="info-text">
+                        <h4>Our Promise</h4>
+                        <p>100% farm-direct produce, fair compensation to growers, and quick door delivery.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enquiry Form Panel -->
+            <div class="contact-form-panel">
+                <h3>Direct Farmer Enquiry Form</h3>
+                <p class="form-subtitle">Fill in your details and message. Your enquiry will be sent directly to our team via email.</p>
+
+                <form id="enquiryForm">
+                    <div class="form-group">
+                        <label for="name">Your Full Name *</label>
+                        <input type="text" id="name" placeholder="e.g. Ramesh Kumar" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" placeholder="e.g. ramesh@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone / WhatsApp Number</label>
+                        <input type="tel" id="phone" placeholder="e.g. 9876543210">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Enquiry Details / Requirements *</label>
+                        <textarea id="message" rows="5" placeholder="Specify produce requirements, quantity, delivery location, or question..." required></textarea>
+                    </div>
+
+                    <button type="submit">
+                        Send Enquiry
+                    </button>
+                </form>
+
+                <div id="result" class="result-message"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 B Market. All Rights Reserved. Fresh Local Products &amp; Auxiliary Marketplace.</p>
+    </footer>
+
+    <script src="auth-state.js"></script>
+    <script src="contact.js"></script>
+
+</body>
+
+</html>

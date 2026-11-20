@@ -24,7 +24,16 @@ function setLoggedInCustomer(user) {
 function customerLogout() {
     localStorage.removeItem("bmarket_user");
     updateHeaderCustomerUI();
-    window.location.reload();
+    if (typeof window !== "undefined" && window.location && typeof window.location.reload === "function") {
+        window.location.reload();
+    }
+}
+function logoutCustomer() {
+    customerLogout();
+}
+if (typeof window !== "undefined") {
+    window.customerLogout = customerLogout;
+    window.logoutCustomer = logoutCustomer;
 }
 
 function updateHeaderCustomerUI() {

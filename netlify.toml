@@ -1,0 +1,18 @@
+[build]
+  publish = "."
+
+# Netlify API Proxy Configuration
+# Forwards /api/* to your live backend online
+# Replace the 'to' URL below with your actual deployed backend service URL
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-bmarket-backend.onrender.com/api/:splat"
+  status = 200
+  force = false
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"

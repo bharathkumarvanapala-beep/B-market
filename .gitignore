@@ -27,6 +27,10 @@ npm-debug.log*
 *.p12
 *.pfx
 
+# Unrelated local assets
+Dasara Invitation_files/
+Dussehra Invitation_files/
+
 # Operating system
 .DS_Store
 Thumbs.db

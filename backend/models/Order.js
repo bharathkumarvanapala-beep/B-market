@@ -1,4 +1,35 @@
 import mongoose from "mongoose";
-const itemSchema=new mongoose.Schema({productId:{type:mongoose.Schema.Types.ObjectId,ref:"Product"},name:String,price:Number,quantity:Number},{_id:false});
-const schema=new mongoose.Schema({orderNumber:{type:String,unique:true},userId:{type:mongoose.Schema.Types.ObjectId,ref:"User"},items:[itemSchema],address:{type:String,required:true},total:Number,paymentMethod:{type:String,enum:["COD","DEMO_ONLINE"],default:"COD"},paymentStatus:{type:String,enum:["PENDING","PAID","FAILED"],default:"PENDING"},status:{type:String,enum:["PLACED","CONFIRMED","PACKING","OUT_FOR_DELIVERY","DELIVERED","CANCELLED"],default:"PLACED"}},{timestamps:true});
-export default mongoose.model("Order",schema);
+
+const orderSchema = new mongoose.Schema(
+    {
+        orderId: { type: String, required: true },
+        orderNumber: { type: String },
+        transactionId: { type: String },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
+        customer: {
+            name: { type: String, default: "Customer" },
+            mobile: { type: String, default: "" },
+            email: { type: String, default: "" },
+            address: { type: String, default: "" },
+            city: { type: String, default: "" },
+            pincode: { type: String, default: "" }
+        },
+        items: [
+            {
+                productId: { type: mongoose.Schema.Types.Mixed },
+                name: String,
+                price: Number,
+                quantity: { type: Number, default: 1 },
+                image: String
+            }
+        ],
+        total: { type: Number, required: true },
+        paymentMethod: { type: String, default: "Online" },
+        paymentStatus: { type: String, default: "Paid" },
+        status: { type: String, default: "Order Confirmed" },
+        date: { type: Date, default: Date.now }
+    },
+    { timestamps: true }
+);
+
+export default mongoose.model("Order", orderSchema);

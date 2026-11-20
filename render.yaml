@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: b-market-backend
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: node backend/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: EMAIL_USER
+        value: bharathkumarvanapala@gmail.com
+      - key: EMAIL_PASS
+        sync: false
+      - key: FRONTEND_URL
+        value: https://bmrket.netlify.app

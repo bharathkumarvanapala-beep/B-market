@@ -2,53 +2,72 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details - B Market</title>
-
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="product-details.css">
-
+    <script src="api-config.js"></script>
 </head>
 
 <body>
 
     <header>
-        <h1>B Market</h1>
+        <div class="logo">
+            <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: white;">
+                <img src="image/m logo.png" alt="B Market Logo" style="height: 38px; width: auto; object-fit: contain;">
+                <h1 style="margin: 0;">B Market</h1>
+            </a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="product.html">Products</a>
+            <a href="category.html">Categories</a>
+            <a href="cart.html">Cart 🛒</a>
+            <a href="order-history.html">Orders</a>
+            <a href="contact.html">Contact</a>
+            <div id="headerUserSlot" class="header-user-area" style="display: inline-block; margin-left: 10px;">
+                <a href="login.html" class="btn-flipkart-login">Login</a>
+            </div>
+        </nav>
     </header>
 
     <main class="product-details">
-
-        <img id="productImage"
-             src="image/fruit.jpg" alt="Fresh Fruits" width="300px"height="200px">
-             
+        <img id="productImage" src="image/fruit.jpg" alt="Farm Produce">
 
         <div class="details">
+            <span id="productBadge" style="display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px;">🌿 100% Farm Fresh</span>
+            <h2 id="productName">Loading Product...</h2>
+            <p id="productDescription">Loading fresh details directly from farmer stores...</p>
+            <h3 id="productPrice">₹0</h3>
 
-            <h2 id="productName"></h2>
+            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 25px;">
+                <button id="addCart">
+                    🛒 Add to Cart
+                </button>
+                <button id="buyNowBtn" onclick="buyNowCurrentProduct()" style="background: #fb641b; color: white; border: none; padding: 14px 28px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 700;">
+                    ⚡ Buy Now
+                </button>
+            </div>
 
-            <p id="productDescription"></p>
-
-            <h3 id="productPrice"></h3>
-
-            <button id="addCart">
-                Add to Cart
-            </button>
-
-            <br><br>
-
-            <a href="index.html">
-                ← Back to Products
+            <a href="product.html" class="btn-back-link">
+                ← Back to All Products
             </a>
-
         </div>
-
     </main>
 
+    <script src="auth-state.js"></script>
     <script src="script.js"></script>
     <script src="product-details.js"></script>
+    <script>
+        function buyNowCurrentProduct() {
+            if (typeof currentProduct !== "undefined" && currentProduct) {
+                const price = Number(String(currentProduct.price).replace(/[^0-9]/g, "")) || currentProduct.numPrice || 100;
+                addToCart(currentProduct.name, price, currentProduct.image);
+                window.location.href = "checkout.html";
+            }
+        }
+    </script>
 </body>
 </html>

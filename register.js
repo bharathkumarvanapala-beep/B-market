@@ -7,12 +7,8 @@ function getBackendUrl(path) {
     if (typeof window !== "undefined" && typeof window.getBMarketApiUrl === "function") {
         return window.getBMarketApiUrl(path);
     }
-    const loc = typeof window !== "undefined" ? window.location : null;
-    let host = (loc && loc.hostname) ? loc.hostname.trim() : "";
-    if (!host || host === "0.0.0.0") host = "localhost";
-    const protocol = (loc && loc.protocol === "https:") ? "https:" : "http:";
     const cleanPath = path ? (path.startsWith("/") ? path : "/" + path) : "";
-    return `${protocol}//${host}:5000${cleanPath}`;
+    return cleanPath;
 }
 
 const AUTH_REGISTER_URL = getBackendUrl("/api/auth/register");
@@ -79,7 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             try {
-                const response = await fetch(AUTH_REGISTER_URL, {
+                const registerEndpoint = getBackendUrl("/api/auth/register");
+                const response = await fetch(registerEndpoint, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)

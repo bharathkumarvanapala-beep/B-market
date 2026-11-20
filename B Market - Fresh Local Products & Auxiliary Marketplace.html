@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0032)http://127.0.0.1:8080/index.html -->
+<!-- saved from url=(0032)http://localhost:5000/index.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
     <header class="fk-top-navbar">
         <div class="fk-nav-inner">
             <!-- Brand Logo & Plus Tag -->
-            <a href="http://127.0.0.1:8080/index.html" class="fk-brand-col">
+            <a href="http://localhost:5000/index.html" class="fk-brand-col">
                 <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/m logo.png" alt="B Market Logo" class="fk-brand-logo">
                 <div class="fk-brand-text">
                     <h1>B Market</h1>
@@ -40,21 +40,58 @@
             <div class="fk-header-actions">
                 <!-- Customer Login / Account Menu (Managed dynamically by auth-state.js) -->
                 <div id="headerUserSlot" class="header-user-area">
-                <a href="http://127.0.0.1:8080/login.html" class="btn-flipkart-login">
-                    <span>Login</span>
-                </a>
+                <div class="user-profile-menu">
+                    <button type="button" class="btn-customer-profile" onclick="toggleUserDropdown(event)">
+                        <span class="user-avatar-circle">V</span>
+                        <span class="user-greeting">Hi, <strong>Vanapala</strong></span>
+                        <span class="dropdown-chevron">▼</span>
+                    </button>
+                    <div id="customerDropdown" class="customer-dropdown-menu">
+                        <div class="dropdown-user-header">
+                            <p class="dropdown-user-name">Vanapala Bharath Kumar</p>
+                            <p class="dropdown-user-email">bharathkumarvanapala@gmail.com</p>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="http://localhost:5000/order-history.html" class="dropdown-item">
+                            <span>📦 My Orders</span>
+                        </a>
+                        <a href="http://localhost:5000/cart.html" class="dropdown-item">
+                            <span>🛒 My Cart</span>
+                        </a>
+                        <div class="dropdown-saved-addr">
+                            <span class="addr-label">📍 Delivery Address:</span>
+                            <p class="addr-val">22, paderu - 531024</p>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button type="button" class="dropdown-item btn-logout" onclick="customerLogout()">
+                            <span>🚪 Logout</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-                <a href="http://127.0.0.1:8080/order-history.html" class="fk-action-link" title="My Order History">
+                <a href="http://localhost:5000/order-history.html" class="fk-action-link" title="My Order History">
                     <span>📦 Orders</span>
                 </a>
 
-                <a href="http://127.0.0.1:8080/cart.html" class="fk-action-link" title="Shopping Cart">
+                <a href="http://localhost:5000/cart.html" class="fk-action-link" title="Shopping Cart">
                     <span>🛒 Cart</span>
                     <span id="headerCartCount" class="cart-count-badge" style="display: inline-flex;">1</span>
                 </a>
 
-                <a href="http://127.0.0.1:8080/product.html" class="fk-action-link" style="color: #ffe500; font-weight: 800;" title="View All Dynamic Products">
+                <a href="http://localhost:5000/category.html" class="fk-action-link" title="Categories &amp; Deals">
+                    <span>Categories</span>
+                </a>
+
+                <a href="http://localhost:5000/gallery.html" class="fk-action-link" title="Farm Fresh Gallery">
+                    <span>Gallery</span>
+                </a>
+
+                <a href="http://localhost:5000/contact.html" class="fk-action-link" title="Direct Contact &amp; Enquiry">
+                    <span>Contact</span>
+                </a>
+
+                <a href="http://localhost:5000/product.html" class="fk-action-link" style="color: #ffe500; font-weight: 800;" title="View All Dynamic Products">
                     <span>All Products ↗</span>
                 </a>
             </div>
@@ -125,10 +162,10 @@
                     Experience natural, chemical-free fruits, vegetables, unpolished grains, and organic forest honey at honest farm prices. Partnered with <strong>Amazon</strong> &amp; <strong>Flipkart</strong> for premium dry fruits and gardening essentials.
                 </p>
                 <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <a href="http://127.0.0.1:8080/index.html#dynamicCategoryExplorer" class="btn-fk-cta">
+                    <a href="http://localhost:5000/index.html#dynamicCategoryExplorer" class="btn-fk-cta">
                         <span>🛒 Shop Farm Harvests</span>
                     </a>
-                    <a href="http://127.0.0.1:8080/product.html" class="btn-fk-cta" style="background: #ffffff; color: #10843f !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    <a href="http://localhost:5000/product.html" class="btn-fk-cta" style="background: #ffffff; color: #10843f !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
                         <span>⚡ Auxiliary Deals ↗</span>
                     </a>
                 </div>
@@ -185,10 +222,10 @@
                 <h3 class="fk-deals-title">Deal of the Day — Farm Fresh &amp; Partner Auxiliary Deals</h3>
                 <div class="fk-timer-box">
                     <span>⏰ Ends in:</span>
-                    <strong id="dealTimerDisplay">04h : 26m : 24s</strong>
+                    <strong id="dealTimerDisplay">04h : 28m : 03s</strong>
                 </div>
             </div>
-            <a href="http://127.0.0.1:8080/product.html" style="color: #fb641b; font-weight: 800; text-decoration: none; font-size: 14px;">
+            <a href="http://localhost:5000/product.html" style="color: #fb641b; font-weight: 800; text-decoration: none; font-size: 14px;">
                 View All Deals →
             </a>
         </div>
@@ -206,7 +243,7 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                     <span id="catalogProductCount" class="catalog-count-badge">47 products available</span>
-                    <a href="http://127.0.0.1:8080/product.html" class="cat-pill-btn" style="background: #10843f; color: #ffffff; text-decoration: none; border-color: #10843f;">
+                    <a href="http://localhost:5000/product.html" class="cat-pill-btn" style="background: #10843f; color: #ffffff; text-decoration: none; border-color: #10843f;">
                         <span>All Products Page →</span>
                     </a>
                 </div>
@@ -1628,7 +1665,7 @@
     
         <div class="product-item-card amazon-item" data-category="spices" data-source="amazon">
             <div class="card-media-wrap">
-                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/termer.jpg" alt="Everest Pure Kashmiri Chilli Powder" onerror="this.onerror=null; this.src='image/termer.jpg'" loading="lazy" class="product-item-img">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1627735483796-015848259db8" alt="Everest Pure Kashmiri Chilli Powder" onerror="this.onerror=null; this.src='image/termer.jpg'" loading="lazy" class="product-item-img">
                 <span class="partner-badge badge-amazon">
                     📦 Amazon Prime
                 </span>
@@ -2304,7 +2341,7 @@
     
         <div class="product-item-card amazon-item" data-category="tamarind" data-source="amazon">
             <div class="card-media-wrap">
-                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.d.jpg" alt="Dabur Hommade Tamarind Paste" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1589135233689-d6529fa21946" alt="Dabur Hommade Tamarind Paste" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
                 <span class="partner-badge badge-amazon">
                     📦 Amazon Prime
                 </span>
@@ -2351,7 +2388,7 @@
     
         <div class="product-item-card flipkart-item" data-category="tamarind" data-source="flipkart">
             <div class="card-media-wrap">
-                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/image.d.jpg" alt="Priya Concentrated Tamarind Paste" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
+                <img src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/photo-1589135233689-d6529fa21946" alt="Priya Concentrated Tamarind Paste" onerror="this.onerror=null; this.src='image/image.d.jpg'" loading="lazy" class="product-item-img">
                 <span class="partner-badge badge-flipkart">
                     ⚡ Flipkart Assured
                 </span>
@@ -2646,6 +2683,7 @@
     </script>
 
     <!-- SCRIPTS -->
+    <script src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/api-config.js.download"></script>
     <script src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/auth-state.js.download"></script>
     <script src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/script.js.download"></script>
     <script src="./B Market - Fresh Local Products &amp; Auxiliary Marketplace_files/contact.js.download"></script>
