@@ -1,14 +1,19 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
 
-# Netlify API Proxy Configuration
-# Forwards /api/* to your live backend online
-# Replace the 'to' URL below with your actual deployed backend service URL
+# B Market Netlify Functions - Enquiry Route
 [[redirects]]
-  from = "/api/*"
-  to = "https://your-bmarket-backend.onrender.com/api/:splat"
+  from = "/api/enquiry"
+  to = "/.netlify/functions/enquiry"
   status = 200
-  force = false
+  force = true
+
+[[redirects]]
+  from = "/api/enquiry/*"
+  to = "/.netlify/functions/enquiry/:splat"
+  status = 200
+  force = true
 
 [[headers]]
   for = "/*"
