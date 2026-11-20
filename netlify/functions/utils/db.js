@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 let cachedDbPromise = null;
 
 function resolveMongoUri() {
-    const raw =
+    let raw =
         process.env.MONGODB_URI ||
         process.env.MONGO_URI ||
         process.env.DATABASE_URL ||
@@ -13,7 +13,32 @@ function resolveMongoUri() {
         process.env.ATLAS_URI;
 
     if (!raw || typeof raw !== "string") return null;
-    return raw.trim().replace(/^['"]|['"]$/g, "");
+
+    raw = raw.trim();
+
+    // 1. Remove leading export or assignment if user pasted 'MONGODB_URI=...'
+    raw = raw.replace(/^(export\s+)?([A-Za-z0-9_]+)\s*=\s*/i, "");
+
+    // 2. Remove mongosh invocation if copied from Atlas connect wizard
+    raw = raw.replace(/^mongosh\s+['"]?/i, "");
+
+    // 3. Remove surrounding quotes
+    raw = raw.replace(/^['"]|['"]$/g, "").trim();
+
+    // 4. Normalize scheme slashes (e.g. mongodb:/ or mongodb+srv:/ with missing slash)
+    raw = raw.replace(/^mongodb\+srv:\/([^\/])/i, "mongodb+srv://$1");
+    raw = raw.replace(/^mongodb:\/([^\/])/i, "mongodb://$1");
+
+    // 5. If missing scheme entirely
+    if (!raw.startsWith("mongodb://") && !raw.startsWith("mongodb+srv://")) {
+        if (raw.includes("mongodb.net") || raw.includes("+srv")) {
+            raw = "mongodb+srv://" + raw.replace(/^(\+srv:\/\/|srv:\/\/)/i, "");
+        } else if (raw.includes("@") || raw.includes(":27017")) {
+            raw = "mongodb://" + raw;
+        }
+    }
+
+    return raw;
 }
 
 /**
@@ -47,12 +72,21 @@ export function getSanitizedDbInfo() {
     const pathPart = raw.replace(/^mongodb(\+srv)?:\/\/[^/]+/, "");
     const hasExplicitDb = /\/[a-zA-Z0-9_-]+(\?|$)/.test(pathPart);
 
+    // Safe sanitized preview: strips credentials between // and @
+    let safePreview = raw;
+    if (safePreview.includes("@")) {
+        safePreview = safePreview.replace(/:\/\/[^@]+@/, "://***:***@");
+    } else {
+        safePreview = safePreview.slice(0, 15) + "...";
+    }
+
     return {
         configured: true,
         type: isAtlas ? "MongoDB Atlas (Cloud)" : (isLocal ? "Localhost (Invalid for Cloud)" : "MongoDB"),
         host: host,
         hasExplicitDatabaseName: hasExplicitDb,
-        targetDatabase: hasExplicitDb ? "from_uri" : "bmarket"
+        targetDatabase: hasExplicitDb ? "from_uri" : "bmarket",
+        formatPreview: safePreview
     };
 }
 
