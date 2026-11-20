@@ -277,25 +277,25 @@
                 <h3>Direct Farmer Enquiry Form</h3>
                 <p class="form-subtitle">Fill in your details and message. Your enquiry will be sent directly to our team via email.</p>
 
-                <form id="enquiryForm">
+                <form id="enquiryForm" name="farmer-enquiry" method="POST" data-netlify="true">
                     <div class="form-group">
                         <label for="name">Your Full Name *</label>
-                        <input type="text" id="name" placeholder="e.g. Ramesh Kumar" required>
+                        <input type="text" id="name" name="name" placeholder="e.g. Ramesh Kumar" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address *</label>
-                        <input type="email" id="email" placeholder="e.g. ramesh@example.com" required>
+                        <input type="email" id="email" name="email" placeholder="e.g. ramesh@example.com" required>
                     </div>
 
                     <div class="form-group">
                         <label for="phone">Phone / WhatsApp Number</label>
-                        <input type="tel" id="phone" placeholder="e.g. 9876543210">
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. 9876543210">
                     </div>
 
                     <div class="form-group">
                         <label for="message">Enquiry Details / Requirements *</label>
-                        <textarea id="message" rows="5" placeholder="Specify produce requirements, quantity, delivery location, or question..." required></textarea>
+                        <textarea id="message" name="message" rows="5" placeholder="Specify produce requirements, quantity, delivery location, or question..." required></textarea>
                     </div>
 
                     <button type="submit">

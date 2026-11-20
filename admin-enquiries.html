@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B Market - Farmer Enquiry Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="api-config.js?v=2.2.0"></script>
+    <style>
+        .admin-wrap {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #ffffff;
+            padding: 20px 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            margin-bottom: 24px;
+        }
+        .admin-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #1b5e20;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .btn-refresh {
+            background: #2e7d32;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-refresh:hover {
+            background: #1b5e20;
+        }
+        .enquiry-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: #fff;
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+            border-left: 4px solid #2e7d32;
+        }
+        .stat-card h3 {
+            margin: 0 0 6px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .stat-card p {
+            margin: 0;
+            font-size: 26px;
+            font-weight: bold;
+            color: #111;
+        }
+        .enquiry-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        .enquiry-item-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .enquiry-item-card:hover {
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+        }
+        .cust-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 0;
+        }
+        .cust-date {
+            font-size: 12px;
+            color: #64748b;
+        }
+        .contact-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .chip {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #334155;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        .chip:hover {
+            background: #e2e8f0;
+        }
+        .chip-whatsapp {
+            background: #dcfce7;
+            border-color: #86efac;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .chip-whatsapp:hover {
+            background: #bbf7d0;
+        }
+        .chip-call {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+        .chip-call:hover {
+            background: #dbeafe;
+        }
+        .msg-box {
+            background: #f8fafc;
+            border-left: 3px solid #2e7d32;
+            padding: 12px 14px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #1e293b;
+            line-height: 1.5;
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: #fef08a;
+            color: #854d0e;
+        }
+        .status-badge.CONTACTED {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff;
+            border-radius: 10px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body style="background: #f8fafc;">
+
+    <!-- TOP NAVBAR -->
+    <header class="fk-top-navbar">
+        <div class="fk-nav-inner">
+            <a href="index.html" class="fk-brand-col">
+                <img src="image/m logo.png" alt="B Market Logo" class="fk-brand-logo">
+                <div class="fk-brand-text">
+                    <h1>B Market</h1>
+                    <div class="fk-brand-subtag">
+                        <span>Farmer</span>
+                        <span class="plus-star">Admin ✦</span>
+                        <span>Portal</span>
+                    </div>
+                </div>
+            </a>
+            <div class="fk-header-actions">
+                <a href="index.html" class="fk-action-link"><span>🏠 Live Store</span></a>
+                <a href="order-history.html" class="fk-action-link"><span>📦 Orders</span></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-wrap">
+        <div class="admin-header">
+            <div>
+                <h1>📥 Direct Customer Enquiries</h1>
+                <p style="margin: 4px 0 0 0; font-size: 13px; color: #64748b;">
+                    Farmer: <strong>Bharath Kumar Vanapala</strong> (+91 7981850491)
+                </p>
+            </div>
+            <div class="admin-controls">
+                <button class="btn-refresh" onclick="loadEnquiries()">
+                    🔄 Refresh Now
+                </button>
+            </div>
+        </div>
+
+        <div class="enquiry-stats">
+            <div class="stat-card">
+                <h3>Total Enquiries</h3>
+                <p id="totalCount">0</p>
+            </div>
+            <div class="stat-card" style="border-left-color: #2563eb;">
+                <h3>Today's Enquiries</h3>
+                <p id="todayCount">0</p>
+            </div>
+            <div class="stat-card" style="border-left-color: #16a34a;">
+                <h3>Active Farmers Online</h3>
+                <p>1 (Direct)</p>
+            </div>
+        </div>
+
+        <div id="enquiryList" class="enquiry-grid">
+            <div class="empty-state">
+                <h3>Loading enquiries from database...</h3>
+                <p>Connecting to B Market API</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getApiUrl(path) {
+            if (typeof window.getBMarketApiUrl === "function") {
+                return window.getBMarketApiUrl(path);
+            }
+            return path;
+        }
+
+        async function loadEnquiries() {
+            const listEl = document.getElementById("enquiryList");
+            const totalEl = document.getElementById("totalCount");
+            const todayEl = document.getElementById("todayCount");
+
+            try {
+                const res = await fetch(getApiUrl("/api/enquiry"));
+                if (!res.ok) throw new Error("HTTP " + res.status);
+                const data = await res.json();
+                const enquiries = data.enquiries || [];
+
+                totalEl.innerText = enquiries.length;
+
+                const todayStr = new Date().toDateString();
+                const todayItems = enquiries.filter(e => new Date(e.createdAt || e.date).toDateString() === todayStr);
+                todayEl.innerText = todayItems.length;
+
+                if (enquiries.length === 0) {
+                    listEl.innerHTML = `
+                        <div class="empty-state">
+                            <h3>No enquiries submitted yet</h3>
+                            <p>Customer enquiries from the website will appear here in real-time.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                listEl.innerHTML = enquiries.map(e => {
+                    const phoneClean = (e.phone || "").replace(/[^0-9]/g, "");
+                    const waText = encodeURIComponent(`Hi ${e.name}, this is Bharath Kumar from B-Market regarding your enquiry: "${(e.message || '').slice(0, 80)}"`);
+                    const waLink = phoneClean ? `https://wa.me/91${phoneClean.slice(-10)}?text=${waText}` : `https://wa.me/917981850491`;
+                    const dateFormatted = new Date(e.createdAt || Date.now()).toLocaleString();
+
+                    return `
+                        <div class="enquiry-item-card">
+                            <div class="card-top">
+                                <div>
+                                    <h3 class="cust-name">👤 ${e.name}</h3>
+                                    <span class="cust-date">🕒 ${dateFormatted} &bull; ID: #${(e._id || '').slice(-6)}</span>
+                                </div>
+                                <span class="status-badge ${e.status || 'NEW'}">${e.status || 'NEW'}</span>
+                            </div>
+
+                            <div class="contact-chips">
+                                ${e.phone ? `
+                                    <a href="tel:${e.phone}" class="chip chip-call">
+                                        📞 Call ${e.phone}
+                                    </a>
+                                    <a href="${waLink}" target="_blank" class="chip chip-whatsapp">
+                                        💬 WhatsApp Customer
+                                    </a>
+                                ` : `<span class="chip">No phone provided</span>`}
+                                <a href="mailto:${e.email}" class="chip">
+                                    📧 ${e.email}
+                                </a>
+                            </div>
+
+                            <p class="msg-box"><strong>Message:</strong>\n${e.message}</p>
+                        </div>
+                    `;
+                }).join("");
+
+            } catch (err) {
+                listEl.innerHTML = `
+                    <div class="empty-state" style="border-left: 4px solid #ef4444;">
+                        <h3 style="color: #dc2626;">Could not reach API server</h3>
+                        <p style="margin-bottom: 12px;">${err.message}</p>
+                        <p style="font-size: 13px; color: #64748b;">Ensure backend server or Netlify Functions are active.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-load on open and auto-refresh every 30 seconds
+        loadEnquiries();
+        setInterval(loadEnquiries, 30000);
+    </script>
+</body>
+</html>
