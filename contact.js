@@ -110,10 +110,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } catch (networkErr) {
             console.error("Enquiry network error:", networkErr);
-            showResult(
-                "❌ Could not reach the B Market server. Please check your internet connection or try again later.",
-                "error"
-            );
+            const waFallback = `https://wa.me/917981850491?text=${encodeURIComponent(
+                `Hi Bharath, I want to submit an enquiry on B-Market:\n\n` +
+                `👤 Name: ${name}\n` +
+                `📞 Phone: ${phone || 'Not provided'}\n` +
+                `📧 Email: ${email}\n` +
+                `📝 Message: ${message}`
+            )}`;
+
+            if (resultElement) {
+                resultElement.style.display = "block";
+                resultElement.className = "result-message result-error";
+                resultElement.innerHTML = `
+                    <div style="text-align: left; padding: 6px 2px;">
+                        <p style="margin: 0 0 8px 0; color: #b91c1c; font-weight: bold; font-size: 14px;">
+                            ⚠️ Cloud connection paused. Connect directly with Farmer Bharath:
+                        </p>
+                        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+                            <a href="${waFallback}" target="_blank" rel="noopener noreferrer"
+                               style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: #25D366; color: #fff; padding: 10px 14px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
+                                💬 Send Enquiry on WhatsApp (+91 7981850491)
+                            </a>
+                            <a href="tel:+917981850491"
+                               style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: #1b5e20; color: #fff; padding: 9px 14px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px;">
+                                📞 Call Farmer (+91 7981850491)
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
         } finally {
             isSubmitting = false;
             if (submitButton) {
