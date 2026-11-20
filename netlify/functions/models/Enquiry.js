@@ -48,3 +48,4 @@ const enquirySchema = new mongoose.Schema(
 );
 
 export default mongoose.models.Enquiry || mongoose.model("Enquiry", enquirySchema);
+

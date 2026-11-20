@@ -2,7 +2,7 @@
   publish = "."
   functions = "netlify/functions"
 
-# B Market Netlify Functions - Enquiry Route
+# Netlify Serverless API Functions Routing
 [[redirects]]
   from = "/api/enquiry"
   to = "/.netlify/functions/enquiry"
@@ -12,6 +12,42 @@
 [[redirects]]
   from = "/api/enquiry/*"
   to = "/.netlify/functions/enquiry/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/products"
+  to = "/.netlify/functions/products"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/products/*"
+  to = "/.netlify/functions/products/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/orders"
+  to = "/.netlify/functions/orders"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/orders/*"
+  to = "/.netlify/functions/orders/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/auth/*"
+  to = "/.netlify/functions/auth/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/health"
+  to = "/.netlify/functions/health"
   status = 200
   force = true
 

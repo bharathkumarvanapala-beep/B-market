@@ -1,4 +1,10 @@
 # B Market Single-Platform Netlify Architecture
-# Direct Farmer Enquiry Serverless Function Route
+# Serverless API Functions routing
 /api/enquiry     /.netlify/functions/enquiry 200
 /api/enquiry/*   /.netlify/functions/enquiry/:splat 200
+/api/products    /.netlify/functions/products 200
+/api/products/*  /.netlify/functions/products/:splat 200
+/api/orders      /.netlify/functions/orders 200
+/api/orders/*    /.netlify/functions/orders/:splat 200
+/api/auth/*      /.netlify/functions/auth/:splat 200
+/api/health      /.netlify/functions/health 200

@@ -38,3 +38,4 @@ export async function connectToDatabase() {
 export function isDbConnected() {
     return mongoose.connection && mongoose.connection.readyState === 1;
 }
+
