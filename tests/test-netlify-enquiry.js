@@ -2,10 +2,10 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
-import { handler } from "./netlify/functions/enquiry.js";
+import { handler } from "../netlify/functions/enquiry.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, "backend/.env") });
+dotenv.config({ path: path.join(__dirname, "../backend/.env") });
 dotenv.config();
 
 async function testNetlifyEnquiryFunction() {
