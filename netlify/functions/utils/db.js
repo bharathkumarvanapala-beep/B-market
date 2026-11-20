@@ -139,8 +139,8 @@ export async function connectToDatabase() {
             connectTimeoutMS: 8000
         };
 
-        // If connection string does not specify a db name, route to bmarket
-        if (!hasExplicitDb) {
+        // If connection string does not specify a db name, or defaults to test, route to bmarket
+        if (!hasExplicitDb || pathPart.startsWith("/test")) {
             opts.dbName = "bmarket";
         }
 
