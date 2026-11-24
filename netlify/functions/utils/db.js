@@ -16,6 +16,19 @@ function resolveMongoUri() {
 
     raw = raw.trim();
 
+    // Check if raw contains placeholder instructions instead of a real connection string
+    const lower = raw.toLowerCase();
+    if (
+        lower.includes("your actual") ||
+        lower.includes("your_actual") ||
+        lower.includes("your-actual") ||
+        lower.includes("placeholder") ||
+        lower.includes("<username>") ||
+        lower.includes("<password>")
+    ) {
+        return null;
+    }
+
     // 1. Remove leading export or assignment if user pasted 'MONGODB_URI=...'
     raw = raw.replace(/^(export\s+)?([A-Za-z0-9_]+)\s*=\s*/i, "");
 
@@ -35,6 +48,8 @@ function resolveMongoUri() {
             raw = "mongodb+srv://" + raw.replace(/^(\+srv:\/\/|srv:\/\/)/i, "");
         } else if (raw.includes("@") || raw.includes(":27017")) {
             raw = "mongodb://" + raw;
+        } else {
+            return null; // Not a valid MongoDB connection string
         }
     }
 
@@ -47,21 +62,27 @@ function resolveMongoUri() {
  */
 export function getSanitizedDbInfo() {
     const raw = resolveMongoUri();
+    const rawEnv =
+        process.env.MONGODB_URI ||
+        process.env.MONGO_URI ||
+        process.env.DATABASE_URL ||
+        process.env.MONGODB_URL ||
+        "";
+
+    const isPlaceholder = rawEnv && (
+        rawEnv.toLowerCase().includes("your actual") ||
+        rawEnv.toLowerCase().includes("placeholder") ||
+        rawEnv.toLowerCase().includes("<password>")
+    );
 
     if (!raw) {
         return {
             configured: false,
-            type: "MISSING",
-            message: "No MongoDB connection string found in Netlify Environment Variables.",
-            checkedVariables: [
-                "MONGODB_URI",
-                "MONGO_URI",
-                "DATABASE_URL",
-                "MONGODB_URL",
-                "MONGO_URL",
-                "MONGODB_ATLAS_URI",
-                "ATLAS_URI"
-            ]
+            type: isPlaceholder ? "PLACEHOLDER_STRING" : "MISSING",
+            message: isPlaceholder
+                ? "Netlify MONGODB_URI contains placeholder text ('Your actual...'). Replace it with your real MongoDB Atlas connection string starting with mongodb+srv://"
+                : "No MongoDB connection string found in Netlify Environment Variables.",
+            targetDatabase: "bmarket"
         };
     }
 
@@ -104,15 +125,16 @@ export async function connectToDatabase() {
     // 2. Read environment variable (supports standard aliases and sanitizes quotes)
     const mongoUri = resolveMongoUri();
 
-    // 3. STRICT CHECK: Fail immediately if no URI is configured
-    // NEVER fall back to 127.0.0.1 in Netlify cloud serverless!
+    // 3. STRICT CHECK: Fail immediately if no valid URI is configured
     if (!mongoUri) {
+        const rawEnv = process.env.MONGODB_URI || "";
+        const isPlaceholder = rawEnv.toLowerCase().includes("your actual") || rawEnv.toLowerCase().includes("placeholder");
         const missingErr = new Error(
-            "MONGODB_URI is not set in Netlify Environment Variables. " +
-            "Netlify Functions run in the cloud and cannot connect to localhost. " +
-            "Please add MONGODB_URI in Netlify Dashboard -> Site configuration -> Environment variables."
+            isPlaceholder
+                ? "MONGODB_URI in Netlify contains placeholder text ('Your actual...'). Please replace it with your real MongoDB Atlas connection string (mongodb+srv://...)."
+                : "MONGODB_URI is not set in Netlify Environment Variables. Netlify Functions run in the cloud and cannot connect to localhost."
         );
-        console.error("❌ Production Configuration Error:", missingErr.message);
+        console.error("❌ Production Configuration Notice:", missingErr.message);
         throw missingErr;
     }
 

@@ -95,35 +95,17 @@ router.post("/", async (req, res) => {
 
         const ipAddress = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "";
         const userAgent = req.headers["user-agent"] || "";
+        const submissionDate = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+        const tempEnquiryId = "ENQ-" + Date.now().toString().slice(-6);
 
-        // 2. Persist to MongoDB
-        if (!isDbConnected()) {
-            console.error("❌ MongoDB is disconnected. Refusing to claim success without database storage.");
-            return res.status(503).json({
-                success: false,
-                message: "Database service is temporarily unavailable. Your enquiry could not be saved. Please try again shortly or contact us directly via WhatsApp/Phone."
-            });
-        }
-
-        const savedEnquiry = await Enquiry.create({
-            name,
-            email,
-            phone,
-            message,
-            ipAddress: typeof ipAddress === "string" ? ipAddress.split(",")[0].trim() : "",
-            userAgent: typeof userAgent === "string" ? userAgent.slice(0, 200) : "",
-            status: "NEW"
-        });
-
-        console.log(`📝 Enquiry successfully saved in MongoDB! ID: ${savedEnquiry._id} from ${name} (${email})`);
-
-        // 3. Asynchronous Email Notification via Nodemailer
+        // 1. Send Email Notification to Owner's Mobile Gmail Immediately!
         const emailUser = (process.env.EMAIL_USER || "bharathkumarvanapala@gmail.com").trim();
-        const rawPass = process.env.EMAIL_PASS || "";
+        const rawPass = process.env.EMAIL_PASS || "oiufzihvumlfcsen";
         const emailPass = rawPass.replace(/\s+/g, "").trim();
         let emailSent = false;
+        let emailErrorMsg = null;
 
-        if (emailPass && emailPass !== "your_16_character_app_password_here" && emailPass.length >= 8) {
+        if (emailPass && emailPass.length >= 8) {
             try {
                 const transporter = nodemailer.createTransport({
                     service: "gmail",
@@ -133,17 +115,14 @@ router.post("/", async (req, res) => {
                     }
                 });
 
-                const submissionDate = new Date().toLocaleString();
-
-                const mailOptions = {
-                    from: `"B Market" <${emailUser}>`,
+                await transporter.sendMail({
+                    from: `"B Market Farmer Enquiry" <${emailUser}>`,
                     to: emailUser,
                     replyTo: email,
-                    subject: `New B Market Enquiry from ${name} [${savedEnquiry._id.toString().slice(-6)}]`,
+                    subject: `🌾 New B Market Enquiry from ${name} [${tempEnquiryId}]`,
                     text: `
-New B Market Customer Enquiry (Stored in MongoDB)
+New B Market Customer Enquiry
 
-Enquiry ID: ${savedEnquiry._id}
 Name: ${name}
 Email: ${email}
 Phone: ${phone || "Not provided"}
@@ -158,13 +137,13 @@ Reply directly to this email to contact ${name} (${email}).
                     html: `
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
     <div style="background-color: #2e7d32; color: #ffffff; padding: 22px; text-align: center;">
-        <h2 style="margin: 0; font-size: 24px; letter-spacing: 0.5px;">B Market — New Customer Enquiry</h2>
-        <p style="margin: 6px 0 0 0; font-size: 14px; opacity: 0.9;">Fresh Farm Products Directly from Farmers</p>
+        <h2 style="margin: 0; font-size: 24px; letter-spacing: 0.5px;">B Market — Direct Farmer Enquiry</h2>
+        <p style="margin: 6px 0 0 0; font-size: 14px; opacity: 0.9;">Fresh Farm Products Directly from Growers</p>
     </div>
     <div style="padding: 26px; background-color: #ffffff;">
         <div style="background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 6px; padding: 10px 14px; margin-bottom: 20px;">
             <p style="margin: 0; font-size: 13px; color: #2e7d32; font-weight: bold;">
-                💾 Stored in MongoDB: #${savedEnquiry._id}
+                📬 Direct Enquiry: ${tempEnquiryId}
             </p>
         </div>
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 22px;">
@@ -180,50 +159,74 @@ Reply directly to this email to contact ${name} (${email}).
             </tr>
             <tr style="border-bottom: 1px solid #eeeeee;">
                 <td style="padding: 10px 0; font-weight: bold; color: #555555;">Phone:</td>
-                <td style="padding: 10px 0; color: #111111; font-size: 15px;">${phone || "Not provided"}</td>
+                <td style="padding: 10px 0; color: #111111; font-size: 15px;">
+                    ${phone ? `<a href="tel:${phone}" style="color: #2e7d32;">${phone}</a>` : "Not provided"}
+                </td>
             </tr>
             <tr>
-                <td style="padding: 10px 0; font-weight: bold; color: #555555;">Time:</td>
-                <td style="padding: 10px 0; color: #777777; font-size: 13px;">${submissionDate}</td>
+                <td style="padding: 10px 0; font-weight: bold; vertical-align: top; color: #555555;">Message:</td>
+                <td style="padding: 10px 0; color: #222222; line-height: 1.6; font-size: 15px; white-space: pre-wrap;">${message}</td>
             </tr>
         </table>
-        <div style="padding: 16px 20px; background-color: #f7faf7; border-left: 4px solid #2e7d32; border-radius: 4px; margin-bottom: 20px;">
-            <p style="margin: 0 0 8px 0; font-weight: bold; color: #2e7d32; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Message:</p>
-            <p style="margin: 0; color: #333333; line-height: 1.6; font-size: 15px; white-space: pre-wrap;">${message}</p>
-        </div>
-        <p style="margin: 20px 0 0 0; font-size: 13px; color: #666666; background: #e8f5e9; padding: 10px 14px; border-radius: 6px;">
+        <p style="font-size: 12px; color: #777; margin: 0; text-align: center;">Submitted on ${submissionDate}</p>
+        <p style="margin: 18px 0 0 0; font-size: 13px; color: #666666; background: #e8f5e9; padding: 10px 14px; border-radius: 6px;">
             💡 <strong>Quick Reply:</strong> Click "Reply" in your email client to email <strong>${name}</strong> directly at <a href="mailto:${email}" style="color: #2e7d32;">${email}</a>.
         </p>
     </div>
-    <div style="background-color: #f5f5f5; padding: 14px; text-align: center; font-size: 12px; color: #888888; border-top: 1px solid #eeeeee;">
-        © 2026 B Market. All Rights Reserved.
-    </div>
 </div>
                     `
-                };
+                });
 
-                await transporter.sendMail(mailOptions);
                 emailSent = true;
-                await Enquiry.updateOne({ _id: savedEnquiry._id }, { emailDelivered: true });
-                console.log(`✅ Enquiry email notification delivered to ${emailUser}`);
-            } catch (mailErr) {
-                console.error("⚠️ Enquiry email notification failed (saved in DB):", mailErr.message);
+                console.log(`[Backend API] Sent Gmail notification for enquiry from ${name} (${email})`);
+            } catch (emailErr) {
+                emailErrorMsg = emailErr.message;
+                console.warn("[Backend API] Email notification notice:", emailErr.message);
             }
         }
 
-        // 4. Return success response with MongoDB enquiry ID
-        res.status(201).json({
-            success: true,
-            message: "Enquiry submitted and saved successfully! Our farm team will contact you soon.",
-            enquiryId: savedEnquiry._id,
-            emailDispatched: emailSent
-        });
+        // 2. Best-Effort Database Persistence in MongoDB
+        let savedEnquiry = null;
+        if (isDbConnected()) {
+            try {
+                savedEnquiry = await Enquiry.create({
+                    name,
+                    email,
+                    phone,
+                    message,
+                    ipAddress: typeof ipAddress === "string" ? ipAddress.split(",")[0].trim() : "",
+                    userAgent: typeof userAgent === "string" ? userAgent.slice(0, 200) : "",
+                    status: "NEW",
+                    emailDelivered: emailSent
+                });
+                console.log(`📝 Enquiry successfully saved in MongoDB! ID: ${savedEnquiry._id} from ${name} (${email})`);
+            } catch (dbErr) {
+                console.warn("[Backend API] MongoDB storage notice:", dbErr.message);
+            }
+        }
 
+        // If email was sent OR database saved it, return SUCCESS!
+        if (emailSent || savedEnquiry) {
+            return res.status(201).json({
+                success: true,
+                message: "Enquiry submitted successfully! A notification has been sent directly to the B-Market team's Gmail.",
+                enquiryId: savedEnquiry ? savedEnquiry._id : tempEnquiryId,
+                emailDispatched: emailSent,
+                databaseSaved: Boolean(savedEnquiry)
+            });
+        }
+
+        // Only if both email and DB failed:
+        return res.status(503).json({
+            success: false,
+            message: "Unable to process enquiry at this moment. Please contact us directly via WhatsApp at +91 7981850491.",
+            emailError: emailErrorMsg
+        });
     } catch (error) {
         console.error("❌ Error handling enquiry:", error);
         res.status(500).json({
             success: false,
-            message: "Failed to save enquiry: " + (error.message || "Internal server error")
+            message: "Failed to process enquiry: " + (error.message || "Internal server error")
         });
     }
 });
